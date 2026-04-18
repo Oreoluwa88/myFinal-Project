@@ -1,22 +1,34 @@
 import { useContext } from "react";
 import { AuthContext } from "../authentication/AuthContext";
-
-import { Link } from "react-router-dom";
 import { PropertyContext } from "../pages/PropertyContext";
+import { Link } from "react-router-dom";
 
 function DashboardHome() {
-  const { user } = useContext(AuthContext);
-  const { properties } = useContext(PropertyContext);
+  const authContext = useContext(AuthContext);
+  const propertyContext = useContext(PropertyContext);
 
-  const total = properties.length;
-  const available = properties.filter((p: any) => p.status === "Available").length;
-  const occupied = properties.filter((p: any) => p.status === "Occupied").length;
+  if (!authContext || !propertyContext) return null;
+
+  const { user } = authContext;
+  const { properties } = propertyContext;
+
+  const safeProperties = properties ?? [];
+
+  const total = safeProperties.length;
+
+  const available = safeProperties.filter(
+    (p) => p.status === "Available"
+  ).length;
+
+  const occupied = safeProperties.filter(
+    (p) => p.status === "Occupied"
+  ).length;
 
   return (
     <div>
       <h1>Welcome, {user?.name}</h1>
 
-      
+      {/* ADMIN */}
       {user?.role === "admin" && (
         <div>
           <h2>Admin Overview</h2>
@@ -33,7 +45,7 @@ function DashboardHome() {
         </div>
       )}
 
-      
+      {/* LANDLORD */}
       {user?.role === "landlord" && (
         <div>
           <h2>Landlord Dashboard</h2>
@@ -52,7 +64,7 @@ function DashboardHome() {
         </div>
       )}
 
-    
+      {/* TENANT */}
       {user?.role === "tenant" && (
         <div>
           <h2>Tenant Dashboard</h2>
@@ -71,15 +83,17 @@ function DashboardHome() {
   );
 }
 
-function Card({ title, value }: any) {
+function Card({ title, value }: { title: string; value: string | number }) {
   return (
-    <div style={{
-      background: "#fff",
-      padding: "20px",
-      borderRadius: "10px",
-      minWidth: "150px",
-      boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
-    }}>
+    <div
+      style={{
+        background: "#fff",
+        padding: "20px",
+        borderRadius: "10px",
+        minWidth: "150px",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+      }}
+    >
       <h4>{title}</h4>
       <h2>{value}</h2>
     </div>

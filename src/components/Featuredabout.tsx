@@ -68,43 +68,43 @@ useEffect(() => {
 }, []);
     const [current] = useState(0);
       const testimonials = [
-      {
-        name: "John Doe",
-        role: "Tenant",
-        image: "/images/user1.jpg",
-        text: "Finding a home was so easy with RentEase!",
-      },
-      {
-        name: "Adaeze Okafor",
-        role: "Landlord",
-        image: "/images/user2.jpg",
-        text: "Managing my properties is now stress-free.",
-      },
-      {
-        name: "Ibrahim Musa",
-        role: "Investor",
-        image: "/images/user3.jpg",
-        text: "Best platform for landlords and tenants.",
-      },
-      {
-        name: "Chioma Nwoye",
-        role: "Tenant",
-        image: "/images/user4.jpg",
-        text: "Very smooth experience from start to finish.",
-      },
-      {
-        name: "Tunde Balogun",
-        role: "Landlord",
-        image: "/images/user5.jpg",
-        text: "Tracking rent payments has never been easier.",
-      },
-      {
-        name: "Fatima Bello",
-        role: "Agent",
-        image: "/images/user6.jpg",
-        text: "I recommend this platform to all my clients.",
-      },
-    ];
+  {
+    name: "Jane Doe",
+    role: "Tenant",
+    image: "publicimages/images/client1.jpg",
+    text: "Finding a home was so easy with RentEase!",
+  },
+  {
+    name: "Adaeze Okafor",
+    role: "Landlord",
+    image: "publicimages/images/client2.jpg",
+    text: "Managing my properties is now stress-free.",
+  },
+  {
+    name: "Ibrahim Musa",
+    role: "Investor",
+    image: "publicimages/images/client3.jpg",
+    text: "Best platform for landlords and tenants.",
+  },
+  {
+    name: "Chioma Nwoye",
+    role: "Tenant",
+    image: "publicimages/images/client4.jpg",
+    text: "Very smooth experience from start to finish.",
+  },
+  {
+    name: "Tunde Balogun",
+    role: "Landlord",
+    image: "publicimages/images/client5.jpg",
+    text: "Tracking rent payments has never been easier.",
+  },
+  {
+    name: "Fatima Bello",
+    role: "Agent",
+    image: "publicimages/images/agent3.jpg",
+    text: "I recommend this platform to all my clients.",
+  },
+];
     return (
         <>
         <section className="about-section">

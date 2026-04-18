@@ -1,4 +1,4 @@
-import { useContext, type JSXElementConstructor, type Key, type ReactElement, type ReactNode, type ReactPortal } from "react";
+import { useContext } from "react";
 import { PropertyContext } from "../../pages/PropertyContext";
 import Navbarone from "../../components/Navbarone";
 import Navbartwo from "../../components/Navbartwo";
@@ -6,28 +6,34 @@ import { ChevronRight } from "lucide-react";
 import Footer from "../../components/Footer";
 
 function AdminDashboard() {
-  const { properties } = useContext(PropertyContext);
+  const context = useContext(PropertyContext);
+  if (!context) return null;
+
+  const { properties } = context;
 
   const total = properties.length;
-  const available = properties.filter((p: { status: string; }) => p.status === "Available").length;
-  const occupied = properties.filter((p: { status: string; }) => p.status === "Occupied").length;
+  const available = properties.filter((p) => p.status === "Available").length;
+  const occupied = properties.filter((p) => p.status === "Occupied").length;
 
   return (
-
     <>
-    <Navbarone />
-    <div className="about-hero admin-hero">
-      <div className="overlay">
-        <Navbartwo />
+      <Navbarone />
 
-        <div className="hero-text">
-          <p>Login <ChevronRight size={12} />Dashboard<ChevronRight size={12} /></p>
-          <h1>Admin</h1>
+      <div className="about-hero admin-hero">
+        <div className="overlay">
+          <Navbartwo />
+
+          <div className="hero-text">
+            <p>
+              Login <ChevronRight size={12} /> Dashboard
+              <ChevronRight size={12} />
+            </p>
+            <h1>Admin</h1>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div className="dash-container">
+      <div className="dash-container">
         <h1>Admin Analytics</h1>
 
         <div className="dash-grid">
@@ -39,19 +45,20 @@ function AdminDashboard() {
         <div className="dash-section">
           <h3>Recent Listings</h3>
 
-          {properties.slice(-4).map((p: { title: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; location: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; }, i: Key | null | undefined) => (
-            <div key={i} className="list-item">
+          {(properties ?? []).slice(-4).map((p) => (
+            <div key={p.id} className="list-item">
               <strong>{p.title}</strong> — {p.location}
             </div>
           ))}
         </div>
       </div>
+
       <Footer />
-      </>
+    </>
   );
 }
 
-function Card({ title, value }: any) {
+function Card({ title, value }: { title: string; value: any }) {
   return (
     <div className="dash-card">
       <h4>{title}</h4>

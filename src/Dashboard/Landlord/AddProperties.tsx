@@ -5,21 +5,21 @@ import Navbarone from "../../components/Navbarone";
 import Navbartwo from "../../components/Navbartwo";
 import Footer from "../../components/Footer";
 
-
-
-
 function AddProperty() {
-  const { addProperty } = useContext(PropertyContext);
+  const context = useContext(PropertyContext);
+  if (!context) return null;
+
+  const { addProperty } = context;
 
   const [preview, setPreview] = useState("");
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState("");
-  const [status, setStatus] = useState("Available");
+  const [status, setStatus] = useState<"Available" | "Occupied">("Available");
   const [beds, setBeds] = useState("");
   const [baths, setBaths] = useState("");
 
-  const handleImage = (e: any) => {
+  const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -27,43 +27,49 @@ function AddProperty() {
     setPreview(imageUrl);
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!title || !location || !price) return;
+
     addProperty({
-      image: preview,
+      image: preview || "/placeholder.jpg",
       title,
       location,
-      price,
+      price: Number(price),
       status,
-      beds: Number(beds),
-      baths: Number(baths),
+      beds: Number(beds) || 0,
+      baths: Number(baths) || 0,
     });
-
 
     setPreview("");
     setTitle("");
     setLocation("");
     setPrice("");
     setStatus("Available");
+    setBeds("");
+    setBaths("");
   };
 
   return (
-
     <>
-    <Navbarone />
-    <div className="about-hero addproperties-hero">
-      <div className="overlay">
-        <Navbartwo />
+      <Navbarone />
 
-        <div className="hero-text">
-          <p>Home <ChevronRight size={12} />About<ChevronRight size={12} /></p>
-          <h1>About Us</h1>
+      <div className="about-hero addproperties-hero">
+        <div className="overlay">
+          <Navbartwo />
+
+          <div className="hero-text">
+            <p>
+              Home <ChevronRight size={12} /> Add Property
+              <ChevronRight size={12} />
+            </p>
+            <h1>Add Property</h1>
+          </div>
         </div>
       </div>
-    </div>
-    
-    <div className="addproperty-wrapper">
+
+      <div className="addproperty-wrapper">
         <form onSubmit={handleSubmit} className="addproperty-form">
           <h2 style={{ textAlign: "center" }}>Add Property</h2>
 
@@ -81,36 +87,43 @@ function AddProperty() {
             <input
               placeholder="Property Title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)} />
+              onChange={(e) => setTitle(e.target.value)}
+            />
 
             <input
               placeholder="Location"
               value={location}
-              onChange={(e) => setLocation(e.target.value)} />
+              onChange={(e) => setLocation(e.target.value)}
+            />
 
             <input
               placeholder="Price"
               value={price}
-              onChange={(e) => setPrice(e.target.value)} />
+              onChange={(e) => setPrice(e.target.value)}
+            />
 
             <input
               placeholder="Bedrooms"
               value={beds}
-              onChange={(e) => setBeds(e.target.value)} />
+              onChange={(e) => setBeds(e.target.value)}
+            />
 
             <input
               placeholder="Bathrooms"
               value={baths}
-              onChange={(e) => setBaths(e.target.value)} />
+              onChange={(e) => setBaths(e.target.value)}
+            />
 
             <select
-            className="status-select"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}>
-            <option>Available</option>
-            <option>Occupied</option>
-          </select>
-
+              className="status-select"
+              value={status}
+              onChange={(e) =>
+                setStatus(e.target.value as "Available" | "Occupied")
+              }
+            >
+              <option value="Available">Available</option>
+              <option value="Occupied">Occupied</option>
+            </select>
           </div>
 
           <button type="submit" className="submit-btn">
@@ -118,8 +131,9 @@ function AddProperty() {
           </button>
         </form>
       </div>
+
       <Footer />
-      </>
+    </>
   );
 }
 

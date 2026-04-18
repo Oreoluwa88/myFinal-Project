@@ -7,7 +7,10 @@ import { ChevronRight } from "lucide-react";
 import Footer from "../../components/Footer";
 
 function MyProperties() {
-  const { properties, deleteProperty } = useContext(PropertyContext);
+  const context = useContext(PropertyContext);
+if (!context) return <p>Loading...</p>;
+
+const { properties, deleteProperty } = context;
 
   return (
     <>
@@ -48,7 +51,7 @@ function MyProperties() {
 
         <div className="property-cont">
           <div className="property-grid">
-            {properties.map((prop: any) => (
+            {(properties ?? []).map((prop) => (
               <div key={prop.id}>
                 <PropertyCard {...prop} />
 

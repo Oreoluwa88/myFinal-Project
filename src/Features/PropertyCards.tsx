@@ -5,7 +5,7 @@ interface Props {
   title: string;
   location: string;
   price: number | string;
-  status: string;
+  status: "Available" | "Occupied";
   beds: number;
   baths: number;
 }
@@ -21,17 +21,14 @@ function PropertyCard({
 }: Props) {
   return (
     <div className="property-card">
-      
       <div className="card-image">
-        <img src={image} alt={title} />
+        <img src={image || "/placeholder.jpg"} alt={title} />
 
-        <span className="price-tag">${price}</span>
+        <span className="price-tag">
+          ₦{Number(price).toLocaleString()}
+        </span>
 
-        <span
-          className={`status-tag ${
-            status === "Available" ? "available" : "occupied"
-          }`}
-        >
+        <span className={`status-tag ${status.toLowerCase()}`}>
           {status}
         </span>
       </div>
@@ -41,8 +38,12 @@ function PropertyCard({
         <p className="location">{location}</p>
 
         <div className="card-icons">
-          <span><BedDouble size={16} /> {beds}</span>
-          <span><Bath size={16} /> {baths}</span>
+          <span>
+            <BedDouble size={16} /> {beds}
+          </span>
+          <span>
+            <Bath size={16} /> {baths}
+          </span>
         </div>
       </div>
     </div>

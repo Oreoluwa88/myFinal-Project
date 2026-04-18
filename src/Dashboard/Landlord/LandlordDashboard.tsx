@@ -7,45 +7,59 @@ import Navbartwo from "../../components/Navbartwo";
 import Footer from "../../components/Footer";
 
 function LandlordDashboard() {
-  const { properties } = useContext(PropertyContext);
+  const context = useContext(PropertyContext);
+  if (!context) return null;
+
+  const { properties } = context;
   const navigate = useNavigate();
 
-  const myProperties = properties; 
+  const myProperties = properties ?? [];
 
   const total = myProperties.length;
-  const occupied = myProperties.filter((p: { status: string; }) => p.status === "Occupied").length;
-  const revenue = myProperties.reduce((sum: number, p: { price: any; }) => sum + Number(p.price || 0), 0);
+
+  const occupied = myProperties.filter(
+    (p) => p.status === "Occupied"
+  ).length;
+
+  const revenue = myProperties.reduce(
+    (sum, p) => sum + Number(p.price || 0),
+    0
+  );
 
   return (
-
     <>
-    <Navbarone />
-    <div className="about-hero landlord-hero">
-      <div className="overlay">
-        <Navbartwo />
+      <Navbarone />
 
-        <div className="hero-text">
-          <p>Login <ChevronRight size={12} />Dashboard<ChevronRight size={12} /></p>
-          <h1>Landlord Dashboard</h1>
+      <div className="about-hero landlord-hero">
+        <div className="overlay">
+          <Navbartwo />
+
+          <div className="hero-text">
+            <p>
+              Login <ChevronRight size={12} /> Dashboard
+              <ChevronRight size={12} />
+            </p>
+            <h1>Landlord Dashboard</h1>
+          </div>
         </div>
       </div>
-    </div>
-    
-    <div className="dash-container">
+
+      <div className="dash-container">
         <h1>Landlord Dashboard</h1>
 
         <div className="dash-grid">
           <Card title="My Properties" value={total} />
           <Card title="Occupied" value={occupied} />
-          <Card title="Revenue" value={`₦${revenue.toLocaleString()}`} />
+          <Card
+            title="Revenue"
+            value={`₦${revenue.toLocaleString()}`}
+          />
         </div>
 
         <div className="dash-section">
           <h3>Quick Actions</h3>
 
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-
-
             <button onClick={() => navigate("/dashboard/add-property")}>
               Add Property
             </button>
@@ -60,20 +74,18 @@ function LandlordDashboard() {
           </div>
         </div>
       </div>
+
       <Footer />
-      </>
+    </>
   );
 }
 
-function Card({ title, value }: any) {
+function Card({ title, value }: { title: string; value: any }) {
   return (
-  
-    <>
     <div className="dash-card">
       <h4>{title}</h4>
       <h2>{value}</h2>
     </div>
-    </>
   );
 }
 
