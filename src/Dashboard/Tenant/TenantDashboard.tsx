@@ -16,7 +16,7 @@ function TenantDashboard() {
 
         <div className="hero-text">
           <p>Login <ChevronRight size={12} />Dashboard<ChevronRight size={12} /></p>
-          <h1>Landlord Dashboard</h1>
+          <h1>Tenant Dashboard</h1>
         </div>
       </div>
     </div><div className="dash-container">
