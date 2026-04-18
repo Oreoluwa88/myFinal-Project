@@ -40,7 +40,6 @@ function MyProperties() {
           My Properties
         </h2>
 
-        {/* ✅ Better empty state */}
         {properties.length === 0 && (
           <p style={{ textAlign: "center", marginTop: "40px" }}>
             No properties yet
