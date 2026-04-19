@@ -23,7 +23,7 @@ function Login() {
   const handleLogin = () => {
   const mockUser = {
     name: "User",
-    role: "tenant",
+    role: "admin",
   };
 
   setUser(mockUser);
