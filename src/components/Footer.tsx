@@ -1,7 +1,10 @@
 import { MapPin, Phone, Mail, ChevronRight } from "lucide-react";
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaInstagram, FaTwitter } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function Footer() {
+  const navigate = useNavigate();
+
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -20,29 +23,26 @@ function Footer() {
             <a href="https://twitter.com/ms_orreee" target="_blank" rel="noopener noreferrer">
             <FaTwitter/>
             </a>
-            <a href="https://instagram.com/yourusername" target="_blank" rel="noopener noreferrer">
-            <FaFacebook/>
-            </a>
           </div>
         </div>
 
         <div className="footer-col">
           <h3>Offers</h3>
           <ul>
-            <li><ChevronRight size={14}/>Properties</li>
-            <li><ChevronRight size={14}/>Landlord</li>
-            <li><ChevronRight size={14}/>Locations</li>
-            <li><ChevronRight size={14}/>Clients Support</li>
+            <li onClick={() => navigate("/properties") && window.scrollTo(0, 0)}><ChevronRight size={14}/>Properties</li>
+            <li onClick={() => navigate("/landlord") && window.scrollTo(0, 0)}><ChevronRight size={14}/>Landlord</li>
+            <li onClick={() => navigate("/categories") && window.scrollTo(0, 0)}><ChevronRight size={14}/>Locations</li>
+            <li onClick={() => navigate("/contact") && window.scrollTo(0, 0)}><ChevronRight size={14}/>Clients Support</li>
           </ul>
         </div>
 
         <div className="footer-col">
           <h3>Company</h3>
           <ul>
-            <li>Home</li>
-            <li><ChevronRight size={14}/>About</li>
-            <li><ChevronRight size={14}/>Properties</li>
-            <li><ChevronRight size={14}/>Contact Us</li>
+            <li onClick={() => navigate("/") && window.scrollTo(0, 0)}><ChevronRight size={14}/>Home</li>
+            <li onClick={() => navigate("/about") && window.scrollTo(0, 0)}><ChevronRight size={14}/>About</li>
+            <li onClick={() => navigate("/properties") && window.scrollTo(0, 0)}><ChevronRight size={14}/>Properties</li>
+            <li onClick={() => navigate("/contact") && window.scrollTo(0, 0)}><ChevronRight size={14}/>Contact Us</li>
           </ul>
         </div>
 
