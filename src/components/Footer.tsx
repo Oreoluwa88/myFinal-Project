@@ -29,20 +29,20 @@ function Footer() {
         <div className="footer-col">
           <h3>Offers</h3>
           <ul>
-            <li onClick={() => navigate("/properties") && window.scrollTo(0, 0)}><ChevronRight size={14}/>Properties</li>
-            <li onClick={() => navigate("/landlord") && window.scrollTo(0, 0)}><ChevronRight size={14}/>Landlord</li>
-            <li onClick={() => navigate("/categories") && window.scrollTo(0, 0)}><ChevronRight size={14}/>Locations</li>
-            <li onClick={() => navigate("/contact") && window.scrollTo(0, 0)}><ChevronRight size={14}/>Clients Support</li>
+            <li onClick={() => navigate("/properties")}><ChevronRight size={14}/>Properties</li>
+            <li onClick={() => navigate("/landlord")}><ChevronRight size={14}/>Landlord</li>
+            <li onClick={() => navigate("/categories")}><ChevronRight size={14}/>Locations</li>
+            <li onClick={() => navigate("/contact")}><ChevronRight size={14}/>Clients Support</li>
           </ul>
         </div>
 
         <div className="footer-col">
           <h3>Company</h3>
           <ul>
-            <li onClick={() => navigate("/") && window.scrollTo(0, 0)}><ChevronRight size={14}/>Home</li>
-            <li onClick={() => navigate("/about") && window.scrollTo(0, 0)}><ChevronRight size={14}/>About</li>
-            <li onClick={() => navigate("/properties") && window.scrollTo(0, 0)}><ChevronRight size={14}/>Properties</li>
-            <li onClick={() => navigate("/contact") && window.scrollTo(0, 0)}><ChevronRight size={14}/>Contact Us</li>
+            <li onClick={() => navigate("/")}><ChevronRight size={14}/>Home</li>
+            <li onClick={() => navigate("/about")}><ChevronRight size={14}/>About</li>
+            <li onClick={() => navigate("/properties")}><ChevronRight size={14}/>Properties</li>
+            <li onClick={() => navigate("/contact")}><ChevronRight size={14}/>Contact Us</li>
           </ul>
         </div>
 
