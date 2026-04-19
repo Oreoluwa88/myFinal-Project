@@ -38,6 +38,7 @@ function AddProperty() {
       location,
       price: Number(price),
       status,
+      approval: "Pending",
       beds: Number(beds) || 0,
       baths: Number(baths) || 0,
     });

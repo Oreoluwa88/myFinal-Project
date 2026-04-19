@@ -4,17 +4,20 @@ import Navbarone from "../../components/Navbarone";
 import Navbartwo from "../../components/Navbartwo";
 import { ChevronRight } from "lucide-react";
 import Footer from "../../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 function AdminDashboard() {
+  const navigate = useNavigate();
+  
   const context = useContext(PropertyContext);
-  if (!context) return null;
+    if (!context) return null;
 
   const { properties } = context;
 
   const total = properties.length;
   const available = properties.filter((p) => p.status === "Available").length;
   const occupied = properties.filter((p) => p.status === "Occupied").length;
-
+  const pending = properties.filter((p) => p.approval === "Pending").length;
   return (
     <>
       <Navbarone />
@@ -40,6 +43,7 @@ function AdminDashboard() {
           <Card title="Total Properties" value={total} />
           <Card title="Available" value={available} />
           <Card title="Occupied" value={occupied} />
+          <Card title="Pending Approval" value={pending} />
         </div>
 
         <div className="dash-section">
@@ -51,6 +55,9 @@ function AdminDashboard() {
             </div>
           ))}
         </div>
+        <button onClick={() => navigate("/dashboard/approvals")}>
+         View Approvals
+        </button>
       </div>
 
       <Footer />

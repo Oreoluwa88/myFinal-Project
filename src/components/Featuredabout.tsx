@@ -1,7 +1,9 @@
 import { Quote, Star } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Featuredabout (){
+  const navigate = useNavigate();
   const [count1, setCount1] = useState(0);
   const [count2, setCount2] = useState(0);
   const [count3, setCount3] = useState(0);
@@ -66,8 +68,16 @@ useEffect(() => {
     }
   };
 }, []);
-    const [current] = useState(0);
-      const testimonials = [
+    const [current, setCurrent] = useState(0);
+    useEffect(() => {
+      const interval = setInterval(() => {
+    setCurrent((prev) => (prev + 1) % testimonials.length);
+      }, 3000);
+
+    return () => clearInterval(interval);
+    }, []);
+
+    const testimonials = [
   {
     name: "Jane Doe",
     role: "Tenant",
@@ -126,7 +136,7 @@ useEffect(() => {
             management all in one place.
           </p>
 
-          <button>Learn More</button>
+          <button onClick={() => navigate("/contact")}>Learn More</button>
         </div>
         <div className="stats" ref={statsRef}>
           <div>
@@ -318,7 +328,7 @@ useEffect(() => {
       
       <section className="cta">
         <h2>Start Managing Properties Today</h2>
-        <button>Get Started</button>
+        <button onClick={() => navigate("/register")}>Get Started</button>
       </section>
 
 </>

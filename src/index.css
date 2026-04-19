@@ -793,17 +793,13 @@ body {
   color: #555;
 }
 .slider {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  height: 250px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
 }
 
 .test-card {
-  position: absolute;
   width: 300px;
-  opacity: 0;
-  transform: scale(0.8);
   transition: 0.5s;
 }
 
@@ -1039,6 +1035,7 @@ body {
   gap: 20px;
   justify-content: center;
   margin-top: 20px;
+  background-color: #030f1b;
 }
 
 .ps-box div {

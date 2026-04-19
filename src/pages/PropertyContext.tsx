@@ -5,8 +5,9 @@ export interface Property {
   image: string;
   title: string;
   location: string;
-  price: number | string;
+  price: number;
   status: "Available" | "Occupied";
+  approval: "Pending" | "Approved" | "Rejected";
   beds: number;
   baths: number;
 }
@@ -16,6 +17,8 @@ interface PropertyContextType {
   addProperty: (property: Omit<Property, "id">) => void;
   deleteProperty: (id: number) => void;
   editProperty: (id: number, updated: Partial<Property>) => void;
+  approveProperty: (id: number) => void;
+  rejectProperty: (id: number) => void;
 }
 
 export const PropertyContext = createContext<PropertyContextType | null>(null);
@@ -51,9 +54,32 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const approveProperty = (id: number) => {
+    setProperties((prev) =>
+      prev.map((p) =>
+        p.id === id ? { ...p, approval: "Approved" } : p
+      )
+    );
+  };
+
+  const rejectProperty = (id: number) => {
+    setProperties((prev) =>
+      prev.map((p) =>
+        p.id === id ? { ...p, approval: "Rejected" } : p
+      )
+    );
+  };
+
   return (
     <PropertyContext.Provider
-      value={{ properties, addProperty, deleteProperty, editProperty }}
+      value={{
+        properties,
+        addProperty,
+        deleteProperty,
+        editProperty,
+        approveProperty,
+        rejectProperty,
+      }}
     >
       {children}
     </PropertyContext.Provider>
