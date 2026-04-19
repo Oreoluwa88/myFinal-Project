@@ -102,6 +102,7 @@ useEffect(() => {
     image: "/images/client4.jpg",
     text: "Very smooth experience from start to finish.",
   },
+  /*
   {
     name: "Tunde Balogun",
     role: "Landlord",
@@ -113,7 +114,7 @@ useEffect(() => {
     role: "Agent",
     image: "/images/agent3.jpg",
     text: "I recommend this platform to all my clients.",
-  },
+  },*/
 ];
     return (
         <>
