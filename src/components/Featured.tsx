@@ -7,25 +7,25 @@ function Featured() {
       title: "3 bed Apartment",
       location: "Lekki, Lagos",
       price: "$2,000,000",
-      image: "/public/images/Southampton Beach House.jpg",
+      image: "/images/southampton beach house.jpg",
     },
     {
       title: "Studio apartment",
       location: "Victoria Island,Lagos",
       price: "$1,200,000",
-      image: "/public/images/Featured2.jpg",
+      image: "/images/Featured2.jpg",
     },
     {
       title: "Mini Flat",
       location: "Ajah, Lagos",
       price: "$300,000",
-      image: "/public/images/Featured3.jpg",
+      image: "/images/Featured3.jpg",
     },
     {
       title: "2 bed apartment",
       location: "Salem, Lagos",
       price: "$300,000",
-      image: "/public/images/Featured1.jpg",
+      image: "/images/Featured1.jpg",
     },
   ];
 
