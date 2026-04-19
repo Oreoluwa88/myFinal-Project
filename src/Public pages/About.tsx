@@ -75,37 +75,37 @@ useEffect(() => {
   {
     name: "Jane Doe",
     role: "Tenant",
-    image: "/public/images/client1.jpg",
+    image: "/images/client1.jpg",
     text: "Finding a home was so easy with RentEase!",
   },
   {
     name: "Adaeze Okafor",
     role: "Landlord",
-    image: "/public/images/client2.jpg",
+    image: "/images/client2.jpg",
     text: "Managing my properties is now stress-free.",
   },
   {
     name: "Ibrahim Musa",
     role: "Investor",
-    image: "/public/images/client3.jpg",
+    image: "/images/client3.jpg",
     text: "Best platform for landlords and tenants.",
   },
   {
     name: "Chioma Nwoye",
     role: "Tenant",
-    image: "/public/images/client4.jpg",
+    image: "/images/client4.jpg",
     text: "Very smooth experience from start to finish.",
   },
   {
     name: "Tunde Balogun",
     role: "Landlord",
-    image: "/public/images/client5.jpg",
+    image: "/images/client5.jpg",
     text: "Tracking rent payments has never been easier.",
   },
   {
     name: "Fatima Bello",
     role: "Agent",
-    image: "/public/images/agent3.jpg",
+    image: "/images/agent3.jpg",
     text: "I recommend this platform to all my clients.",
   },
 ];
@@ -128,7 +128,7 @@ useEffect(() => {
 
       <section className="about-section">
         <div className="about-img">
-          <img src="/public/images/aboutimg 1.jpg" alt="about" />
+          <img src="/images/aboutimg 1.jpg" alt="about" />
         </div>
         <div className="about-before">
           <div className="about-text">
@@ -169,7 +169,7 @@ useEffect(() => {
             </div>
           </div>
           <div className="about-img2">
-            <img src="/public/images/22 Indoor Concrete Floor Paint Ideas for Modern Spaces.jpg" alt="" />
+            <img src="/images/22 Indoor Concrete Floor Paint Ideas for Modern Spaces.jpg" alt="" />
           </div>
         </div>
       </section>
@@ -264,7 +264,7 @@ useEffect(() => {
         <div className="agents-grid">
 
           <div className="agent-card">
-            <img src="/public/images/agent1.jpg" />
+            <img src="/images/agent1.jpg" />
             <div className="agent-info">
               <p>Listing • 10 Properties</p>
               <h3>Mike Bochs</h3>
@@ -273,7 +273,7 @@ useEffect(() => {
           </div>
 
           <div className="agent-card">
-            <img src="/public/images/agent2.jpg" />
+            <img src="/images/agent2.jpg" />
             <div className="agent-info">
               <p>Listing • 8 Properties</p>
               <h3>Sarah Geronimo </h3>
@@ -282,7 +282,7 @@ useEffect(() => {
           </div>
 
           <div className="agent-card">
-            <img src="/public/images/agent3.jpg" />
+            <img src="/images/agent3.jpg" />
             <div className="agent-info">
               <p>Listing • 12 Properties</p>
               <h3>Jessica Moore</h3>
@@ -291,7 +291,7 @@ useEffect(() => {
           </div>
 
           <div className="agent-card">
-            <img src="/public/images/agent4.jpg" />
+            <img src="/images/agent4.jpg" />
             <div className="agent-info">
               <p>Listing • 9 Properties</p>
               <h3>David Smith</h3>
