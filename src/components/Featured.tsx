@@ -7,7 +7,7 @@ function Featured() {
       title: "3 bed Apartment",
       location: "Lekki, Lagos",
       price: "$2,000,000",
-      image: "/images/Southampton beach house.jpg",
+      image: "/images/Southampton Beach House.jpg",
     },
     {
       title: "Studio apartment",
