@@ -1026,8 +1026,9 @@ body {
 
 .problem-solution {
   padding: 60px;
-  background: #f0f0f0;
+  background: #030f1b;
   text-align: center;
+  color:white
 }
 
 .ps-box {
@@ -1035,7 +1036,6 @@ body {
   gap: 20px;
   justify-content: center;
   margin-top: 20px;
-  background-color: #030f1b;
 }
 
 .ps-box div {
