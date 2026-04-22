@@ -20,19 +20,25 @@ function Properties() {
   const [type, setType] = useState("");
   const [price, setPrice] = useState("");
 
-  // safe fallback for navigation state
+  const approvedProperties = (properties ?? []).filter(
+    (p) => p.approval === "Approved"
+  );
+
   const searchResults = location.state?.results;
 
-  const dataToShow = searchResults ?? properties ?? [];
+  const dataToShow = searchResults ?? approvedProperties;
+
 
   const handleSearch = () => {
-    const filtered = (properties ?? []).filter((p: any) => {
+    const filtered = approvedProperties.filter((p: any) => {
       return (
         (searchLocation === "" ||
-          p.location.toLowerCase().includes(searchLocation.toLowerCase())) &&
+          p.location
+            ?.toLowerCase()
+            .includes(searchLocation.toLowerCase())) &&
         (type === "" ||
-          p.title.toLowerCase().includes(type.toLowerCase())) &&
-        (price === "" || Number(p.price) <= Number(price))
+          p.title?.toLowerCase().includes(type.toLowerCase())) &&
+        (price === "" || Number(p.price || 0) <= Number(price))
       );
     });
 

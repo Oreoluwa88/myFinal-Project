@@ -1,4 +1,9 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
+import {
+  getProperties,
+  createProperty,
+  approvePropertyApi,
+} from "../api/propertyApi";
 
 export interface Property {
   id: number;
@@ -14,71 +19,57 @@ export interface Property {
 
 interface PropertyContextType {
   properties: Property[];
-  addProperty: (property: Omit<Property, "id">) => void;
-  deleteProperty: (id: number) => void;
-  editProperty: (id: number, updated: Partial<Property>) => void;
-  approveProperty: (id: number) => void;
-  rejectProperty: (id: number) => void;
+  fetchProperties: () => Promise<void>;
+  addProperty: (property: Omit<Property, "id">) => Promise<void>;
+  approveProperty: (id: number) => Promise<void>;
 }
 
 export const PropertyContext = createContext<PropertyContextType | null>(null);
 
 export function PropertyProvider({ children }: { children: ReactNode }) {
-  const [properties, setProperties] = useState<Property[]>(() => {
+  const [properties, setProperties] = useState<Property[]>([]);
+
+  // ✅ FETCH FROM API
+  const fetchProperties = async () => {
     try {
-      const saved = localStorage.getItem("properties");
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
+      const data = await getProperties();
+      setProperties(data);
+    } catch (err) {
+      console.error("Error fetching properties:", err);
     }
-  });
+  };
+
+  // ✅ ADD PROPERTY (API)
+  const addProperty = async (property: Omit<Property, "id">) => {
+    try {
+      await createProperty(property);
+      await fetchProperties(); // refresh list
+    } catch (err) {
+      console.error("Error adding property:", err);
+    }
+  };
+
+  // ✅ APPROVE PROPERTY (API)
+  const approveProperty = async (id: number) => {
+    try {
+      await approvePropertyApi(id);
+      await fetchProperties();
+    } catch (err) {
+      console.error("Error approving property:", err);
+    }
+  };
 
   useEffect(() => {
-    localStorage.setItem("properties", JSON.stringify(properties));
-  }, [properties]);
-
-  const addProperty = (property: Omit<Property, "id">) => {
-    setProperties((prev) => [
-      ...prev,
-      { ...property, id: Date.now() },
-    ]);
-  };
-
-  const deleteProperty = (id: number) => {
-    setProperties((prev) => prev.filter((p) => p.id !== id));
-  };
-
-  const editProperty = (id: number, updated: Partial<Property>) => {
-    setProperties((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, ...updated } : p))
-    );
-  };
-
-  const approveProperty = (id: number) => {
-    setProperties((prev) =>
-      prev.map((p) =>
-        p.id === id ? { ...p, approval: "Approved" } : p
-      )
-    );
-  };
-
-  const rejectProperty = (id: number) => {
-    setProperties((prev) =>
-      prev.map((p) =>
-        p.id === id ? { ...p, approval: "Rejected" } : p
-      )
-    );
-  };
+    fetchProperties();
+  }, []);
 
   return (
     <PropertyContext.Provider
       value={{
         properties,
+        fetchProperties,
         addProperty,
-        deleteProperty,
-        editProperty,
         approveProperty,
-        rejectProperty,
       }}
     >
       {children}
