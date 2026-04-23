@@ -85,10 +85,10 @@ function Login() {
         Don't have an account? <Link to="/register">Register</Link>
       </p>
     </div>
-    <Footer/>
     <h1 className="text-red-500 text-3xl font-bold">
   Tailwind Test
 </h1>
+    <Footer/>
     </>
   );
 }
