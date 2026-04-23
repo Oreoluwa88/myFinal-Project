@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { PropertyContext } from "../../pages/PropertyContext";
+import { useEffect, useState } from "react";
 import Navbarone from "../../components/Navbarone";
 import Navbartwo from "../../components/Navbartwo";
 import { ChevronRight } from "lucide-react";
@@ -8,16 +7,37 @@ import { useNavigate } from "react-router-dom";
 
 function AdminDashboard() {
   const navigate = useNavigate();
-  
-  const context = useContext(PropertyContext);
-    if (!context) return null;
+  const [stats, setStats] = useState<any>(null);
 
-  const { properties } = context;
+  useEffect(() => {
+    const fetchAdminDashboard = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-  const total = properties.length;
-  const available = properties.filter((p) => p.status === "Available").length;
-  const occupied = properties.filter((p) => p.status === "Occupied").length;
-  const pending = properties.filter((p) => p.approval === "Pending").length;
+        const res = await fetch(
+          "https://propms-api.fly.dev/api/v1/Dashboard/admin",
+          {
+            method: "GET",
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const data = await res.json();
+
+        console.log("ADMIN DASHBOARD RESPONSE:", data);
+
+        setStats(data.data);
+      } catch (err) {
+        console.error("Admin dashboard error:", err);
+      }
+    };
+
+    fetchAdminDashboard();
+  }, []);
+
   return (
     <>
       <Navbarone />
@@ -40,24 +60,23 @@ function AdminDashboard() {
         <h1>Admin Analytics</h1>
 
         <div className="dash-grid">
-          <Card title="Total Properties" value={total} />
-          <Card title="Available" value={available} />
-          <Card title="Occupied" value={occupied} />
-          <Card title="Pending Approval" value={pending} />
+          <Card title="Total Users" value={stats?.totalUsers ?? 0} />
+          <Card title="Landlords" value={stats?.totalLandlords ?? 0} />
+          <Card title="Tenants" value={stats?.totalTenants ?? 0} />
+          <Card title="Total Properties" value={stats?.totalProperties ?? 0} />
+          <Card title="Pending Approvals" value={stats?.pendingApprovals ?? 0} />
+          <Card title="Active Leases" value={stats?.activeLeases ?? 0} />
+          <Card title="Total Revenue" value={`₦${stats?.totalRevenue ?? 0}`} />
+          <Card title="Overdue Payments" value={stats?.overduePayments ?? 0} />
         </div>
 
         <div className="dash-section">
-          <h3>Recent Listings</h3>
+          <h3>Quick Actions</h3>
 
-          {(properties ?? []).slice(-4).map((p) => (
-            <div key={p.id} className="list-item">
-              <strong>{p.title}</strong> — {p.location}
-            </div>
-          ))}
+          <button onClick={() => navigate("/dashboard/approvals")}>
+            View Approvals
+          </button>
         </div>
-        <button onClick={() => navigate("/dashboard/approvals")}>
-         View Approvals
-        </button>
       </div>
 
       <Footer />

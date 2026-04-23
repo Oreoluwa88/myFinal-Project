@@ -1,33 +1,39 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { PropertyContext } from "../pages/PropertyContext";
 
 function Hero() {
   const navigate = useNavigate();
 
-  const context = useContext(PropertyContext);
-  if (!context) return null;
-
-  const { properties } = context;
-
-  const safeProperties = properties ?? [];
-
   const [location, setLocation] = useState("");
-  const [type, setType] = useState("");
-  const [price, setPrice] = useState("");
+  const [propertyType, setPropertyType] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
-  const handleSearch = () => {
-    const filtered = safeProperties.filter((p) => {
-      return (
-        (location === "" ||
-          p.location.toLowerCase().includes(location.toLowerCase())) &&
-        (type === "" ||
-          p.title.toLowerCase().includes(type.toLowerCase())) &&
-        (price === "" || Number(p.price) <= Number(price))
+  const handleSearch = async () => {
+    try {
+      const query = new URLSearchParams();
+
+      if (location) query.append("Location", location);
+      if (propertyType) query.append("PropertyType", propertyType);
+      if (minPrice) query.append("MinPrice", minPrice);
+      if (maxPrice) query.append("MaxPrice", maxPrice);
+
+      // optional pagination
+      query.append("Page", "1");
+      query.append("PageSize", "10");
+
+      const res = await fetch(
+        `https://propms-api.fly.dev/api/v1/Properties?${query.toString()}`
       );
-    });
 
-    navigate("/properties", { state: { results: filtered } });
+      const data = await res.json();
+
+      navigate("/properties", {
+        state: { results: data.data.items },
+      });
+    } catch (error) {
+      console.error("Search failed:", error);
+    }
   };
 
   return (
@@ -85,21 +91,34 @@ function Hero() {
 
           <div className="search-box">
             <input
-              placeholder="Location (e.g Lagos)"
+              placeholder="Location (e.g Chevron, Lekki)"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
 
+            <select
+              value={propertyType}
+              onChange={(e) => setPropertyType(e.target.value)}
+              className="property-select">
+              <option value="">Property Type</option>
+              <option value="House">House</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Shop">Shop</option>
+              <option value="Land">Land</option>
+              </select>
+
             <input
-              placeholder="Property Type (e.g Apartment)"
-              value={type}
-              onChange={(e) => setType(e.target.value)}
+              type="number"
+              placeholder="Min Price"
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
             />
 
             <input
+              type="number"
               placeholder="Max Price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
             />
 
             <button onClick={handleSearch}>Search</button>

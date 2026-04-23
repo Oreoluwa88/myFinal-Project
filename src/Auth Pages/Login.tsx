@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import Navbarone from "../components/Navbarone";
 import Navbartwo from "../components/Navbartwo";
 import { ChevronRight } from "lucide-react";
+import { loginUser } from "../api/propertyApi";
 
 function Login() {
   const { setUser } = useContext(AuthContext);
@@ -20,20 +21,30 @@ function Login() {
   };
 
 
-  const handleLogin = () => {
-  const mockUser = {
-    name: "User",
-    role: "admin",
-  };
+  const handleLogin = async () => {
+  try {
+    const res = await loginUser(form);
 
-  setUser(mockUser);
+    if (res.success) {
+      const user = res.data.user;
+      const token = res.data.token;
 
-  if (mockUser.role === "admin") {
-    navigate("/dashboard/admin");
-  } else if (mockUser.role === "landlord") {
-    navigate("/dashboard/landlord");
-  } else {
-    navigate("/dashboard/tenant");
+      localStorage.setItem("token", token);
+
+      setUser(user);
+
+      if (user.role === "Admin") {
+        navigate("/dashboard/admin");
+      } else if (user.role === "Landlord") {
+        navigate("/dashboard/landlord");
+      } else {
+        navigate("/dashboard/tenant");
+      }
+    } else {
+      alert(res.message);
+    }
+  } catch (err) {
+    console.error(err);
   }
 };
 

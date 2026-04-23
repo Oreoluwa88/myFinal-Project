@@ -4,10 +4,12 @@ import Footer from "../components/Footer";
 import { ChevronRight } from "lucide-react";
 import Navbarone from "../components/Navbarone";
 import Navbartwo from "../components/Navbartwo";
+import { registerUser } from "../api/propertyApi";
 
 function Register() {
   const [form, setForm] = useState({
-    name: "",
+    firstname: "",
+    lastname: "",
     email: "",
     phone: "",
     password: "",
@@ -20,13 +22,29 @@ function Register() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = () => {
-    console.log("User registered:", form);
 
-    // later: send to backend or store in context/localStorage
-
-    navigate("/login");
+const handleRegister = async () => {
+  const registerData = {
+    firstName: form.firstname,
+    lastName: form.lastname,
+    email: form.email,
+    password: form.password,
+    phoneNumber: form.phone,
+    role: form.role,
   };
+
+  try {
+    const res = await registerUser(registerData);
+
+    if (res.success) {
+      navigate("/login");
+    } else {
+      alert(res.message);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   return (
     <>
@@ -45,7 +63,8 @@ function Register() {
     <div className="registerhere">
       <h2>Create Account</h2>
 
-      <input name="name" placeholder="Full Name" onChange={handleChange} />
+      <input name="firstname" placeholder="First Name" onChange={handleChange} />
+      <input name="lastname" placeholder="Last Name" onChange={handleChange} />
       <input name="email" placeholder="Email" onChange={handleChange} />
       <input name="phone" placeholder="Phone Number" onChange={handleChange} />
 

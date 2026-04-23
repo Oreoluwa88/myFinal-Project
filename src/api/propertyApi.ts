@@ -1,5 +1,37 @@
 const BASE_URL = "https://propms-api.fly.dev/api/v1";
 
+//REGISTER
+export const registerUser = async (data: any) => {
+  const res = await fetch(`${BASE_URL}/Auth/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const json = await res.json();
+  console.log("REGISTER RESPONSE:", json);
+
+  return json;
+};
+
+//LOGIN
+export const loginUser = async (data: any) => {
+  const res = await fetch(`${BASE_URL}/Auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const json = await res.json();
+  console.log("LOGIN RESPONSE:", json);
+
+  return json;
+};
+
 export const getProperties = async () => {
   const res = await fetch(`${BASE_URL}/Properties`);
   const data = await res.json();

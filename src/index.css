@@ -1,4 +1,4 @@
-/*
+
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -110,6 +110,10 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 */
 
 * {
@@ -1369,4 +1373,55 @@ body {
   width: 100%;
   height: 100%;
   border: none;
+}
+
+.property-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.edit-btn {
+  flex: 1;
+  padding: 10px;
+  background: #f5c542;
+  border: none;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.delete-btn {
+  flex: 1;
+  padding: 10px;
+  background: #e74c3c;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.edit-btn:hover {
+  opacity: 0.9;
+}
+
+.delete-btn:hover {
+  opacity: 0.85;
 }

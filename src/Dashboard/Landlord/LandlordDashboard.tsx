@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { PropertyContext } from "../../pages/PropertyContext";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import Navbarone from "../../components/Navbarone";
@@ -7,24 +6,38 @@ import Navbartwo from "../../components/Navbartwo";
 import Footer from "../../components/Footer";
 
 function LandlordDashboard() {
-  const context = useContext(PropertyContext);
-  if (!context) return null;
-
-  const { properties } = context;
   const navigate = useNavigate();
 
-  const myProperties = properties ?? [];
+  const [stats, setStats] = useState<any>(null);
 
-  const total = myProperties.length;
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-  const occupied = myProperties.filter(
-    (p) => p.status === "Occupied"
-  ).length;
+        const res = await fetch(
+          "https://propms-api.fly.dev/api/v1/Dashboard/landlord",
+          {
+            method: "GET",
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-  const revenue = myProperties.reduce(
-    (sum, p) => sum + Number(p.price || 0),
-    0
-  );
+        const data = await res.json();
+
+        console.log("DASHBOARD RESPONSE:", data);
+
+        setStats(data.data);
+      } catch (err) {
+        console.error("Dashboard error:", err);
+      }
+    };
+
+    fetchDashboard();
+  }, []);
 
   return (
     <>
@@ -48,12 +61,12 @@ function LandlordDashboard() {
         <h1>Landlord Dashboard</h1>
 
         <div className="dash-grid">
-          <Card title="My Properties" value={total} />
-          <Card title="Occupied" value={occupied} />
-          <Card
-            title="Revenue"
-            value={`₦${revenue.toLocaleString()}`}
-          />
+          <Card title="Total Properties" value={stats?.totalProperties ?? 0} />
+          <Card title="Occupied" value={stats?.occupiedProperties ?? 0} />
+          <Card title="Vacant" value={stats?.vacantProperties ?? 0} />
+          <Card title="Pending Approval" value={stats?.pendingApprovalProperties ?? 0} />
+          <Card title="Total Rent" value={`₦${stats?.totalRentCollected ?? 0}`} />
+          <Card title="Overdue Payments" value={stats?.overduePaymentsCount ?? 0} />
         </div>
 
         <div className="dash-section">
