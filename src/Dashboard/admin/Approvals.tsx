@@ -1,15 +1,69 @@
-import { useContext } from "react";
-import { PropertyContext } from "../../pages/PropertyContext";
+import { useEffect, useState } from "react";
 
 function Approvals() {
-  const context = useContext(PropertyContext);
-  if (!context) return null;
+  const [pending, setPending] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const { properties, approveProperty, rejectProperty } = context;
+  const token = localStorage.getItem("token"); // adjust if you store it differently
 
-  const pending = properties.filter(
-    (p) => p.approval === "Pending"
-  );
+  // FETCH PENDING PROPERTIES
+  const fetchPending = async () => {
+    try {
+      const res = await fetch(
+        "https://propms-api.fly.dev/api/v1/Properties/pending",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await res.json();
+      setPending(data.data || []);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPending();
+  }, []);
+
+  const approveProperty = async (id: string) => {
+    await fetch(
+      `https://propms-api.fly.dev/api/v1/Properties/${id}/approve`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    fetchPending();
+  };
+
+  const rejectProperty = async (id: string) => {
+    const reason = prompt("Enter rejection reason:");
+
+    await fetch(
+      `https://propms-api.fly.dev/api/v1/Properties/${id}/reject`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ reason }),
+      }
+    );
+
+    fetchPending();
+  };
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div>
@@ -19,8 +73,8 @@ function Approvals() {
         <p>No pending properties</p>
       ) : (
         pending.map((p) => (
-          <div key={p.id}>
-            <img src={p.image} width="200" />
+          <div key={p.id} style={{ marginBottom: "20px" }}>
+            <img src={p.primaryImageUrl} width="200" />
             <h3>{p.title}</h3>
             <p>{p.location}</p>
 

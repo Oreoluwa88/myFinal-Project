@@ -51,9 +51,6 @@ function Login() {
   return (
     <>
     <Navbarone />
-    <h1 className="text-red-500 text-3xl font-bold">
-  Tailwind Test
-</h1>
     <div className="about-hero login-hero">
       <div className="overlay">
         <Navbartwo />

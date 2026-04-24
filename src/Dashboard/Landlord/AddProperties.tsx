@@ -63,7 +63,7 @@ function AddProperty() {
       const data = await res.json();
       console.log("Property Created:", data);
 
-      // reset form
+    
       setPreview("");
       setFile(null);
       setTitle("");
