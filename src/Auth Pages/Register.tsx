@@ -16,77 +16,129 @@ function Register() {
     role: "tenant",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const handleChange = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleRegister = async (e?: any) => {
+    if (e) e.preventDefault();
 
-const handleRegister = async () => {
-  const registerData = {
-    firstName: form.firstname,
-    lastName: form.lastname,
-    email: form.email,
-    password: form.password,
-    phoneNumber: form.phone,
-    role: form.role,
-  };
-
-  try {
-    const res = await registerUser(registerData);
-
-    if (res.success) {
-      navigate("/login");
-    } else {
-      alert(res.message);
+    if (
+      !form.firstname ||
+      !form.lastname ||
+      !form.email ||
+      !form.password
+    ) {
+      alert("Please fill all required fields");
+      return;
     }
-  } catch (err) {
-    console.error(err);
-  }
-};
+
+    setLoading(true);
+
+    const registerData = {
+      firstName: form.firstname,
+      lastName: form.lastname,
+      email: form.email,
+      password: form.password,
+      phoneNumber: form.phone,
+      role: form.role,
+    };
+
+    try {
+      const res = await registerUser(registerData);
+
+      if (res?.success) {
+        alert("Registration successful");
+        navigate("/login");
+      } else {
+        alert(res?.message || "Registration failed");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
-    <Navbarone />
-    <div className="about-hero register-hero">
-      <div className="overlay">
-        <Navbartwo />
-    
-        <div className="hero-text">
-          <p>Home <ChevronRight size={12}/>Register<ChevronRight size={12}/></p>
-          <h1>Register here</h1>
+      <Navbarone />
+
+      <div className="about-hero register-hero">
+        <div className="overlay">
+          <Navbartwo />
+
+          <div className="hero-text">
+            <p>
+              Home <ChevronRight size={12} />
+              Register <ChevronRight size={12} />
+            </p>
+            <h1>Register here</h1>
+          </div>
         </div>
       </div>
-    </div>
-    
-    <div className="registerhere">
-      <h2>Create Account</h2>
 
-      <input name="firstname" placeholder="First Name" onChange={handleChange} />
-      <input name="lastname" placeholder="Last Name" onChange={handleChange} />
-      <input name="email" placeholder="Email" onChange={handleChange} />
-      <input name="phone" placeholder="Phone Number" onChange={handleChange} />
+      <div className="registerhere">
+        <h2>Create Account</h2>
 
-      <input
-        name="password"
-        type="password"
-        placeholder="Password"
-        onChange={handleChange}
-      />
+        <form onSubmit={handleRegister}>
+          <input
+            name="firstname"
+            placeholder="First Name"
+            value={form.firstname}
+            onChange={handleChange}
+          />
 
-      <select name="role" onChange={handleChange}>
-        <option value="tenant">Tenant</option>
-        <option value="landlord">Landlord</option>
-      </select>
+          <input
+            name="lastname"
+            placeholder="Last Name"
+            value={form.lastname}
+            onChange={handleChange}
+          />
 
-      <button onClick={handleRegister}>Register</button>
+          <input
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+          />
 
-      <p style={{ marginTop: "10px" }}>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
-    </div>
-    <Footer/>
+          <input
+            name="phone"
+            placeholder="Phone Number"
+            value={form.phone}
+            onChange={handleChange}
+          />
+
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+          />
+
+          <select name="role" value={form.role} onChange={handleChange}>
+            <option value="tenant">Tenant</option>
+            <option value="landlord">Landlord</option>
+          </select>
+
+          <button type="submit" disabled={loading}>
+            {loading ? "Registering..." : "Register"}
+          </button>
+        </form>
+
+        <p style={{ marginTop: "10px" }}>
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
+      </div>
+
+      <Footer />
     </>
   );
 }

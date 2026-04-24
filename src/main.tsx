@@ -4,6 +4,7 @@ import "./index.css";
 import { AuthProvider } from "./authentication/AuthContext";
 import { PropertyProvider } from "./pages/PropertyContext";
 import React from "react";
+import "../input.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

@@ -9,10 +9,16 @@ function MyProperties() {
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem("token");
-
   useEffect(() => {
     const fetchMyProperties = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.log("No token found");
+        setLoading(false);
+        return;
+      }
+
       try {
         const res = await fetch(
           "https://propms-api.fly.dev/api/v1/Properties/my-properties",
@@ -24,6 +30,12 @@ function MyProperties() {
           }
         );
 
+        if (res.status === 401) {
+          console.log("Unauthorized");
+          setProperties([]);
+          return;
+        }
+
         const data = await res.json();
         setProperties(data.data || []);
       } catch (err) {
@@ -33,11 +45,12 @@ function MyProperties() {
       }
     };
 
-    if (token) fetchMyProperties();
-  }, [token]);
-
+    fetchMyProperties();
+  }, []);
 
   const handleDelete = async (id: string) => {
+    const token = localStorage.getItem("token");
+
     try {
       await fetch(
         `https://propms-api.fly.dev/api/v1/Properties/${id}`,
@@ -54,7 +67,6 @@ function MyProperties() {
       console.error("Delete failed", err);
     }
   };
-
 
   const handleEdit = (property: any) => {
     localStorage.setItem("editProperty", JSON.stringify(property));
@@ -90,7 +102,15 @@ function MyProperties() {
           <div className="property-grid">
             {properties.map((prop) => (
               <div key={prop.id} className="property-card-wrapper">
-                <PropertyCard {...prop} />
+                <PropertyCard
+                  image={prop.primaryImageUrl}
+                  title={prop.title}
+                  location={prop.location}
+                  price={prop.rentAmount}
+                  status={prop.status}
+                  beds={0}
+                  baths={0}
+                />
 
                 <div className="action-buttons">
                   <button

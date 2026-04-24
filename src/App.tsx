@@ -19,6 +19,12 @@ const Approvals = lazy(() => import("./Dashboard/admin/Approvals"));
 import { PropertyProvider } from "./pages/PropertyContext";
 import Categories from "./components/Categories";
 import ScrollToTop from "./components/ScrollToTop";
+import PaymentConfirmation from "./pages/payments/PaymentConfirmation";
+import CreateLease from "./pages/leases/CreateLeases";
+import LeaseDetails from "./pages/leases/LeaseDetails";
+import TenantPayment from "./pages/payments/TenantPayment";
+import PaymentHistory from "./pages/payments/PaymentHistory";
+import MyLeases from "./pages/leases/MyLeases";
 
 
 
@@ -54,11 +60,18 @@ function App() {
             <Route path="add-property" element={<AddProperties />} />
             <Route path="my-properties" element={<MyProperties />} />
             <Route path="landlord" element={<LandlordDashboard />} />
+            <Route path="create-lease" element={<CreateLease />} />
+            <Route path="lease-details" element={<LeaseDetails />} />
 
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="approvals" element={<Approvals />} />
+            <Route path="payment-confirmation" element={<PaymentConfirmation />} />
 
             <Route path="tenant" element={<TenantDashboard />} />
+            <Route path="tenant-payments" element={<TenantPayment />} />
+            <Route path="payment-history" element={<PaymentHistory />} />
+            <Route path="my-leases" element={<MyLeases />} />
+            
             
           </Route>
 

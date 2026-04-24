@@ -16,77 +16,104 @@ function Login() {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleLogin = async (e?: any) => {
+    if (e) e.preventDefault();
 
-  const handleLogin = async () => {
-  try {
-    const res = await loginUser(form);
-
-    if (res.success) {
-      const user = res.data.user;
-      const token = res.data.token;
-
-      localStorage.setItem("token", token);
-
-      setUser(user);
-
-      if (user.role === "Admin") {
-        navigate("/dashboard/admin");
-      } else if (user.role === "Landlord") {
-        navigate("/dashboard/landlord");
-      } else {
-        navigate("/dashboard/tenant");
-      }
-    } else {
-      alert(res.message);
+    if (!form.email || !form.password) {
+      alert("Please fill in all fields");
+      return;
     }
-  } catch (err) {
-    console.error(err);
-  }
-};
+
+    setLoading(true);
+
+    try {
+      const res = await loginUser(form);
+
+      if (res?.success) {
+        const user = res.data?.user;
+        const token = res.data?.token;
+
+        if (!token) {
+          alert("Login failed: No token received");
+          return;
+        }
+
+        localStorage.setItem("token", token);
+        setUser(user);
+
+        if (user.role === "Admin") {
+          navigate("/dashboard/admin");
+        } else if (user.role === "Landlord") {
+          navigate("/dashboard/landlord");
+        } else {
+          navigate("/dashboard/tenant");
+        }
+      } else {
+        alert(res?.message || "Login failed");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
-    <Navbarone />
-    <div className="about-hero login-hero">
-      <div className="overlay">
-        <Navbartwo />
-    
-        <div className="hero-text">
-            <p>Home <ChevronRight size={12}/>Login<ChevronRight size={12}/></p>
+      <Navbarone />
+
+      <div className="about-hero login-hero">
+        <div className="overlay">
+          <Navbartwo />
+
+          <div className="hero-text">
+            <p>
+              Home <ChevronRight size={12} />
+              Login <ChevronRight size={12} />
+            </p>
             <h1>Login here</h1>
+          </div>
         </div>
       </div>
-    </div>
-    
-    <div className="loginhere">
-      <h2>Welcome Back</h2>
-      <p>Login to access your dashboard</p>
 
-      <input 
-        name="email"
-        placeholder="Email Address"
-        onChange={handleChange}
-      />
+      <div className="loginhere">
+        <h2>Welcome Back</h2>
+        <p>Login to access your dashboard</p>
 
-      <input
-        name="password"
-        type="password"
-        placeholder="Password"
-        onChange={handleChange}
-      />
+        <form onSubmit={handleLogin}>
+          <input
+            name="email"
+            placeholder="Email Address"
+            value={form.email}
+            onChange={handleChange}
+          />
 
-      <button onClick={handleLogin}>Login</button>
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+          />
 
-      <p style={{ marginTop: "10px" }}>
-        Don't have an account? <Link to="/register">Register</Link>
-      </p>
-    </div>
-    
-    <Footer/>
+          <button type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+
+        <p style={{ marginTop: "10px" }}>
+          Don't have an account? <Link to="/register">Register</Link>
+        </p>
+      </div>
+
+      <Footer />
     </>
   );
 }

@@ -1477,3 +1477,10 @@ body {
   cursor: pointer;
   border-radius: 6px;
 }
+.overlay {
+  pointer-events: none;
+}
+
+.overlay * {
+  pointer-events: auto;
+}
