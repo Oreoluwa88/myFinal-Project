@@ -1491,175 +1491,160 @@ body {
 }
 
 
+
+
 @media screen and (max-width: 1024px) {
-
-  .property-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .agents-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .why-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .audience-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .dash-grid {
-    width: 100%;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .contact-page {
-    grid-template-columns: 1fr;
-  }
-
-  .about-section {
-    flex-direction: column;
-    padding: 40px 20px;
-  }
-
-  .about-img {
-    width: 100%;
-  }
-
-  .about-before {
-    width: 100%;
-    padding-right: 0;
-  }
-
-  .hero-content {
-    margin-top: -200px;
-  }
 
   .topbar,
   .newtopbar {
     padding-left: 40px;
     padding-right: 40px;
   }
-}
 
-
-
-@media screen and (max-width: 768px) {
 
   .property-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .agents-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .why-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .audience-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .steps {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .ps-box {
-    flex-direction: column;
-    align-items: center;
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .dash-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .property-cont {
-    padding: 0px 20px;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
   }
 
   .hero-content h1 {
-    font-size: 32px;
+    font-size: 36px;
   }
 
-  .hero-content p {
-    font-size: 14px;
+  .hero-text h1 {
+    font-size: 30px;
   }
 
-  .search-box {
+  .property-cont {
+    padding: 0 30px;
+  }
+
+  .about-section {
     flex-direction: column;
+    padding: 60px 30px;
   }
 
-  .search-box input {
+  .about-img img {
     width: 100%;
+    height: auto;
+    padding-left: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .topbar,
+  .newtopbar {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 20px;
+    text-align: center;
+  }
+
+  
+  .nav-links a {
+    margin: 0 8px;
+    font-size: 12px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  
+  .property-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .agents-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .why-grid {
+    grid-template-columns: repeat(1, 1fr);
   }
 
   .footer-container {
     grid-template-columns: 1fr;
   }
 
-  .topbar,
-  .newtopbar {
-    flex-direction: column;
-    gap: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+  .dash-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .hero-nav {
-    flex-direction: column;
-    height: auto;
+  
+  .loginhere,
+  .registerhere {
+    width: 90%;
   }
 
-  .nav-links {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+
+  .hero-content h1 {
+    font-size: 28px;
+  }
+
+  .hero-content p {
+    font-size: 14px;
+  }
+
+  .hero-text h1 {
+    font-size: 24px;
+  }
+
+  .property-cont {
+    padding: 0 15px;
+  }
+
+  .overlay > div:first-child {
+    padding: 20px;
   }
 }
 
 
-/* SMALL MOBILE */
 @media screen and (max-width: 480px) {
 
+
+  .property-grid,
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+
   .hero-content h1 {
-    font-size: 26px;
-  }
-
-  .loginhere,
-  .registerhere {
-    width: 90%;
-    margin: 40px auto;
-  }
-
-  .property-card img {
-    height: 180px;
-  }
-
-  .dash-card h2 {
-    font-size: 18px;
+    font-size: 22px;
   }
 
   .hero-text h1 {
-    font-size: 28px;
+    font-size: 20px;
   }
 
-  .overlay > div:first-child {
-    padding: 15px 20px;
+  .nav-links button {
+    padding: 6px 10px;
+    font-size: 12px;
   }
 }
