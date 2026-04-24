@@ -4,14 +4,15 @@ const BASE_URL = "https://propms-api.fly.dev/api/v1";
 export const registerUser = async (data: any) => {
   const res = await fetch(`${BASE_URL}/Auth/register`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
 
   const json = await res.json();
-  console.log("REGISTER RESPONSE:", json);
+
+  if (!res.ok) {
+    throw new Error(json.message || "Registration failed");
+  }
 
   return json;
 };
@@ -20,14 +21,15 @@ export const registerUser = async (data: any) => {
 export const loginUser = async (data: any) => {
   const res = await fetch(`${BASE_URL}/Auth/login`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
 
   const json = await res.json();
-  console.log("LOGIN RESPONSE:", json);
+
+  if (!res.ok) {
+    throw new Error(json.message || "Login failed");
+  }
 
   return json;
 };

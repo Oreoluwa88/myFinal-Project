@@ -23,47 +23,47 @@ function Login() {
   };
 
   const handleLogin = async (e?: any) => {
-    if (e) e.preventDefault();
+  if (e) e.preventDefault();
 
-    if (!form.email || !form.password) {
-      alert("Please fill in all fields");
+  if (!form.email || !form.password) {
+    alert("Please fill in all fields");
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const res = await loginUser(form);
+
+    console.log("LOGIN RAW RESPONSE:", res);
+
+    const data = res?.data || res;
+
+    const token = data?.token;
+    const user = data?.user;
+
+    if (!token || !user) {
+      alert(res?.message || "Invalid login response from server");
       return;
     }
 
-    setLoading(true);
+    localStorage.setItem("token", token);
+    setUser(user);
 
-    try {
-      const res = await loginUser(form);
-
-      if (res?.success) {
-        const user = res.data?.user;
-        const token = res.data?.token;
-
-        if (!token) {
-          alert("Login failed: No token received");
-          return;
-        }
-
-        localStorage.setItem("token", token);
-        setUser(user);
-
-        if (user.role === "Admin") {
-          navigate("/dashboard/admin");
-        } else if (user.role === "Landlord") {
-          navigate("/dashboard/landlord");
-        } else {
-          navigate("/dashboard/tenant");
-        }
-      } else {
-        alert(res?.message || "Login failed");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong");
-    } finally {
-      setLoading(false);
+    if (user.role?.toLowerCase() === "admin") {
+      navigate("/dashboard/admin");
+    } else if (user.role?.toLowerCase() === "landlord") {
+      navigate("/dashboard/landlord");
+    } else {
+      navigate("/dashboard/tenant");
     }
-  };
+  } catch (err) {
+    console.error("LOGIN ERROR:", err);
+    alert("Network error or server unavailable");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <>

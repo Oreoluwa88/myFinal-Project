@@ -24,20 +24,15 @@ function Register() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = async (e?: any) => {
-    if (e) e.preventDefault();
+    const handleRegister = async (e?: any) => {
+  if (e) e.preventDefault();
 
-    if (
-      !form.firstname ||
-      !form.lastname ||
-      !form.email ||
-      !form.password
-    ) {
-      alert("Please fill all required fields");
-      return;
-    }
+  if (!form.firstname || !form.lastname || !form.email || !form.password) {
+    alert("Please fill all required fields");
+    return;
+  }
 
-    setLoading(true);
+  setLoading(true);
 
     const registerData = {
       firstName: form.firstname,
@@ -49,21 +44,24 @@ function Register() {
     };
 
     try {
-      const res = await registerUser(registerData);
+    const res = await registerUser(registerData);
 
-      if (res?.success) {
-        alert("Registration successful");
-        navigate("/login");
-      } else {
-        alert(res?.message || "Registration failed");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong");
-    } finally {
-      setLoading(false);
+    console.log("REGISTER RAW RESPONSE:", res);
+
+    if (!res?.success && !res?.data) {
+      alert(res?.message || "Registration failed");
+      return;
     }
-  };
+
+    alert("Registration successful");
+    navigate("/login");
+  } catch (err) {
+    console.error("REGISTER ERROR:", err);
+    alert("Network error or server unavailable");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <>
