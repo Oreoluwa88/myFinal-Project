@@ -96,13 +96,13 @@ useEffect(() => {
     image: "/images/client3.jpg",
     text: "Best platform for landlords and tenants.",
   },
+  /*
   {
     name: "Chioma Nwoye",
     role: "Tenant",
     image: "/images/client4.jpg",
     text: "Very smooth experience from start to finish.",
   },
-  /*
   {
     name: "Tunde Balogun",
     role: "Landlord",

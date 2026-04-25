@@ -16,6 +16,7 @@ const LandlordDashboard = lazy(() => import("./Dashboard/Landlord/LandlordDashbo
 const TenantDashboard = lazy(() => import("./Dashboard/Tenant/TenantDashboard"));
 const AdminDashboard = lazy(() => import("./Dashboard/admin/AdminDashboard"));
 const Approvals = lazy(() => import("./Dashboard/admin/Approvals"));
+const EditProperty = lazy(() => import("./Dashboard/Landlord/EditProperty"));
 import { PropertyProvider } from "./pages/PropertyContext";
 import Categories from "./components/Categories";
 import ScrollToTop from "./components/ScrollToTop";
@@ -25,6 +26,8 @@ import LeaseDetails from "./pages/leases/LeaseDetails";
 import TenantPayment from "./pages/payments/TenantPayment";
 import PaymentHistory from "./pages/payments/PaymentHistory";
 import MyLeases from "./pages/leases/MyLeases";
+import LandlordLeases from "./pages/leases/LandlordLeases";
+import PropertyDetails from "./Features/PropertyDetails";
 
 
 
@@ -46,6 +49,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/categories" element={<Categories/>}/>
+          <Route path="/properties/:id" element={<PropertyDetails />} />
 
           <Route
             path="/dashboard"
@@ -61,7 +65,9 @@ function App() {
             <Route path="my-properties" element={<MyProperties />} />
             <Route path="landlord" element={<LandlordDashboard />} />
             <Route path="create-lease" element={<CreateLease />} />
-            <Route path="lease-details" element={<LeaseDetails />} />
+            <Route path="leases/:id" element={<LeaseDetails />} />
+            <Route path="landlord-leases" element={<LandlordLeases />} />
+            <Route path="edit-property/:id" element={<EditProperty />} />
 
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="approvals" element={<Approvals />} />

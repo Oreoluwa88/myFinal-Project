@@ -1,0 +1,57 @@
+.tenant-history-page {
+  padding: 25px;
+}
+
+.tenant-history-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.tenant-history-loading,
+.tenant-history-empty {
+  color: #666;
+  padding: 20px;
+}
+.tenant-history-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.tenant-history-card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 18px;
+}
+
+
+.tenant-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tenant-history-status {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #eee;
+}
+
+.tenant-history-status.success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.tenant-history-status.failed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.tenant-history-body {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+}

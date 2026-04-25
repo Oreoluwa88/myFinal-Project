@@ -4,20 +4,16 @@ import Navbarone from "../../components/Navbarone";
 import Navbartwo from "../../components/Navbartwo";
 import { ChevronRight, Pencil, Trash2 } from "lucide-react";
 import Footer from "../../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 function MyProperties() {
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMyProperties = async () => {
       const token = localStorage.getItem("token");
-
-      if (!token) {
-        console.log("No token found");
-        setLoading(false);
-        return;
-      }
 
       try {
         const res = await fetch(
@@ -30,16 +26,12 @@ function MyProperties() {
           }
         );
 
-        if (res.status === 401) {
-          console.log("Unauthorized");
-          setProperties([]);
-          return;
-        }
-
         const data = await res.json();
-        setProperties(data.data || []);
+
+        setProperties(data?.data || []);
       } catch (err) {
         console.error(err);
+        setProperties([]);
       } finally {
         setLoading(false);
       }
@@ -69,8 +61,10 @@ function MyProperties() {
   };
 
   const handleEdit = (property: any) => {
-    localStorage.setItem("editProperty", JSON.stringify(property));
-    window.location.href = "/edit-property";
+    
+    navigate(`/dashboard/edit-property/${property.id}`, {
+      state: property,
+    });
   };
 
   return (
@@ -102,6 +96,7 @@ function MyProperties() {
           <div className="property-grid">
             {properties.map((prop) => (
               <div key={prop.id} className="property-card-wrapper">
+
                 <PropertyCard
                   image={prop.primaryImageUrl}
                   title={prop.title}
@@ -113,20 +108,23 @@ function MyProperties() {
                 />
 
                 <div className="action-buttons">
+
                   <button
                     className="edit-btn"
                     onClick={() => handleEdit(prop)}
                   >
-                    <Pencil size={14} /> Edit
+                    <Pencil size={14} />
                   </button>
 
                   <button
                     className="delete-btn"
                     onClick={() => handleDelete(prop.id)}
                   >
-                    <Trash2 size={14} /> Delete
+                    <Trash2 size={14} />
                   </button>
+
                 </div>
+
               </div>
             ))}
           </div>

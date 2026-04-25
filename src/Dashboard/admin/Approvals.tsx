@@ -4,9 +4,8 @@ function Approvals() {
   const [pending, setPending] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem("token"); // adjust if you store it differently
+  const token = localStorage.getItem("token");
 
-  // FETCH PENDING PROPERTIES
   const fetchPending = async () => {
     try {
       const res = await fetch(
@@ -63,33 +62,58 @@ function Approvals() {
     fetchPending();
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) {
+    return <p className="text-gray-500">Loading approvals...</p>;
+  }
 
   return (
-    <div>
-      <h2>Pending Approvals</h2>
+  <div className="bg-white p-5 rounded-xl shadow-sm">
+    
+    <h2 className="text-lg font-bold mb-4">
+      Pending Property Approvals
+    </h2>
 
-      {pending.length === 0 ? (
-        <p>No pending properties</p>
-      ) : (
-        pending.map((p) => (
-          <div key={p.id} style={{ marginBottom: "20px" }}>
-            <img src={p.primaryImageUrl} width="200" />
-            <h3>{p.title}</h3>
-            <p>{p.location}</p>
+    {pending.length === 0 ? (
+      <p className="text-gray-500">No pending properties</p>
+    ) : (
+      <div className="approval-grid">
+        {pending.map((p) => (
+          <div key={p.id} className="approval-card">
 
-            <button onClick={() => approveProperty(p.id)}>
-              Approve
-            </button>
+      
+            <div className="approval-img">
+              <img src={p.primaryImageUrl} alt={p.title} />
+            </div>
 
-            <button onClick={() => rejectProperty(p.id)}>
-              Reject
-            </button>
+            <div className="approval-body">
+              <h3>{p.title}</h3>
+              <p className="location">{p.location}</p>
+
+              <span className="badge">Pending</span>
+
+        
+              <div className="approval-actions">
+                <button
+                  onClick={() => approveProperty(p.id)}
+                  className="approve-btn"
+                >
+                  Approve
+                </button>
+
+                <button
+                  onClick={() => rejectProperty(p.id)}
+                  className="reject-btn"
+                >
+                  Reject
+                </button>
+              </div>
+
+            </div>
           </div>
-        ))
-      )}
-    </div>
-  );
-}
-
+        ))}
+      </div>
+    )}
+  </div>
+);
+};
 export default Approvals;

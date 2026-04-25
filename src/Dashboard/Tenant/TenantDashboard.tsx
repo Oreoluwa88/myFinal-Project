@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Home, FileText, CreditCard, History, LogOut } from "lucide-react";
+
 import Navbarone from "../../components/Navbarone";
 import Navbartwo from "../../components/Navbartwo";
 import Footer from "../../components/Footer";
@@ -12,14 +13,22 @@ import PaymentHistory from "../../pages/payments/PaymentHistory";
 function TenantDashboard() {
   const navigate = useNavigate();
 
-  const [activeTab, setActiveTab] = useState<
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  const [view, setView] = useState<
     "dashboard" | "leases" | "payments" | "history"
   >("dashboard");
+
+  const logout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
   return (
     <>
       <Navbarone />
 
+  
       <div className="about-hero landlord-hero">
         <div className="overlay">
           <Navbartwo />
@@ -35,59 +44,107 @@ function TenantDashboard() {
       </div>
 
   
-      <div className="flex gap-3 p-4 justify-center">
-        <button onClick={() => setActiveTab("dashboard")}>Overview</button>
-        <button onClick={() => setActiveTab("leases")}>My Leases</button>
-        <button onClick={() => setActiveTab("payments")}>Make Payment</button>
-        <button onClick={() => setActiveTab("history")}>
-          Payment History
-        </button>
-      </div>
+      <div className="tenant-dashboard-layout">
+
+        <aside className="tenant-sidebar">
+
+          <h2 className="tenant-logo">Rentify</h2>
+
+          <div className="tenant-user-box">
+            <p className="tenant-name">
+              {user?.fullName || "Tenant User"}
+            </p>
+            <span className="tenant-role">Tenant Account</span>
+          </div>
+
+          <button onClick={() => setView("dashboard")}>
+            <Home size={16} /> Overview
+          </button>
+
+          <button onClick={() => setView("leases")}>
+            <FileText size={16} /> My Leases
+          </button>
+
+          <button onClick={() => setView("payments")}>
+            <CreditCard size={16} /> Payments
+          </button>
+
+          <button onClick={() => setView("history")}>
+            <History size={16} /> Payment History
+          </button>
+
+          <button onClick={() => navigate("/properties")}>
+            Browse Properties
+          </button>
+
+          <button className="tenant-logout" onClick={logout}>
+            <LogOut size={16} /> Logout
+          </button>
+
+        </aside>
+
+  
+        <main className="tenant-main">
+
+  
+          <div className="tenant-topbar">
+
+            <h3>
+              Tenant Dashboard{" "}
+              <ChevronRight size={14} />{" "}
+              {view.charAt(0).toUpperCase() + view.slice(1)}
+            </h3>
+
+            <div className="tenant-top-right">
+              <p>{user?.fullName || "Tenant"}</p>
+            </div>
+
+          </div>
 
     
-      <div className="dash-container">
-        {activeTab === "dashboard" && (
-          <>
-            <h1>Tenant Dashboard</h1>
+          <div className="tenant-content">
 
-            <div className="dash-grid">
-              <Card title="Active Rent" value="₦0" />
-              <Card title="Due Date" value="--" />
-              <Card title="Payments" value="0" />
-            </div>
+            {view === "dashboard" && (
+              <div className="tenant-overview">
 
-            <div className="dash-section">
-              <h3>Quick Actions</h3>
+                <h2>Overview</h2>
 
-              <button onClick={() => navigate("/properties")}>
-                Browse Properties
-              </button>
+                <div className="tenant-grid">
 
-              <button onClick={() => setActiveTab("history")}>
-                View Payment History
-              </button>
-            </div>
-          </>
-        )}
+                  <div className="tenant-card">
+                    <h4>Active Rent</h4>
+                    <h2>₦0</h2>
+                  </div>
 
-        {activeTab === "leases" && <MyLeases />}
+                  <div className="tenant-card">
+                    <h4>Next Due</h4>
+                    <h2>--</h2>
+                  </div>
 
-        {activeTab === "payments" && <TenantPayment />}
+                  <div className="tenant-card">
+                    <h4>Total Payments</h4>
+                    <h2>0</h2>
+                  </div>
 
-        {activeTab === "history" && <PaymentHistory />}
+                </div>
+
+              </div>
+            )}
+
+            {view === "leases" && <MyLeases />}
+
+            {view === "payments" && <TenantPayment />}
+
+            {view === "history" && <PaymentHistory />}
+
+          </div>
+
+        </main>
+
       </div>
 
       <Footer />
     </>
-  );
-}
-
-function Card({ title, value }: any) {
-  return (
-    <div className="dash-card">
-      <h4>{title}</h4>
-      <h2>{value}</h2>
-    </div>
   );
 }
 

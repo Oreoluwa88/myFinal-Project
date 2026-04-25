@@ -18,7 +18,7 @@ function Hero() {
       if (minPrice) query.append("MinPrice", minPrice);
       if (maxPrice) query.append("MaxPrice", maxPrice);
 
-      // optional pagination
+    
       query.append("Page", "1");
       query.append("PageSize", "10");
 

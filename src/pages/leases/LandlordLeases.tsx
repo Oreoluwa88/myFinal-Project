@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function LandlordLeases() {
+function LandlordLeases({ compact = false }: any) {
   const token = localStorage.getItem("token");
   const [leases, setLeases] = useState<any[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,23 +38,71 @@ function LandlordLeases() {
     alert("Lease terminated");
   };
 
+  const list = compact ? leases.slice(0, 3) : leases;
+
   return (
-    <div className="min-h-screen p-6 bg-gray-50">
-      <h1 className="text-2xl font-bold mb-6">Landlord Leases</h1>
+    <div className={compact ? "lease-compact" : "lease-full"}>
+      {!compact && <h1 className="page-title">Landlord Leases</h1>}
 
-      <div className="grid gap-4">
-        {leases.map((l) => (
-          <div key={l.id} className="bg-white p-4 rounded shadow">
-            <h2 className="font-bold">{l.propertyTitle}</h2>
-            <p>{l.tenantName}</p>
-            <p>Status: {l.status}</p>
+      <div className="lease-grid">
+        {list.map((l) => (
+          <div
+            key={l.id}
+            className="lease-card"
+          >
+        
+            <div onClick={() => navigate(`/leases/${l.id}`)}>
+              <div className="lease-header">
+                <h2>{l.propertyTitle}</h2>
+                <span className={`status ${l.status?.toLowerCase()}`}>
+                  {l.status}
+                </span>
+              </div>
 
-            <button
-              onClick={() => terminateLease(l.id)}
-              className="mt-3 bg-red-500 text-white px-3 py-1 rounded"
-            >
-              Terminate
-            </button>
+              <p className="muted">{l.propertyAddress}</p>
+
+              <div className="lease-info">
+                <div>
+                  <small>Tenant</small>
+                  <p>{l.tenantName}</p>
+                </div>
+
+                <div>
+                  <small>Email</small>
+                  <p>{l.tenantEmail}</p>
+                </div>
+
+                <div>
+                  <small>Rent</small>
+                  <p>₦{l.rentAmount}</p>
+                </div>
+
+                <div>
+                  <small>Start</small>
+                  <p>{l.startDate}</p>
+                </div>
+
+                <div>
+                  <small>End</small>
+                  <p>{l.endDate}</p>
+                </div>
+
+                <div>
+                  <small>Created</small>
+                  <p>{l.createdDate}</p>
+                </div>
+              </div>
+            </div>
+
+  
+            {!compact && (
+              <button
+                onClick={() => terminateLease(l.id)}
+                className="terminate-btn"
+              >
+                Terminate Lease
+              </button>
+            )}
           </div>
         ))}
       </div>

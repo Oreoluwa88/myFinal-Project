@@ -11,44 +11,115 @@ function CreateLease() {
     rentAmount: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const handleChange = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const createLease = async () => {
-    const res = await fetch("https://propms-api.fly.dev/api/v1/Leases", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        propertyId: form.propertyId,
-        tenantId: form.tenantId,
-        startDate: form.startDate,
-        endDate: form.endDate,
-        rentAmount: Number(form.rentAmount),
-      }),
-    });
+    setLoading(true);
+    setError("");
+    setSuccess("");
 
-    const data = await res.json();
+    try {
+      const res = await fetch("https://propms-api.fly.dev/api/v1/Leases", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          propertyId: form.propertyId,
+          tenantId: form.tenantId,
+          startDate: form.startDate,
+          endDate: form.endDate,
+          rentAmount: Number(form.rentAmount),
+        }),
+      });
 
-    alert(data.message || "Lease created");
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || "Failed to create lease");
+        return;
+      }
+
+      setSuccess(data.message || "Lease created successfully");
+
+      // reset form
+      setForm({
+        propertyId: "",
+        tenantId: "",
+        startDate: "",
+        endDate: "",
+        rentAmount: "",
+      });
+
+    } catch (err) {
+      setError("Network error. Try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="p-6 max-w-xl mx-auto bg-white shadow rounded">
-      <h2 className="text-xl font-bold mb-4">Create Lease</h2>
+    <div className="lease-form-container">
 
-      <input name="propertyId" placeholder="Property ID" onChange={handleChange} className="border p-2 w-full mb-2" />
-      <input name="tenantId" placeholder="Tenant ID" onChange={handleChange} className="border p-2 w-full mb-2" />
-      <input name="startDate" type="date" onChange={handleChange} className="border p-2 w-full mb-2" />
-      <input name="endDate" type="date" onChange={handleChange} className="border p-2 w-full mb-2" />
-      <input name="rentAmount" placeholder="Rent Amount" onChange={handleChange} className="border p-2 w-full mb-4" />
+      <h2 className="form-title">Create Lease</h2>
 
-      <button onClick={createLease} className="bg-blue-600 text-white px-4 py-2 rounded">
-        Create Lease
+      {error && <p className="error-msg">{error}</p>}
+      {success && <p className="success-msg">{success}</p>}
+
+      <div className="form-grid">
+
+        <input
+          name="propertyId"
+          placeholder="Property ID"
+          value={form.propertyId}
+          onChange={handleChange}
+        />
+
+        <input
+          name="tenantId"
+          placeholder="Tenant ID"
+          value={form.tenantId}
+          onChange={handleChange}
+        />
+
+        <input
+          name="startDate"
+          type="date"
+          value={form.startDate}
+          onChange={handleChange}
+        />
+
+        <input
+          name="endDate"
+          type="date"
+          value={form.endDate}
+          onChange={handleChange}
+        />
+
+        <input
+          name="rentAmount"
+          placeholder="Rent Amount"
+          value={form.rentAmount}
+          onChange={handleChange}
+        />
+
+      </div>
+
+      <button
+        onClick={createLease}
+        disabled={loading}
+        className="submit-btn"
+      >
+        {loading ? "Creating..." : "Create Lease"}
       </button>
+
     </div>
   );
 }

@@ -1,58 +1,134 @@
 import { useEffect, useState } from "react";
-import { getLeaseSchedules, makePayment } from "../../api/paymentApi";
+import "./TenantPayment.css";
 
 function TenantPayment() {
-  const [leaseId, setLeaseId] = useState<string>("");
+  const token = localStorage.getItem("token");
+
   const [schedules, setSchedules] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!leaseId) return;
-
     const load = async () => {
-      const res = await getLeaseSchedules(leaseId);
-      setSchedules(res.data || []);
+      try {
+        const res = await fetch(
+          "https://propms-api.fly.dev/api/v1/Payments/schedules/my",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: "application/json",
+            },
+          }
+        );
+
+        const data = await res.json();
+        setSchedules(data.data || []);
+      } catch (err) {
+        console.error("Failed to load schedules:", err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     load();
-  }, [leaseId]);
+  }, []);
 
   const handlePayment = async (schedule: any) => {
-    const res = await makePayment({
-      rentScheduleId: schedule.id,
-      amount: schedule.amountDue,
-      paymentMethod: "Manual",
-      transactionReference: "TX-" + Date.now(),
-      notes: "Tenant payment",
-    });
+    try {
+      const res = await fetch(
+        "https://propms-api.fly.dev/api/v1/Payments",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            rentScheduleId: schedule.id,
+            amount: schedule.amountDue,
+            paymentMethod: "Manual",
+            transactionReference: "TX-" + Date.now(),
+            notes: "Tenant payment",
+          }),
+        }
+      );
 
-    alert(res.message || "Payment submitted");
+      const data = await res.json();
+
+      alert(data.message || "Payment submitted");
+
+
+      setSchedules((prev) =>
+        prev.map((s) =>
+          s.id === schedule.id
+            ? { ...s, amountPaid: schedule.amountDue, status: "Pending" }
+            : s
+        )
+      );
+    } catch (err) {
+      console.error("Payment failed:", err);
+    }
   };
 
+  if (loading) {
+    return <div className="tenant-payment-loading">Loading payments...</div>;
+  }
+
   return (
-    <div className="p-6">
-      <h2 className="text-xl font-bold mb-4">Make Payment</h2>
+    <div className="tenant-payment-page">
 
-      <input
-        className="border p-2 mb-4"
-        placeholder="Enter Lease ID"
-        value={leaseId}
-        onChange={(e) => setLeaseId(e.target.value)}
-      />
+      <h2 className="tenant-payment-title">My Rent Payments</h2>
 
-      {schedules.map((s) => (
-        <div key={s.id} className="border p-4 mb-3 rounded">
-          <p>Due: {new Date(s.dueDate).toDateString()}</p>
-          <p>Amount: ₦{s.amountDue}</p>
-          <p>Status: {s.status}</p>
+      {schedules.length === 0 ? (
+        <p className="tenant-payment-empty">
+          No payment schedules available
+        </p>
+      ) : (
+        <div className="tenant-payment-grid">
 
-          <button
-            onClick={() => handlePayment(s)}
-            className="bg-green-600 text-white px-3 py-1 mt-2 rounded"
-          >
-            Pay Now
-          </button>
+          {schedules.map((s) => (
+            <div key={s.id} className="tenant-payment-card">
+
+              <div className="tenant-payment-header">
+                <h3>Due Payment</h3>
+                <span className={`tenant-payment-status ${s.status?.toLowerCase()}`}>
+                  {s.status}
+                </span>
+              </div>
+
+              <div className="tenant-payment-body">
+
+                <p>
+                  <b>Due Date:</b>{" "}
+                  {new Date(s.dueDate).toDateString()}
+                </p>
+
+                <p>
+                  <b>Amount:</b> ₦{s.amountDue}
+                </p>
+
+                <p>
+                  <b>Paid:</b> ₦{s.amountPaid || 0}
+                </p>
+
+                <p>
+                  <b>Balance:</b> ₦{s.balanceDue}
+                </p>
+
+              </div>
+
+              <button
+                className="tenant-pay-btn"
+                onClick={() => handlePayment(s)}
+                disabled={s.status === "Paid"}
+              >
+                Pay Now
+              </button>
+
+            </div>
+          ))}
+
         </div>
-      ))}
+      )}
     </div>
   );
 }

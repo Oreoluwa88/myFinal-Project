@@ -5,6 +5,8 @@ import Navbartwo from "../../components/Navbartwo";
 import Footer from "../../components/Footer";
 
 function AddProperty() {
+  const token = localStorage.getItem("token");
+
   const [preview, setPreview] = useState("");
   const [file, setFile] = useState<File | null>(null);
 
@@ -31,39 +33,58 @@ function AddProperty() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!title || !location || !price || !propertyType) return;
+    if (!title || !location || !price || !propertyType) {
+      alert("Please fill required fields");
+      return;
+    }
+
+    if (!token) {
+      alert("Unauthorized. Please login again.");
+      return;
+    }
 
     try {
       setLoading(true);
 
       const formData = new FormData();
 
-      formData.append("Title", title);
+
+      formData.append("title", title);
       formData.append(
-        "Description",
+        "description",
         description || `${beds} bed, ${baths} bath property`
       );
-      formData.append("Location", location);
-      formData.append("Address", address || location);
-      formData.append("RentAmount", price);
-      formData.append("PropertyType", propertyType);
+      formData.append("location", location);
+      formData.append("address", address || location);
+      formData.append("rentAmount", price);
+      formData.append("propertyType", propertyType);
 
       if (file) {
-        formData.append("Images", file);
+        formData.append("images", file);
       }
 
       const res = await fetch(
         "https://propms-api.fly.dev/api/v1/Properties",
         {
           method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           body: formData,
         }
       );
 
       const data = await res.json();
-      console.log("Property Created:", data);
 
-    
+      console.log("Response:", data);
+
+      if (!res.ok || data.success === false) {
+        throw new Error(data.message || "Failed to create property");
+      }
+
+      alert("Property created successfully!");
+
+      
       setPreview("");
       setFile(null);
       setTitle("");
@@ -74,8 +95,9 @@ function AddProperty() {
       setPropertyType("");
       setBeds("");
       setBaths("");
-    } catch (error) {
-      console.error("Failed to create property:", error);
+    } catch (error: any) {
+      console.error("Failed to create property:", error.message);
+      alert(error.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -91,8 +113,7 @@ function AddProperty() {
 
           <div className="hero-text">
             <p>
-              Home <ChevronRight size={12} /> Add Property{" "}
-              <ChevronRight size={12} />
+              Home <ChevronRight size={12} /> Add Property
             </p>
             <h1>Add Property</h1>
           </div>
@@ -103,7 +124,6 @@ function AddProperty() {
         <form onSubmit={handleSubmit} className="addproperty-form">
           <h2 style={{ textAlign: "center" }}>Add Property</h2>
 
-        
           <label className="upload-box">
             <input type="file" onChange={handleImage} hidden />
 
@@ -114,44 +134,18 @@ function AddProperty() {
             )}
           </label>
 
-      
           <div className="form-grid">
-            <input
-              placeholder="Property Title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+            <input placeholder="Property Title" value={title} onChange={(e) => setTitle(e.target.value)} />
 
-            <input
-              placeholder="Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
+            <input placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
 
-            <input
-              placeholder="Location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-            />
+            <input placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} />
 
-            <input
-              placeholder="Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
+            <input placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} />
 
-            <input
-              placeholder="Rent Amount"
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            />
+            <input placeholder="Rent Amount" type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
 
-            <select
-              value={propertyType}
-              onChange={(e) => setPropertyType(e.target.value)}
-              className="status-select"
-            >
+            <select value={propertyType} onChange={(e) => setPropertyType(e.target.value)}>
               <option value="">Property Type</option>
               <option value="House">House</option>
               <option value="Apartment">Apartment</option>
@@ -159,17 +153,9 @@ function AddProperty() {
               <option value="Land">Land</option>
             </select>
 
-            <input
-              placeholder="Bedrooms"
-              value={beds}
-              onChange={(e) => setBeds(e.target.value)}
-            />
+            <input placeholder="Bedrooms" value={beds} onChange={(e) => setBeds(e.target.value)} />
 
-            <input
-              placeholder="Bathrooms"
-              value={baths}
-              onChange={(e) => setBaths(e.target.value)}
-            />
+            <input placeholder="Bathrooms" value={baths} onChange={(e) => setBaths(e.target.value)} />
           </div>
 
           <button type="submit" className="submit-btn" disabled={loading}>

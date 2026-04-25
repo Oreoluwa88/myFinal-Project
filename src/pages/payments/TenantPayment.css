@@ -1,0 +1,77 @@
+.tenant-payment-page {
+  padding: 25px;
+}
+
+.tenant-payment-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.tenant-payment-loading,
+.tenant-payment-empty {
+  color: #666;
+  padding: 20px;
+}
+
+.tenant-payment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.tenant-payment-card {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 18px;
+  border-radius: 10px;
+  transition: 0.2s ease;
+}
+
+.tenant-payment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.tenant-payment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tenant-payment-status {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #eee;
+}
+
+.tenant-payment-status.paid {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.tenant-payment-status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.tenant-payment-body {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.tenant-pay-btn {
+  width: 100%;
+  padding: 10px;
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.tenant-pay-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}

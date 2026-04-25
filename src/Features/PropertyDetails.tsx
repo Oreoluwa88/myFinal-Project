@@ -1,8 +1,10 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, MapPin, Home, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbarone from "../components/Navbarone";
 import Navbartwo from "../components/Navbartwo";
+import Footer from "../components/Footer";
+import "./PropertyDetails.css";
 
 function PropertyDetails() {
   const { id } = useParams();
@@ -21,44 +23,66 @@ function PropertyDetails() {
     fetchProperty();
   }, [id]);
 
-  if (!property) return <p>Loading...</p>;
+  if (!property) return <p className="loading">Loading...</p>;
 
- return (
+  return (
     <>
-    <Navbarone />
-    <div className="about-hero register-hero">
-         <div className="overlay">
-             <Navbartwo />
+      <Navbarone />
 
-             <div className="hero-text">
-                 <p>Property <ChevronRight size={12} />Property Details<ChevronRight size={12} /></p>
-                 <h1>View Property</h1>
-             </div>
-         </div>
-     </div>
+      <div className="details-hero">
+        <Navbartwo />
+        <img src={property.primaryImageUrl} className="hero-image" />
+      </div>
 
-     <div className="property-details">
+      <div className="details-container">
 
-             <img src={property.primaryImageUrl} />
+    
+        <div className="details-left">
 
-             <h1>{property.title}</h1>
+          <h1>{property.title}</h1>
 
-             <p className="location">{property.location}</p>
+          <p className="location">
+            <MapPin size={14} /> {property.location}
+          </p>
 
-             <p className="price">₦{property.rentAmount}</p>
+          <p className="price">₦{property.rentAmount}</p>
 
-             <p className="description">{property.description}</p>
+          <div className="desc">
+            <h3>Description</h3>
+            <p>{property.description}</p>
+          </div>
 
-             <div className="landlord">
-                 <h3>Landlord Info</h3>
-                 <p>{property.landlord?.fullName}</p>
-                 <p>{property.landlord?.phoneNumber}</p>
-                 <p>{property.landlord?.email}</p>
-             </div>
+          <div className="meta">
+            <p><Home size={14} /> {property.propertyType}</p>
+            <p>Status: {property.status}</p>
+            <p>Created: {new Date(property.createdDate).toDateString()}</p>
+          </div>
 
-         </div></>
-);
+        </div>
 
+    
+        <div className="details-right">
+
+          <div className="landlord-card">
+
+            <div className="landlord-header">
+              <User />
+              <h3>Landlord</h3>
+            </div>
+
+            <p>{property.landlord?.fullName}</p>
+            <p>{property.landlord?.phoneNumber}</p>
+            <p>{property.landlord?.email}</p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <Footer />
+    </>
+  );
 }
 
 export default PropertyDetails;

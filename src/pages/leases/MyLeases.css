@@ -1,0 +1,85 @@
+.tenant-leases-page {
+  padding: 25px;
+}
+
+.tenant-leases-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.tenant-leases-loading,
+.tenant-leases-empty {
+  padding: 20px;
+  color: #666;
+}
+
+.tenant-leases-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.tenant-lease-card {
+  background: white;
+  padding: 18px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  transition: 0.2s ease;
+}
+
+.tenant-lease-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+
+.tenant-lease-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tenant-lease-header h3 {
+  font-size: 16px;
+}
+
+.tenant-status {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #eee;
+}
+
+.tenant-status.active {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.tenant-status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+
+.tenant-address {
+  font-size: 13px;
+  color: #666;
+  margin: 6px 0 12px;
+}
+
+.tenant-lease-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.tenant-lease-info small {
+  color: #888;
+  font-size: 11px;
+}
+
+.tenant-lease-info p {
+  font-weight: 600;
+  font-size: 13px;
+}

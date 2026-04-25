@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./LeaseDetails.css";
 
 function LeaseDetails() {
   const { id } = useParams();
@@ -8,16 +9,14 @@ function LeaseDetails() {
   const [lease, setLease] = useState<any>(null);
   const [schedules, setSchedules] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingSchedules, setLoadingSchedules] = useState(true);
 
-  
   const fetchLease = async () => {
     try {
       const res = await fetch(
         `https://propms-api.fly.dev/api/v1/Leases/${id}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
 
@@ -33,9 +32,7 @@ function LeaseDetails() {
       const res = await fetch(
         `https://propms-api.fly.dev/api/v1/Payments/schedules/lease/${id}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
 
@@ -44,10 +41,9 @@ function LeaseDetails() {
     } catch (err) {
       console.error("Schedule fetch error:", err);
     } finally {
-      setLoading(false);
+      setLoadingSchedules(false);
     }
   };
-
 
   const recordPayment = async (scheduleId: string, amount: number) => {
     try {
@@ -59,7 +55,7 @@ function LeaseDetails() {
         },
         body: JSON.stringify({
           rentScheduleId: scheduleId,
-          amount: amount,
+          amount,
           paymentMethod: "Manual",
           transactionReference: "MANUAL-" + Date.now(),
           notes: "Paid from system",
@@ -69,70 +65,88 @@ function LeaseDetails() {
       const data = await res.json();
 
       if (data.success) {
-        alert("Payment recorded successfully");
-        fetchSchedules(); // refresh
+        alert("Payment recorded");
+        fetchSchedules();
       } else {
         alert(data.message || "Payment failed");
       }
     } catch (err) {
-      console.error("Payment error:", err);
+      console.error(err);
     }
   };
 
   useEffect(() => {
-    if (id) {
-      fetchLease();
-      fetchSchedules();
-    }
+    if (!id) return;
+
+    const load = async () => {
+      setLoading(true);
+      await fetchLease();
+      await fetchSchedules();
+      setLoading(false);
+    };
+
+    load();
   }, [id]);
 
   if (loading) {
-    return <p className="p-6">Loading lease...</p>;
+    return <div className="lease-loading">Loading lease...</div>;
   }
 
   if (!lease) {
-    return <p className="p-6">Lease not found</p>;
+    return <div className="lease-empty">Lease not found</div>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="lease-details-page">
 
+      <div className="lease-card">
+        <h1 className="lease-title">{lease.propertyTitle}</h1>
+        <p className="lease-address">{lease.propertyAddress}</p>
 
-      <div className="bg-white p-6 rounded-lg shadow mb-6">
-        <h1 className="text-2xl font-bold">{lease.propertyTitle}</h1>
-        <p className="text-gray-600">{lease.propertyAddress}</p>
+        <div className="lease-info-grid">
+          <div>
+            <span>Tenant</span>
+            <p>{lease.tenantName}</p>
+          </div>
 
-        <div className="mt-4 text-sm text-gray-700 space-y-1">
-          <p><b>Tenant:</b> {lease.tenantName}</p>
-          <p><b>Email:</b> {lease.tenantEmail}</p>
-          <p><b>Rent:</b> ₦{lease.rentAmount}</p>
-          <p><b>Status:</b> {lease.status}</p>
+          <div>
+            <span>Email</span>
+            <p>{lease.tenantEmail}</p>
+          </div>
+
+          <div>
+            <span>Rent</span>
+            <p>₦{lease.rentAmount}</p>
+          </div>
+
+          <div>
+            <span>Status</span>
+            <p>{lease.status}</p>
+          </div>
         </div>
       </div>
+      <div className="schedule-card">
+        <h2>Rent Schedule</h2>
 
-
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-bold mb-4">Rent Schedule</h2>
-
-        {schedules.length === 0 ? (
+        {loadingSchedules ? (
+          <p>Loading schedules...</p>
+        ) : schedules.length === 0 ? (
           <p>No payment schedule available</p>
         ) : (
           schedules.map((s) => (
-            <div
-              key={s.id}
-              className="border p-4 rounded mb-4 flex justify-between items-center"
-            >
+            <div key={s.id} className="schedule-item">
               <div>
-                <p className="font-medium">
+                <p className="due-date">
                   Due: {new Date(s.dueDate).toDateString()}
                 </p>
+
                 <p>Amount: ₦{s.amountDue}</p>
                 <p>Status: {s.status}</p>
               </div>
 
               <button
                 onClick={() => recordPayment(s.id, s.amountDue)}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                className="pay-btn"
               >
                 Record Payment
               </button>

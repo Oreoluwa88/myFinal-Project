@@ -1,0 +1,87 @@
+.tenant-dashboard-layout {
+  display: flex;
+  min-height: 80vh;
+}
+
+
+.tenant-sidebar {
+  width: 240px;
+  background: #111827;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tenant-logo {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.tenant-user-box {
+  background: #1f2937;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.tenant-name {
+  font-weight: bold;
+}
+
+.tenant-role {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.tenant-sidebar button {
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  border-radius: 6px;
+}
+
+.tenant-sidebar button:hover {
+  background: #374151;
+}
+
+.tenant-logout {
+  margin-top: auto;
+  background: #7f1d1d !important;
+}
+
+
+.tenant-main {
+  flex: 1;
+  background: #f5f6f8;
+  padding: 20px;
+}
+
+
+.tenant-topbar {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tenant-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.tenant-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+}
