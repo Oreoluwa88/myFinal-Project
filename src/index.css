@@ -132,6 +132,8 @@ body {
   background: var(--bg);
   font-family: "Poppins", sans-serif;
   color: var(--text);
+  overflow-x: hidden;
+  width: 100%;
 }
 
 * {
@@ -369,7 +371,7 @@ body {
   cursor: pointer;
 }
 
-.search-container {
+.hero-search-container {
   margin-top: 120px;
   position: relative;
   z-index: 2;
@@ -395,20 +397,21 @@ body {
 }
 
 
-.search-box {
+.hero-search-box {
   background: white;
   padding: 20px;
   display: flex;
   justify-content: center;
   gap: 10px;
+  width: 100%;
 }
 
-.search-box input {
+.hero-search-box input {
   padding: 10px;
   width: 150px;
 }
 
-.search-box button {
+.hero-search-box button {
   background: #0a1931;
   border: none;
   padding: 10px 20px;
@@ -853,7 +856,11 @@ body {
   font-family: Arial, sans-serif;
   animation: fadeIn 0.5s ease-in-out;
 }
-
+.loginhere form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 .loginhere h2 {
   font-size: 26px;
   margin-bottom: 5px;
@@ -1084,6 +1091,11 @@ body {
   padding: 20px;
   background: #fff;
   border-left: 4px solid green;
+}
+.registerhere form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .registerhere {
@@ -1403,7 +1415,8 @@ body {
   display: flex;
   gap: 10px;
   justify-content: space-between;
-  margin-top: 5px;
+  margin-top: -10px;
+  width: 20%;
 }
 
 .edit-btn {
@@ -1765,6 +1778,7 @@ body {
   display: flex;
   min-height: 100vh;
   background: #f6f7fb;
+  width: 100%;
 }
 
 
@@ -1939,7 +1953,7 @@ body {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 18px;
+  padding: 12px;
   box-shadow: var(--shadow);
 }
 
@@ -1951,8 +1965,9 @@ body {
 
 .user-grid {
   display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
 .user-card {
@@ -2204,7 +2219,7 @@ body {
 }
 .user-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 15px;
 }
 
@@ -2336,73 +2351,127 @@ body {
   color: green;
   font-size: 13px;
 }
-.details-hero {
+.details-wrapper {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  padding: 60px 80px;
+}
+
+.details-image {
   position: relative;
 }
 
-.hero-image {
+.details-image img {
   width: 100%;
-  height: 420px;
+  height: 800px;
   object-fit: cover;
+  border-radius: 16px;
+  transition: 0.4s ease;
 }
 
-.details-container {
-  display: flex;
-  justify-content: space-between;
-  padding: 40px;
-  gap: 40px;
+.details-image img:hover {
+  transform: scale(1.03);
 }
 
-.details-left {
-  flex: 2;
+.price-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: white;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: bold;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
-.details-left h1 {
-  font-size: 28px;
+.details-content h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
 }
 
 .location {
-  color: gray;
   display: flex;
   align-items: center;
   gap: 6px;
+  color: #64748b;
+  margin-bottom: 15px;
 }
 
-.price {
-  font-size: 24px;
-  font-weight: bold;
-  margin: 10px 0;
-}
-
-.desc {
-  margin-top: 20px;
-}
-
-.meta {
-  margin-top: 20px;
+.meta-badges {
   display: flex;
-  gap: 20px;
-  color: gray;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
-.details-right {
-  flex: 1;
-  position: sticky;
-  top: 20px;
+.meta-badges span {
+  background: #f1f5f9;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
 }
 
-.landlord-card {
-  background: white;
+.meta-badges .status {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.info-card {
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+
+.info-card:hover {
+  transform: translateY(-4px);
+}
+
+.landlord-card.modern {
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.landlord-card.modern:hover {
+  transform: translateY(-5px);
 }
 
 .landlord-header {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 10px;
+  color: #4f46e5;
+}
+
+.landlord-body .name {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.contact-btn {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.contact-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
 }
 .lease-details-page {
   padding: 30px;

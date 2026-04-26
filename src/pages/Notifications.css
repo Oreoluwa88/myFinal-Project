@@ -4,6 +4,9 @@
 
 .notif-page h2 {
   margin-bottom: 20px;
+  text-align: center;
+  text-decoration: wavy;
+  font-size: 15px;
 }
 
 .notif-list {
@@ -19,7 +22,7 @@
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-  border: 1px solid #eee;
+  border: 2px solid wheat;
   transition: 0.2s;
 }
 
@@ -43,4 +46,38 @@
   background: #3b82f6;
   border-radius: 50%;
   margin-top: 5px;
+}
+.notifications-hero{
+  background: url("/public/images/image4.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.icon-circle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notif-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+
+  background: red;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid white;
 }

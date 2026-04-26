@@ -9,13 +9,15 @@ import Footer from "../../components/Footer";
 import CreateLease from "../../pages/leases/CreateLeases";
 import LandlordLeases from "../../pages/leases/LandlordLeases";
 import PaymentApproval from "../../pages/payments/PaymentApproval";
+import "../Tenant/TenantDashboard.css"
+import "../../pages/Notifications.css";
 
 const BASE_URL = "https://propms-api.fly.dev/api/v1";
 
 function LandlordDashboard() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  
+
   const [notifications, setNotifications] = useState<any[]>([]);
   const unreadCount = notifications.filter(n => !n.isRead).length;
 
@@ -68,9 +70,9 @@ function LandlordDashboard() {
           <Navbartwo />
           <div className="hero-text">
             <p>
-              Home <ChevronRight size={12} /> Landlord Dashboard
+              Home <ChevronRight size={12} />Dashboard <ChevronRight size={12} />
             </p>
-            <h1>My Dashboard</h1>
+            <h1>Landlord Dashboard</h1>
           </div>
         </div>
       </div>
@@ -79,7 +81,8 @@ function LandlordDashboard() {
 
     
         <aside className="landlord-sidebar">
-          <h2 className="logo">Landify</h2>
+          <h2 className="logo">Rentify</h2>
+
 
           <button onClick={() => setView("dashboard")}>
             <Home size={14} /> Overview

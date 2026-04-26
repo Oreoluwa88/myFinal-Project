@@ -1,4 +1,9 @@
 import { useEffect, useState } from "react";
+import Navbarone from "../components/Navbarone";
+import "./Notifications.css";
+import { ChevronRight } from "lucide-react";
+import Navbartwo from "../components/Navbartwo";
+import Footer from "../components/Footer";
 
 const BASE_URL = "https://propms-api.fly.dev/api/v1";
 
@@ -50,9 +55,23 @@ function Notifications() {
   }, []);
 
   return (
+    <>
+    <Navbarone />
+    <div className="about-hero notifications-hero">
+        <div className="overlay">
+          <Navbartwo />
+          <div className="hero-text">
+            <p>
+              Dashboard <ChevronRight size={12} /> Notifications <ChevronRight size={12} />
+            </p>
+            <h1>My Notifications</h1>
+          </div>
+        </div>
+      </div>
+      
     <div className="notif-page">
 
-      <h2>Notifications</h2>
+      <h2>All Notifications</h2>
 
       {loading ? (
         <p>Loading...</p>
@@ -82,6 +101,8 @@ function Notifications() {
       )}
 
     </div>
+    <Footer />
+    </>
   );
 }
 

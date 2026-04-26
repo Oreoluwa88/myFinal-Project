@@ -30,7 +30,7 @@ function Footer() {
           <h3>Offers</h3>
           <ul>
             <li onClick={() => navigate("/properties")}><ChevronRight size={14}/>Properties</li>
-            <li onClick={() => navigate("/landlord")}><ChevronRight size={14}/>Landlord</li>
+            <li onClick={() => navigate("/register")}><ChevronRight size={14}/>Register</li>
             <li onClick={() => navigate("/categories")}><ChevronRight size={14}/>Locations</li>
             <li onClick={() => navigate("/contact")}><ChevronRight size={14}/>Clients Support</li>
           </ul>

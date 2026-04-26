@@ -28,7 +28,6 @@ function DashboardHome() {
     <div>
       <h1>Welcome, {user?.name}</h1>
 
-      {/* ADMIN */}
       {user?.role === "admin" && (
         <div>
           <h2>Admin Overview</h2>
@@ -45,7 +44,6 @@ function DashboardHome() {
         </div>
       )}
 
-      {/* LANDLORD */}
       {user?.role === "landlord" && (
         <div>
           <h2>Landlord Dashboard</h2>
@@ -64,7 +62,6 @@ function DashboardHome() {
         </div>
       )}
 
-      {/* TENANT */}
       {user?.role === "tenant" && (
         <div>
           <h2>Tenant Dashboard</h2>

@@ -59,7 +59,7 @@ function Login() {
     }
   } catch (err) {
     console.error("LOGIN ERROR:", err);
-    alert("Network error or server unavailable");
+    alert("Login failed. Please check your credentials and try again.");
   } finally {
     setLoading(false);
   }

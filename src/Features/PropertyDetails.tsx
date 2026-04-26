@@ -1,9 +1,8 @@
 import { MapPin, Home, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Navbarone from "../components/Navbarone";
-import Navbartwo from "../components/Navbartwo";
 import Footer from "../components/Footer";
+import Navbarone from "../components/Navbarone";
 
 
 function PropertyDetails() {
@@ -23,62 +22,64 @@ function PropertyDetails() {
     fetchProperty();
   }, [id]);
 
-  if (!property) return <p className="loading">Loading...</p>;
+  if (!property) return <p className="loading" style={{fontSize:"16px", fontWeight:"bold"}}>Loading...</p>;
 
   return (
     <>
-      <Navbarone />
 
-      <div className="details-hero">
-        <Navbartwo />
-        <img src={property.primaryImageUrl} className="hero-image" />
+    <Navbarone />
+      <div className="details-wrapper">
+
+  <div className="details-image">
+    <img src={property.primaryImageUrl} alt="" />
+
+    <div className="price-badge">
+      ₦{property.rentAmount} <span style={{fontSize:"10px"}}>/Annum</span>
+    </div>
+  </div>
+
+
+  <div className="details-content">
+
+    <h1>{property.title}</h1>
+
+    <p className="location">
+      <MapPin size={16} /> {property.location}
+    </p>
+
+  
+    <div className="meta-badges">
+      <span><Home size={14} /> {property.propertyType}</span>
+      <span className="status">{property.status}</span>
+      <span>{new Date(property.createdDate).toDateString()}</span>
+    </div>
+
+    <div className="info-card">
+      <h3>About this property</h3>
+      <p>{property.description}</p>
+    </div>
+
+
+    <div className="landlord-card modern">
+
+      <div className="landlord-header">
+        <User size={18} />
+        <h3>Landlord</h3>
       </div>
 
-      <div className="details-container">
-
-    
-        <div className="details-left">
-
-          <h1>{property.title}</h1>
-
-          <p className="location">
-            <MapPin size={14} /> {property.location}
-          </p>
-
-          <p className="price">₦{property.rentAmount}</p>
-
-          <div className="desc">
-            <h3>Description</h3>
-            <p>{property.description}</p>
-          </div>
-
-          <div className="meta">
-            <p><Home size={14} /> {property.propertyType}</p>
-            <p>Status: {property.status}</p>
-            <p>Created: {new Date(property.createdDate).toDateString()}</p>
-          </div>
-
-        </div>
-
-    
-        <div className="details-right">
-
-          <div className="landlord-card">
-
-            <div className="landlord-header">
-              <User />
-              <h3>Landlord</h3>
-            </div>
-
-            <p>{property.landlord?.fullName}</p>
-            <p>{property.landlord?.phoneNumber}</p>
-            <p>{property.landlord?.email}</p>
-
-          </div>
-
-        </div>
-
+      <div className="landlord-body">
+        <p className="name">{property.landlord?.fullName}</p>
+        <p>{property.landlord?.phoneNumber}</p>
+        <p>{property.landlord?.email}</p>
       </div>
+
+      <button className="contact-btn">Contact Landlord</button>
+
+    </div>
+
+  </div>
+
+</div>
 
       <Footer />
     </>

@@ -10,10 +10,12 @@ function Properties() {
   const navigate = useNavigate();
   const locationState = useLocation();
 
-  const [properties, setProperties] = useState<any[]>([]);
   const [searchLocation, setSearchLocation] = useState("");
-  const [type, setType] = useState("");
-  const [price, setPrice] = useState("");
+  const [propertyType, setPropertyType] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+
+  const [properties, setProperties] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -33,21 +35,32 @@ function Properties() {
   }, []);
 
   const searchResults = (locationState as any)?.state?.results;
-
   const dataToShow = searchResults ?? properties;
 
-  const handleSearch = () => {
-    const filtered = properties.filter((p: any) => {
-      return (
-        (!searchLocation ||
-          p.location?.toLowerCase().includes(searchLocation.toLowerCase())) &&
-        (!type ||
-          p.propertyType?.toLowerCase().includes(type.toLowerCase())) &&
-        (!price || Number(p.rentAmount) <= Number(price))
-      );
-    });
+  const handleSearch = async () => {
+    try {
+      const query = new URLSearchParams();
 
-    navigate("/properties", { state: { results: filtered } });
+      if (searchLocation) query.append("Location", searchLocation);
+      if (propertyType) query.append("PropertyType", propertyType);
+      if (minPrice) query.append("MinPrice", minPrice);
+      if (maxPrice) query.append("MaxPrice", maxPrice);
+
+      query.append("Page", "1");
+      query.append("PageSize", "10");
+
+      const res = await fetch(
+        `https://propms-api.fly.dev/api/v1/Properties?${query.toString()}`
+      );
+
+      const data = await res.json();
+
+      navigate("/properties", {
+        state: { results: data?.data?.items || [] },
+      });
+    } catch (error) {
+      console.error("Search failed:", error);
+    }
   };
 
   return (
@@ -59,39 +72,61 @@ function Properties() {
           <Navbartwo />
 
           <div className="hero-text">
-            <p>
+            <p style={{marginTop:"-20px"}}>
               Home <ChevronRight size={12} /> Properties
             </p>
-            <h1>All Properties</h1>
+            <h1 style={{ marginTop:"-10px"}}>All Properties</h1>
           </div>
         </div>
 
-        <div className="search-wrapper">
-          <div className="search-box">
-            <input
-              placeholder="Location"
-              value={searchLocation}
-              onChange={(e) => setSearchLocation(e.target.value)}
-            />
+        <div className="search-wrapper" style={{ marginTop:"-180px"}}>
+          <div className="hero-search-container">
+            <div className="tabs">
+              <button className="active" onClick={() => navigate("/register")}>Get Started</button>
+              <button onClick={() => navigate("/properties")}>Rent</button>
+            </div>
 
-            <input
-              placeholder="Property Type"
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-            />
+            <div className="hero-search-box">
+              <input
+                placeholder="Location (e.g Chevron, Lekki)"
+                value={searchLocation}
+                onChange={(e) => setSearchLocation(e.target.value)}
+              />
 
-            <input
-              placeholder="Max Price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            />
+              <select
+                value={propertyType}
+                onChange={(e) => setPropertyType(e.target.value)}
+                className="property-select"
+              >
+                <option value="">Property Type</option>
+                <option value="House">House</option>
+                <option value="Apartment">Apartment</option>
+                <option value="Shop">Shop</option>
+                <option value="Land">Land</option>
+              </select>
 
-            <button onClick={handleSearch}>Search</button>
+              <input
+                type="number"
+                placeholder="Min Price"
+                value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)}
+              />
+
+              <input
+                type="number"
+                placeholder="Max Price"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(e.target.value)}
+              />
+
+              <button onClick={handleSearch}>Search</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="properties-container">
+      <div className="properties-container" style={{ padding: "100px 0px" }}>
+        <p style={{fontWeight:"bold", marginBottom:"40px", textAlign:"center", fontSize:"10px"}}> Explore our properties here and find the perfect one tailored to your needs </p>
         <div className="property-grid">
           {dataToShow.length === 0 ? (
             <p>No properties found</p>

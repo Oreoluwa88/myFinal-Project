@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import Navbartwo from "../../components/Navbartwo";
+import Navbarone from "../../components/Navbarone";
+import { ChevronRight } from "lucide-react";
 
 function Approvals() {
   const [pending, setPending] = useState<any[]>([]);
@@ -67,53 +70,64 @@ function Approvals() {
   }
 
   return (
-  <div className="bg-white p-5 rounded-xl shadow-sm">
-    
-    <h2 className="text-lg font-bold mb-4">
-      Pending Property Approvals
-    </h2>
-
-    {pending.length === 0 ? (
-      <p className="text-gray-500">No pending properties</p>
-    ) : (
-      <div className="approval-grid">
-        {pending.map((p) => (
-          <div key={p.id} className="approval-card">
-
-      
-            <div className="approval-img">
-              <img src={p.primaryImageUrl} alt={p.title} />
-            </div>
-
-            <div className="approval-body">
-              <h3>{p.title}</h3>
-              <p className="location">{p.location}</p>
-
-              <span className="badge">Pending</span>
-
-        
-              <div className="approval-actions">
-                <button
-                  onClick={() => approveProperty(p.id)}
-                  className="approve-btn"
-                >
-                  Approve
-                </button>
-
-                <button
-                  onClick={() => rejectProperty(p.id)}
-                  className="reject-btn"
-                >
-                  Reject
-                </button>
-              </div>
-
-            </div>
-          </div>
-        ))}
+    <><Navbarone />
+    <div className="about-hero admin-hero">
+      <div className="overlay">
+        <Navbartwo />
+        <div className="hero-text">
+          <p>
+            Dashboard <ChevronRight size={12} />Approvals <ChevronRight size={12} />
+          </p>
+          <h1>Pending Approvals</h1>
+        </div>
       </div>
-    )}
-  </div>
+    </div><div className="bg-white p-5 rounded-xl shadow-sm">
+
+        <h2 style={{ fontSize: "10px", textAlign:"center", marginBottom:"20px", marginTop:"20px" }}>
+          Pending Property Approvals
+        </h2>
+
+        {pending.length === 0 ? (
+          <p>No pending properties</p>
+        ) : (
+          <div id="approval-grid" className="approval-grid">
+            {pending.map((p) => (
+              <div key={p.id} className="approval-card">
+
+
+                <div className="approval-img">
+                  <img src={p.primaryImageUrl} alt={p.title} />
+                </div>
+
+                <div className="approval-body">
+                  <h3>{p.title}</h3>
+                  <p className="location">{p.location}</p>
+
+                  <span className="badge">Pending</span>
+
+
+                  <div className="approval-actions">
+                    <button
+                      onClick={() => approveProperty(p.id)}
+                      className="approve-btn"
+                    >
+                      Approve
+                    </button>
+
+                    <button
+                      onClick={() => rejectProperty(p.id)}
+                      className="reject-btn"
+                    >
+                      Reject
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div></>
 );
 };
 export default Approvals;

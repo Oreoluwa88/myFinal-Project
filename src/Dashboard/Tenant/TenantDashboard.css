@@ -89,6 +89,22 @@
   border-radius: 10px;
 }
 
+.notif-badge{
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+}
 
 @media screen and (max-width: 1024px) {
   .tenant-dashboard-layout {

@@ -1,3 +1,4 @@
+import { PhoneCall, Globe, Map } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -39,27 +40,70 @@ function Hero() {
   return (
     <section className="hero">
       <div className="topbar">
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div
+            style={{
+              width: "32px",
+              height: "32px",
+              borderRadius: "50%",
+              backgroundColor: "transparent",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+              border: "2px solid grey",
+            }}
+          >
+            <PhoneCall size={14} color="white" />
+          </div>
+          <div> 
+        <p style={{fontWeight:"bold", }}><span style={{color:"goldenrod"}}>Free call</span> +234 906 419 8423 </p>
+        <p style={{fontSize:"8px", color:"grey"}}>Call us now 24/7 Customer support</p> 
+        </div>
+        </div>
+         
+         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div
+            style={{
+              width: "32px",
+              height: "32px",
+              borderRadius: "50%",
+              backgroundColor: "transparent",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+              border: "2px solid grey",
+            }}
+          >
+            <Map size={14} color="white" />
+          </div>
         <div>
-          <p style={{ fontWeight: "bold" }}>
-            <span style={{ color: "goldenrod" }}>Free call</span> +234 906 419 8423
-          </p>
-          <p style={{ fontSize: "8px", color: "grey" }}>
-            Call us now 24/7 Customer support
-          </p>
+        <p style={{fontWeight:"bold", }}>Our Location</p>
+        <p style={{fontSize:"8px", color:"grey"}}>Lekki, Lagos State, Nigeria</p>
+        </div>
         </div>
 
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div
+            style={{
+              width: "32px",
+              height: "32px",
+              borderRadius: "50%",
+              backgroundColor: "transparent",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+              border: "2px solid grey",
+            }}
+          >
+            <Globe size={14} color="white" />
+          </div>
         <div>
-          <p style={{ fontWeight: "bold" }}>Our Location</p>
-          <p style={{ fontSize: "8px", color: "grey" }}>
-            Lekki, Lagos State, Nigeria
-          </p>
+        <p style={{fontWeight:"bold", }}>Connect with us</p>
+        <p style={{fontSize:"8px", color:"grey"}}>Twitter Instagram Whatsapp </p>
         </div>
-
-        <div>
-          <p style={{ fontWeight: "bold" }}>Connect with us</p>
-          <p style={{ fontSize: "8px", color: "grey" }}>
-            Twitter Instagram Whatsapp
-          </p>
         </div>
       </div>
 
@@ -83,13 +127,13 @@ function Hero() {
       </div>
 
       <div style={{ padding: "0px 200px" }}>
-        <div className="search-container">
+        <div className="hero-search-container">
           <div className="tabs">
-            <button className="active">Get Started</button>
-            <button>Rent</button>
+            <button className="active" onClick={() => navigate("/register")}>Get Started</button>
+            <button onClick={() => navigate("/properties")}>Rent</button>
           </div>
 
-          <div className="search-box">
+          <div className="hero-search-box">
             <input
               placeholder="Location (e.g Chevron, Lekki)"
               value={location}

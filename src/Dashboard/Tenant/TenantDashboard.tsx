@@ -10,6 +10,9 @@ import MyLeases from "../../pages/leases/MyLeases";
 import TenantPayment from "../../pages/payments/TenantPayment";
 import PaymentHistory from "../../pages/payments/PaymentHistory";
 import "./TenantDashboard.css";
+import "../../pages/Notifications.css";
+
+
 const BASE_URL = "https://propms-api.fly.dev/api/v1";
 
 function TenantDashboard() {

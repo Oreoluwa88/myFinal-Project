@@ -38,7 +38,7 @@ function PaymentApproval() {
 
   return (
     <div className="p-6">
-      <h2 className="text-xl font-bold mb-4">
+      <h2 style={{fontSize:"10px"}}>
         Pending Payment Confirmations
       </h2>
 

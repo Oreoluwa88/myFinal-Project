@@ -60,6 +60,12 @@ function MyProperties() {
     }
   };
 
+  const confirmDelete = (id: string) => {
+  if (window.confirm("Are you sure you want to delete this item?")) {
+    handleDelete(id);
+  }
+};
+
   const handleEdit = (property: any) => {
     
     navigate(`/dashboard/edit-property/${property.id}`, {
@@ -86,14 +92,14 @@ function MyProperties() {
       </div>
 
       <div className="property-section">
-        <h2 className="section-title">My Listings</h2>
+        <h2 className="section-title" style={{ textAlign:"center", fontSize:"24px", marginTop:"30px", marginBottom:"40px"}}>My Listings</h2>
 
         {loading ? (
           <p style={{ textAlign: "center" }}>Loading...</p>
         ) : properties.length === 0 ? (
           <p style={{ textAlign: "center" }}>No properties yet</p>
         ) : (
-          <div className="property-grid">
+          <div className="property-grid" style={{padding:"30px"}}>
             {properties.map((prop) => (
               <div key={prop.id} className="property-card-wrapper">
 
@@ -118,7 +124,7 @@ function MyProperties() {
 
                   <button
                     className="delete-btn"
-                    onClick={() => handleDelete(prop.id)}
+                    onClick={() => confirmDelete(prop.id)}
                   >
                     <Trash2 size={14} />
                   </button>
