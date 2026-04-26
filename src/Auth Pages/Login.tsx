@@ -4,7 +4,7 @@ import { AuthContext } from "../authentication/AuthContext";
 import Footer from "../components/Footer";
 import Navbarone from "../components/Navbarone";
 import Navbartwo from "../components/Navbartwo";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Eye, EyeOff } from "lucide-react";
 import { loginUser } from "../api/propertyApi";
 
 function Login() {
@@ -17,53 +17,54 @@ function Login() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleLogin = async (e?: any) => {
-  if (e) e.preventDefault();
+    if (e) e.preventDefault();
 
-  if (!form.email || !form.password) {
-    alert("Please fill in all fields");
-    return;
-  }
-
-  setLoading(true);
-
-  try {
-    const res = await loginUser(form);
-
-    console.log("LOGIN RAW RESPONSE:", res);
-
-    const data = res?.data || res;
-
-    const token = data?.token;
-    const user = data?.user;
-
-    if (!token || !user) {
-      alert(res?.message || "Invalid login response from server");
+    if (!form.email || !form.password) {
+      alert("Please fill in all fields");
       return;
     }
 
-    localStorage.setItem("token", token);
-    setUser(user);
+    setLoading(true);
 
-    if (user.role?.toLowerCase() === "admin") {
-      navigate("/dashboard/admin");
-    } else if (user.role?.toLowerCase() === "landlord") {
-      navigate("/dashboard/landlord");
-    } else {
-      navigate("/dashboard/tenant");
+    try {
+      const res = await loginUser(form);
+
+      console.log("LOGIN RAW RESPONSE:", res);
+
+      const data = res?.data || res;
+
+      const token = data?.token;
+      const user = data?.user;
+
+      if (!token || !user) {
+        alert(res?.message || "Invalid login response from server");
+        return;
+      }
+
+      localStorage.setItem("token", token);
+      setUser(user);
+
+      if (user.role?.toLowerCase() === "admin") {
+        navigate("/dashboard/admin");
+      } else if (user.role?.toLowerCase() === "landlord") {
+        navigate("/dashboard/landlord");
+      } else {
+        navigate("/dashboard/tenant");
+      }
+    } catch (err) {
+      console.error("LOGIN ERROR:", err);
+      alert("Login failed. Please check your credentials and try again.");
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    console.error("LOGIN ERROR:", err);
-    alert("Login failed. Please check your credentials and try again.");
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <>
@@ -94,14 +95,30 @@ function Login() {
             value={form.email}
             onChange={handleChange}
           />
+          <div style={{ position: "relative", padding:"0px 6px" }}>
+            <input
+              name="password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={form.password}
+              onChange={handleChange}
+              style={{ width: "100%", paddingRight: "0px", marginLeft:"-10px", marginRight:"-10px" }}
+            />
 
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-          />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+                color: "#555",
+              }}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </span>
+          </div>
 
           <button type="submit" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
