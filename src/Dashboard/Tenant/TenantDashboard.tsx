@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ChevronRight, Home, FileText, CreditCard, History, LogOut } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ChevronRight, Home, FileText, CreditCard, History, LogOut, Settings, Bell } from "lucide-react";
 
 import Navbarone from "../../components/Navbarone";
 import Navbartwo from "../../components/Navbartwo";
@@ -9,9 +9,36 @@ import { useNavigate } from "react-router-dom";
 import MyLeases from "../../pages/leases/MyLeases";
 import TenantPayment from "../../pages/payments/TenantPayment";
 import PaymentHistory from "../../pages/payments/PaymentHistory";
+import "./TenantDashboard.css";
+const BASE_URL = "https://propms-api.fly.dev/api/v1";
 
 function TenantDashboard() {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const unreadCount = notifications.filter(n => !n.isRead).length;
+  useEffect(() => {
+  const fetchNotifications = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/Notifications`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      setNotifications(data.data || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchNotifications();
+
+  const interval = setInterval(fetchNotifications, 30000);
+  return () => clearInterval(interval);
+}, [token]);
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
@@ -23,6 +50,7 @@ function TenantDashboard() {
     localStorage.clear();
     navigate("/login");
   };
+  
 
   return (
     <>
@@ -84,21 +112,29 @@ function TenantDashboard() {
         </aside>
 
   
-        <main className="tenant-main">
+        <main className="landlord-main">
 
-  
-          <div className="tenant-topbar">
+        
+          <div className="landlord-topbar">
+            <input placeholder="Search properties, tenants..." />
 
-            <h3>
-              Tenant Dashboard{" "}
-              <ChevronRight size={14} />{" "}
-              {view.charAt(0).toUpperCase() + view.slice(1)}
-            </h3>
+            <div className="top-actions">
+              <div className="icon-circle" onClick={() => navigate("/notifications")}
+                  style={{ cursor: "pointer" }}>
+                    <Bell size={16}/>
+                  {unreadCount > 0 && (
+                  <span className="notif-badge">{unreadCount}</span>)}
+              </div>
+              <div className="icon-circle"><Settings size={16}/></div>
 
-            <div className="tenant-top-right">
-              <p>{user?.fullName || "Tenant"}</p>
+              <div className="profile-card">
+                <img src="/images/landlord.jpg" />
+                <div>
+                  <h4>Darasimi</h4>
+                  <p>Tenant</p>
+                </div>
+              </div>
             </div>
-
           </div>
 
     

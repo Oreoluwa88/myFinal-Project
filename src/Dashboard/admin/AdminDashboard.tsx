@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbarone from "../../components/Navbarone";
 import Navbartwo from "../../components/Navbartwo";
 import Footer from "../../components/Footer";
-import { ChevronRight, Bell, Settings, Search } from "lucide-react";
+import { ChevronRight, Bell, Settings, Search, LogOut } from "lucide-react";
 import Approvals from "./Approvals";
 import PaymentConfirmation from "../../pages/payments/PaymentConfirmation";
 
@@ -14,6 +14,36 @@ function AdminDashboard() {
   const [stats, setStats] = useState<any>(null);
   const [users, setUsers] = useState<any[]>([]);
   const token = localStorage.getItem("token");
+  
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const unreadCount = notifications.filter(n => !n.isRead).length;
+
+  useEffect(() => {
+  const fetchNotifications = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/Notifications`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      setNotifications(data.data || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchNotifications();
+
+  const interval = setInterval(fetchNotifications, 30000);
+  return () => clearInterval(interval);
+}, [token]);
+
+  const logout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
   useEffect(() => {
     fetch(`${BASE_URL}/Dashboard/admin`, {
@@ -81,12 +111,11 @@ function AdminDashboard() {
           <button onClick={() => document.getElementById("users")?.scrollIntoView({ behavior: "smooth",block: "start",})}>
             Users
           </button>
-          <button onClick={() => navigate("/dashboard/settings")}>
-            Settings
+          
+          <button className="tenant-logout" onClick={logout}>
+            <LogOut size={16} /> Logout
           </button>
-          <button onClick={() => navigate("/")}>
-            Logout
-            </button>
+          
         </aside>
 
  
@@ -100,8 +129,11 @@ function AdminDashboard() {
             </div>
 
             <div className="top-actions">
-              <div className="icon-circle">
-                <Bell size={18} />
+              <div className="icon-circle" onClick={() => navigate("/notifications")}
+                  style={{ cursor: "pointer" }}>
+                    <Bell size={16}/>
+                  {unreadCount > 0 && (
+                  <span className="notif-badge">{unreadCount}</span>)}
               </div>
 
               <div className="icon-circle">
@@ -109,7 +141,7 @@ function AdminDashboard() {
               </div>
 
               <div className="profile-card">
-                <img src="im" />
+                <img src="images/agent1.jpg" />
                 <div>
                   <h4>Admin</h4>
                   <p>Super Admin</p>

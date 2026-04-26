@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "./LeaseDetails.css";
 
 function LeaseDetails() {
   const { id } = useParams();

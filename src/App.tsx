@@ -28,6 +28,7 @@ import PaymentHistory from "./pages/payments/PaymentHistory";
 import MyLeases from "./pages/leases/MyLeases";
 import LandlordLeases from "./pages/leases/LandlordLeases";
 import PropertyDetails from "./Features/PropertyDetails";
+import Notifications from "./pages/Notifications";
 
 
 
@@ -50,6 +51,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/categories" element={<Categories/>}/>
           <Route path="/properties/:id" element={<PropertyDetails />} />
+          <Route path="/notifications" element={<Notifications />} />
 
           <Route
             path="/dashboard"

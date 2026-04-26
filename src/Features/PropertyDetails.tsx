@@ -1,10 +1,10 @@
-import { ChevronRight, MapPin, Home, User } from "lucide-react";
+import { MapPin, Home, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbarone from "../components/Navbarone";
 import Navbartwo from "../components/Navbartwo";
 import Footer from "../components/Footer";
-import "./PropertyDetails.css";
+
 
 function PropertyDetails() {
   const { id } = useParams();

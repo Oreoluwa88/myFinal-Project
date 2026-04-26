@@ -3,7 +3,6 @@
   min-height: 80vh;
 }
 
-
 .tenant-sidebar {
   width: 240px;
   background: #111827;
@@ -14,10 +13,12 @@
   gap: 12px;
 }
 
+
 .tenant-logo {
   font-size: 18px;
   margin-bottom: 10px;
 }
+
 
 .tenant-user-box {
   background: #1f2937;
@@ -57,14 +58,14 @@
   background: #7f1d1d !important;
 }
 
-
+ 
 .tenant-main {
   flex: 1;
   background: #f5f6f8;
   padding: 20px;
 }
 
-
+ 
 .tenant-topbar {
   background: white;
   padding: 15px;
@@ -72,7 +73,9 @@
   margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
+
 
 .tenant-grid {
   display: grid;
@@ -84,4 +87,57 @@
   background: white;
   padding: 15px;
   border-radius: 10px;
+}
+
+
+@media screen and (max-width: 1024px) {
+  .tenant-dashboard-layout {
+    flex-direction: column;
+  }
+
+  .tenant-sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tenant-sidebar button {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .tenant-logout {
+    margin-top: 0;
+  }
+
+  .tenant-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tenant-sidebar {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .tenant-main {
+    padding: 10px;
+  }
+
+  .tenant-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .tenant-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tenant-card {
+    width: 100%;
+  }
 }

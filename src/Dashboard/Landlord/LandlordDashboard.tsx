@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronRight, Home, FileText, CreditCard, Plus, House } from "lucide-react";
+import { ChevronRight, Home, FileText, CreditCard, Plus, House, Bell, Settings, LogOut } from "lucide-react";
 
 import Navbarone from "../../components/Navbarone";
 import Navbartwo from "../../components/Navbartwo";
@@ -15,6 +15,36 @@ const BASE_URL = "https://propms-api.fly.dev/api/v1";
 function LandlordDashboard() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const unreadCount = notifications.filter(n => !n.isRead).length;
+
+  useEffect(() => {
+  const fetchNotifications = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/Notifications`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      setNotifications(data.data || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchNotifications();
+
+  const interval = setInterval(fetchNotifications, 30000);
+  return () => clearInterval(interval);
+}, [token]);
+
+  const logout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
   const [stats, setStats] = useState<any>(null);
   const [view, setView] = useState<
@@ -74,6 +104,10 @@ function LandlordDashboard() {
           <button onClick={() => setView("createLease")}>
             Create Lease
           </button>
+
+          <button className="tenant-logout" onClick={logout}>
+            <LogOut size={16} /> Logout
+          </button>
         </aside>
 
 
@@ -84,8 +118,13 @@ function LandlordDashboard() {
             <input placeholder="Search properties, tenants..." />
 
             <div className="top-actions">
-              <div className="icon-circle">🔔</div>
-              <div className="icon-circle">⚙️</div>
+              <div className="icon-circle" onClick={() => navigate("/notifications")}
+                  style={{ cursor: "pointer" }}>
+                    <Bell size={16}/>
+                  {unreadCount > 0 && (
+                  <span className="notif-badge">{unreadCount}</span>)}
+              </div>
+              <div className="icon-circle"><Settings size={16}/></div>
 
               <div className="profile-card">
                 <img src="/images/landlord.jpg" />

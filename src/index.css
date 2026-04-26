@@ -2411,7 +2411,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* LOADING */
 .lease-loading,
 .lease-empty {
   padding: 40px;
@@ -2419,7 +2418,6 @@ body {
   font-size: 16px;
 }
 
-/* LEASE CARD */
 .lease-card {
   background: white;
   padding: 20px;
@@ -2452,7 +2450,6 @@ body {
   font-weight: 600;
 }
 
-/* SCHEDULE */
 .schedule-card {
   background: white;
   padding: 20px;
