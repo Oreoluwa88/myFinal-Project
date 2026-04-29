@@ -29,6 +29,7 @@ import MyLeases from "./pages/leases/MyLeases";
 import LandlordLeases from "./pages/leases/LandlordLeases";
 import PropertyDetails from "./Features/PropertyDetails";
 import Notifications from "./pages/Notifications";
+import LeaseRequests from "./pages/leases/LeaseRequests";
 
 
 
@@ -52,6 +53,7 @@ function App() {
           <Route path="/categories" element={<Categories/>}/>
           <Route path="/properties/:id" element={<PropertyDetails />} />
           <Route path="/notifications" element={<Notifications />} />
+          <Route path="/lease-requests" element={<LeaseRequests />} />
 
           <Route
             path="/dashboard"

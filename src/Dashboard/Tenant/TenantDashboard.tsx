@@ -11,6 +11,7 @@ import TenantPayment from "../../pages/payments/TenantPayment";
 import PaymentHistory from "../../pages/payments/PaymentHistory";
 import "./TenantDashboard.css";
 import "../../pages/Notifications.css";
+import MyLeaseRequests from "../../pages/leases/MyLeaseRequests";
 
 
 const BASE_URL = "https://propms-api.fly.dev/api/v1";
@@ -46,7 +47,7 @@ function TenantDashboard() {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const [view, setView] = useState<
-    "dashboard" | "leases" | "payments" | "history"
+    "dashboard" | "leases" | "payments" | "history" | "my-lease-requests"
   >("dashboard");
 
   const logout = () => {
@@ -94,6 +95,10 @@ function TenantDashboard() {
 
           <button onClick={() => setView("leases")}>
             <FileText size={16} /> My Leases
+          </button>
+
+          <button onClick={() => setView("my-lease-requests")}>
+            <FileText size={16} /> My Lease Requests
           </button>
 
           <button onClick={() => setView("payments")}>
@@ -171,6 +176,8 @@ function TenantDashboard() {
             )}
 
             {view === "leases" && <MyLeases />}
+
+            {view === "my-lease-requests" && <MyLeaseRequests />}
 
             {view === "payments" && <TenantPayment />}
 

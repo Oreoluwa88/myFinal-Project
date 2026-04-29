@@ -18,24 +18,30 @@ function LandlordLeases({ compact = false }: any) {
       );
 
       const data = await res.json();
-      setLeases(data.data || []);
+      setLeases(data?.data || []);
     };
 
     fetchData();
   }, []);
 
-  const terminateLease = async (id: string) => {
-    await fetch(
-      `https://propms-api.fly.dev/api/v1/Leases/${id}/terminate`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  const terminateLease = async (lease: any) => {
+    try {
+      await fetch(
+        `https://propms-api.fly.dev/api/v1/Leases/${lease.id}/terminate`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    alert("Lease terminated");
+      setLeases((prev) => prev.filter((l) => l.id !== lease.id));
+      alert("Lease terminated");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to terminate lease");
+    }
   };
 
   const list = compact ? leases.slice(0, 3) : leases;
@@ -46,14 +52,12 @@ function LandlordLeases({ compact = false }: any) {
 
       <div className="lease-grid">
         {list.map((l) => (
-          <div
-            key={l.id}
-            className="lease-card"
-          >
-        
+          <div key={l.id} className="lease-card">
+
             <div onClick={() => navigate(`/leases/${l.id}`)}>
               <div className="lease-header">
                 <h2>{l.propertyTitle}</h2>
+
                 <span className={`status ${l.status?.toLowerCase()}`}>
                   {l.status}
                 </span>
@@ -94,15 +98,15 @@ function LandlordLeases({ compact = false }: any) {
               </div>
             </div>
 
-  
             {!compact && (
               <button
-                onClick={() => terminateLease(l.id)}
+                onClick={() => terminateLease(l)}
                 className="terminate-btn"
               >
                 Terminate Lease
               </button>
             )}
+
           </div>
         ))}
       </div>

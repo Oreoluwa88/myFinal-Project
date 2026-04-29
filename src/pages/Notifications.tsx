@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbarone from "../components/Navbarone";
 import "./Notifications.css";
 import { ChevronRight } from "lucide-react";
@@ -9,6 +10,7 @@ const BASE_URL = "https://propms-api.fly.dev/api/v1";
 
 function Notifications() {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const [notifications, setNotifications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -40,13 +42,31 @@ function Notifications() {
         },
       });
 
-      setNotifications(prev =>
-        prev.map(n =>
+      setNotifications((prev) =>
+        prev.map((n) =>
           n.id === id ? { ...n, isRead: true } : n
         )
       );
     } catch (err) {
       console.error("Read error:", err);
+    }
+  };
+
+  const handleNotificationClick = async (n: any) => {
+    try {
+      if (!n.isRead) {
+        await markAsRead(n.id);
+      }
+
+      if (n.propertyId) {
+        navigate(`/properties/${n.propertyId}`);
+      } else if (n.requestId) {
+        navigate(`/requests/${n.requestId}`);
+      } else {
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      console.error("Notification click error:", err);
     }
   };
 
@@ -56,8 +76,9 @@ function Notifications() {
 
   return (
     <>
-    <Navbarone />
-    <div className="about-hero notifications-hero">
+      <Navbarone />
+
+      <div className="about-hero notifications-hero">
         <div className="overlay">
           <Navbartwo />
           <div className="hero-text">
@@ -68,40 +89,40 @@ function Notifications() {
           </div>
         </div>
       </div>
-      
-    <div className="notif-page">
 
-      <h2>All Notifications</h2>
+      <div className="notif-page">
+        <h2>All Notifications</h2>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : notifications.length === 0 ? (
-        <p>No notifications available</p>
-      ) : (
-        <div className="notif-list">
-          {notifications.map((n) => (
-            <div
-              key={n.id}
-              className={`notif-card ${n.isRead ? "" : "unread"}`}
-              onClick={() => markAsRead(n.id)}
-            >
-              <div className="notif-content">
-                <h4>{n.title}</h4>
-                <p>{n.message}</p>
+        {loading ? (
+          <p>Loading...</p>
+        ) : notifications.length === 0 ? (
+          <p>No notifications available</p>
+        ) : (
+          <div className="notif-list">
+            {notifications.map((n) => (
+              <div
+                key={n.id}
+                className={`notif-card ${n.isRead ? "" : "unread"}`}
+                onClick={() => handleNotificationClick(n)}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="notif-content">
+                  <h4>{n.title}</h4>
+                  <p>{n.message}</p>
 
-                <small>
-                  {new Date(n.createdDate).toLocaleString()}
-                </small>
+                  <small>
+                    {new Date(n.createdDate).toLocaleString()}
+                  </small>
+                </div>
+
+                {!n.isRead && <span className="dot"></span>}
               </div>
+            ))}
+          </div>
+        )}
+      </div>
 
-              {!n.isRead && <span className="dot"></span>}
-            </div>
-          ))}
-        </div>
-      )}
-
-    </div>
-    <Footer />
+      <Footer />
     </>
   );
 }

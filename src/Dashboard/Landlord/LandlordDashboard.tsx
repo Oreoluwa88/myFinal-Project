@@ -11,6 +11,7 @@ import LandlordLeases from "../../pages/leases/LandlordLeases";
 import PaymentApproval from "../../pages/payments/PaymentApproval";
 import "../Tenant/TenantDashboard.css"
 import "../../pages/Notifications.css";
+import LeaseRequests from "../../pages/leases/LeaseRequests";
 
 const BASE_URL = "https://propms-api.fly.dev/api/v1";
 
@@ -50,7 +51,7 @@ function LandlordDashboard() {
 
   const [stats, setStats] = useState<any>(null);
   const [view, setView] = useState<
-    "dashboard" | "createLease" | "leases" | "payments"
+    "dashboard" | "createLease" | "leases" | "payments" | "lease-requests"
   >("dashboard");
 
   useEffect(() => {
@@ -93,11 +94,15 @@ function LandlordDashboard() {
           </button>
 
           <button onClick={()=> navigate("/dashboard/my-properties")}>
-            <House size={14}/> My Properties
+            <House size={14}/> My Listings
           </button>
 
           <button onClick={() => setView("leases")}>
             <FileText size={14} /> Leases
+          </button>
+
+          <button onClick={() => setView("lease-requests")}>
+            <FileText size={14} /> Lease Requests
           </button>
 
           <button onClick={() => setView("payments")}>
@@ -148,9 +153,9 @@ function LandlordDashboard() {
                 <Card title="Properties" value={stats?.totalProperties ?? 0} />
                 <Card title="Occupied" value={stats?.occupiedProperties ?? 0} />
                 <Card title="Vacant" value={stats?.vacantProperties ?? 0} />
-                <Card title="Pending" value={stats?.pendingApprovalProperties ?? 0} />
+                <Card title="Pending Approvals" value={stats?.pendingApprovalProperties ?? 0} />
                 <Card title="Rent Collected" value={`₦${stats?.totalRentCollected ?? 0}`} />
-                <Card title="Overdue" value={stats?.overduePaymentsCount ?? 0} />
+                <Card title="Overdue Payments" value={stats?.overduePaymentsCount ?? 0} />
                 <Card title="Overdue Amount" value={`₦${stats?.overdueAmount ?? 0}`} />
               </div>
             </section>
@@ -159,6 +164,12 @@ function LandlordDashboard() {
           {view === "leases" && (
             <div className="landlord-panel">
               <LandlordLeases />
+            </div>
+          )}
+
+          {view === "lease-requests" && (
+            <div className="landlord-panel">
+              <LeaseRequests />
             </div>
           )}
 

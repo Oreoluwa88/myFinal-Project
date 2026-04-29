@@ -2,19 +2,23 @@ import { useEffect, useState } from "react";
 import PropertyCard from "../../Features/PropertyCards";
 import Navbarone from "../../components/Navbarone";
 import Navbartwo from "../../components/Navbartwo";
-import { ChevronRight, Pencil, Trash2 } from "lucide-react";
+import {ChevronRight, Pencil, Trash2 } from "lucide-react";
 import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
 
 function MyProperties() {
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [selectedProperty, setSelectedProperty] = useState<any>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [actionType, setActionType] = useState<"delete" | null>(null);
+
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchMyProperties = async () => {
-      const token = localStorage.getItem("token");
-
       try {
         const res = await fetch(
           "https://propms-api.fly.dev/api/v1/Properties/my-properties",
@@ -27,7 +31,6 @@ function MyProperties() {
         );
 
         const data = await res.json();
-
         setProperties(data?.data || []);
       } catch (err) {
         console.error(err);
@@ -40,9 +43,13 @@ function MyProperties() {
     fetchMyProperties();
   }, []);
 
-  const handleDelete = async (id: string) => {
-    const token = localStorage.getItem("token");
+  const handleEdit = (property: any) => {
+    navigate(`/dashboard/edit-property/${property.id}`, {
+      state: property,
+    });
+  };
 
+  const handleDelete = async (id: string) => {
     try {
       await fetch(
         `https://propms-api.fly.dev/api/v1/Properties/${id}`,
@@ -55,23 +62,29 @@ function MyProperties() {
       );
 
       setProperties((prev) => prev.filter((p) => p.id !== id));
+
+      setShowModal(false);
+      setSelectedProperty(null);
+      setActionType(null);
     } catch (err) {
       console.error("Delete failed", err);
     }
   };
 
-  const confirmDelete = (id: string) => {
-  if (window.confirm("Are you sure you want to delete this item?")) {
-    handleDelete(id);
-  }
-};
-
-  const handleEdit = (property: any) => {
-    
-    navigate(`/dashboard/edit-property/${property.id}`, {
-      state: property,
-    });
+  const confirmDelete = (property: any) => {
+    setSelectedProperty(property);
+    setActionType("delete");
+    setShowModal(true);
   };
+
+  const extractBeds = (desc?: string) =>
+    desc?.match(/Beds:(\d+)/)?.[1] ?? 0;
+
+  const extractBaths = (desc?: string) =>
+    desc?.match(/Baths:(\d+)/)?.[1] ?? 0;
+
+  const extractSqm = (desc?: string) =>
+    desc?.match(/Sqm:(\d+)/)?.[1] ?? 0;
 
   return (
     <>
@@ -92,14 +105,23 @@ function MyProperties() {
       </div>
 
       <div className="property-section">
-        <h2 className="section-title" style={{ textAlign:"center", fontSize:"24px", marginTop:"30px", marginBottom:"40px"}}>My Listings</h2>
+        <h2
+          style={{
+            textAlign: "center",
+            fontSize: "24px",
+            marginTop: "30px",
+            marginBottom: "40px",
+          }}
+        >
+          My Listings
+        </h2>
 
         {loading ? (
           <p style={{ textAlign: "center" }}>Loading...</p>
         ) : properties.length === 0 ? (
           <p style={{ textAlign: "center" }}>No properties yet</p>
         ) : (
-          <div className="property-grid" style={{padding:"30px"}}>
+          <div className="property-grid" style={{ padding: "30px" }}>
             {properties.map((prop) => (
               <div key={prop.id} className="property-card-wrapper">
 
@@ -109,26 +131,19 @@ function MyProperties() {
                   location={prop.location}
                   price={prop.rentAmount}
                   status={prop.status}
-                  beds={0}
-                  baths={0}
+                  beds={extractBeds(prop.description)}
+                  baths={extractBaths(prop.description)}
+                  sqm={extractSqm(prop.description)}
                 />
 
                 <div className="action-buttons">
-
-                  <button
-                    className="edit-btn"
-                    onClick={() => handleEdit(prop)}
-                  >
+                  <button onClick={() => handleEdit(prop)}>
                     <Pencil size={14} />
                   </button>
 
-                  <button
-                    className="delete-btn"
-                    onClick={() => confirmDelete(prop.id)}
-                  >
+                  <button onClick={() => confirmDelete(prop)}>
                     <Trash2 size={14} />
                   </button>
-
                 </div>
 
               </div>
@@ -138,6 +153,70 @@ function MyProperties() {
       </div>
 
       <Footer />
+
+      {showModal && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.6)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            style={{
+              background: "#fff",
+              padding: "25px",
+              borderRadius: "10px",
+              width: "350px",
+              textAlign: "center",
+            }}
+          >
+         
+            {actionType === "delete" && (
+              <>
+                <h3>Delete Property?</h3>
+                <p style={{ fontSize: "13px" }}>
+                  This action cannot be undone.
+                </p>
+
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "10px",
+                    justifyContent: "center",
+                  }}
+                >
+                  <button
+                    onClick={() => {
+                      setShowModal(false);
+                      setSelectedProperty(null);
+                      setActionType(null);
+                    }}
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    onClick={() => handleDelete(selectedProperty.id)}
+                    style={{
+                      background: "red",
+                      color: "white",
+                      padding: "6px 12px",
+                      borderRadius: "6px",
+                    }}
+                  >
+                    Yes, Delete
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 }

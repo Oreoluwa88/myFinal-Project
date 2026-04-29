@@ -221,8 +221,10 @@ function AdminDashboard() {
               <Card title="Landlords" value={stats?.totalLandlords ?? 0} />
               <Card title="Tenants" value={stats?.totalTenants ?? 0} />
               <Card title="Properties" value={stats?.totalProperties ?? 0} />
-              <Card title="Pending" value={stats?.pendingApprovals ?? 0} />
-              <Card title="Revenue" value={`₦${stats?.totalRevenue ?? 0}`} />
+              <Card title="Pending Approvals" value={stats?.pendingApprovals ?? 0} />
+              <Card title="Active Leases" value={stats?.activeleases ?? 0} />
+              <Card title="Total Revenue" value={`₦${stats?.totalRevenue ?? 0}`} />
+              <Card title="Overdue Payments" value={stats?.overduePayments ?? 0} />
             </div>
           </section>
 
