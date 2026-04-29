@@ -30,6 +30,7 @@ import LandlordLeases from "./pages/leases/LandlordLeases";
 import PropertyDetails from "./Features/PropertyDetails";
 import Notifications from "./pages/Notifications";
 import LeaseRequests from "./pages/leases/LeaseRequests";
+import PaymentCallBack from "./pages/payments/PaymentCallBack";
 
 
 
@@ -54,6 +55,7 @@ function App() {
           <Route path="/properties/:id" element={<PropertyDetails />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/lease-requests" element={<LeaseRequests />} />
+          <Route path="/payment/callback" element={<PaymentCallBack />} />
 
           <Route
             path="/dashboard"

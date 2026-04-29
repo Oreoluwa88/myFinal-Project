@@ -6,66 +6,95 @@ function TenantPayment() {
 
   const [schedules, setSchedules] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [payingId, setPayingId] = useState<string | null>(null);
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        const res = await fetch(
-          "https://propms-api.fly.dev/api/v1/Payments/schedules/my",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              Accept: "application/json",
-            },
-          }
-        );
-
-        const data = await res.json();
-        setSchedules(data.data || []);
-      } catch (err) {
-        console.error("Failed to load schedules:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    load();
+    loadSchedules();
   }, []);
+
+  const loadSchedules = async () => {
+    try {
+      setLoading(true);
+
+      const res = await fetch(
+        "https://propms-api.fly.dev/api/v1/Payments/schedules/my",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        }
+      );
+
+      const text = await res.text();
+
+      let data: any = {};
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch {
+        data = {};
+      }
+
+      const list = Array.isArray(data?.data) ? data.data : [];
+      setSchedules(list);
+    } catch (err) {
+      console.error("Failed to load schedules:", err);
+      setSchedules([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handlePayment = async (schedule: any) => {
     try {
+      setPayingId(schedule.id);
+
       const res = await fetch(
-        "https://propms-api.fly.dev/api/v1/Payments",
+        "https://propms-api.fly.dev/api/v1/Payments/paystack/initialize",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
+            Accept: "application/json",
           },
           body: JSON.stringify({
-            rentScheduleId: schedule.id,
-            amount: schedule.amountDue,
-            paymentMethod: "Manual",
-            transactionReference: "TX-" + Date.now(),
-            notes: "Tenant payment",
-          }),
+          rentScheduleId: schedule.id,
+          amount: Number(schedule.amountDue),
+          callbackUrl: window.location.origin + "/payment/callback",
+        }),
         }
       );
 
-      const data = await res.json();
+      const text = await res.text();
 
-      alert(data.message || "Payment submitted");
+      let data: any = {};
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch {
+        data = {};
+      }
 
+      console.log("PAYSTACK INIT RESPONSE:", data);
 
-      setSchedules((prev) =>
-        prev.map((s) =>
-          s.id === schedule.id
-            ? { ...s, amountPaid: schedule.amountDue, status: "Pending" }
-            : s
-        )
-      );
+      if (!res.ok) {
+        alert(data?.message || "Payment initialization failed");
+        return;
+      }
+
+      const paymentUrl = data?.data?.authorizationUrl;
+
+      if (!paymentUrl) {
+        alert("No authorization URL returned");
+        return;
+      }
+
+      window.location.href = paymentUrl;
     } catch (err) {
-      console.error("Payment failed:", err);
+      console.error("Payment error:", err);
+      alert("Payment error occurred");
+    } finally {
+      setPayingId(null);
     }
   };
 
@@ -79,9 +108,7 @@ function TenantPayment() {
       <h2 className="tenant-payment-title">My Rent Payments</h2>
 
       {schedules.length === 0 ? (
-        <p className="tenant-payment-empty">
-          No payment schedules available
-        </p>
+        <p className="tenant-payment-empty">No payment schedules available</p>
       ) : (
         <div className="tenant-payment-grid">
 
@@ -89,39 +116,26 @@ function TenantPayment() {
             <div key={s.id} className="tenant-payment-card">
 
               <div className="tenant-payment-header">
-                <h3>Due Payment</h3>
+                <h3>{s.propertyTitle || "Rent Payment"}</h3>
+
                 <span className={`tenant-payment-status ${s.status?.toLowerCase()}`}>
                   {s.status}
                 </span>
               </div>
 
               <div className="tenant-payment-body">
-
-                <p>
-                  <b>Due Date:</b>{" "}
-                  {new Date(s.dueDate).toDateString()}
-                </p>
-
-                <p>
-                  <b>Amount:</b> ₦{s.amountDue}
-                </p>
-
-                <p>
-                  <b>Paid:</b> ₦{s.amountPaid || 0}
-                </p>
-
-                <p>
-                  <b>Balance:</b> ₦{s.balanceDue}
-                </p>
-
+                <p><b>Due Date:</b> {new Date(s.dueDate).toDateString()}</p>
+                <p><b>Amount:</b> ₦{s.amountDue}</p>
+                <p><b>Paid:</b> ₦{s.amountPaid || 0}</p>
+                <p><b>Balance:</b> ₦{s.balanceDue}</p>
               </div>
 
               <button
                 className="tenant-pay-btn"
                 onClick={() => handlePayment(s)}
-                disabled={s.status === "Paid"}
+                disabled={s.status === "Paid" || payingId === s.id}
               >
-                Pay Now
+                {payingId === s.id ? "Processing..." : "Pay Now"}
               </button>
 
             </div>

@@ -51,7 +51,7 @@ function LandlordDashboard() {
 
   const [stats, setStats] = useState<any>(null);
   const [view, setView] = useState<
-    "dashboard" | "createLease" | "leases" | "payments" | "lease-requests"
+    "dashboard" | "leases" | "payments" | "lease-requests"
   >("dashboard");
 
   useEffect(() => {
@@ -107,10 +107,6 @@ function LandlordDashboard() {
 
           <button onClick={() => setView("payments")}>
             <CreditCard size={14} /> Payments
-          </button>
-
-          <button onClick={() => setView("createLease")}>
-            Create Lease
           </button>
 
           <button className="tenant-logout" onClick={logout}>
@@ -180,11 +176,6 @@ function LandlordDashboard() {
           )}
 
     
-          {view === "createLease" && (
-            <div className="landlord-panel">
-              <CreateLease />
-            </div>
-          )}
 
         </main>
       </div>
