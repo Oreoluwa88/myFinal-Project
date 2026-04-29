@@ -55,7 +55,7 @@ function App() {
           <Route path="/properties/:id" element={<PropertyDetails />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/lease-requests" element={<LeaseRequests />} />
-          <Route path="/payment/callback" element={<PaymentCallBack />} />
+          <Route path="/payment-callback" element={<PaymentCallBack />} />
 
           <Route
             path="/dashboard"
