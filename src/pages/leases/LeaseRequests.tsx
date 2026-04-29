@@ -18,10 +18,15 @@ function LeaseRequests() {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            Accept: "application/json",
           },
         }
       );
+
+      if (!res.ok) {
+        console.error("Fetch failed:", res.status);
+        setRequests([]);
+        return;
+      }
 
       const text = await res.text();
       const json = text ? JSON.parse(text) : {};
@@ -47,18 +52,31 @@ function LeaseRequests() {
 
   const approve = async (req: any) => {
     try {
-      await fetch(
+      const res = await fetch(
         `https://propms-api.fly.dev/api/v1/lease-requests/${req.id}/approve`,
         {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
-            Accept: "application/json",
+            "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            startDate: new Date().toISOString(),
+            endDate: new Date(
+              new Date().setFullYear(new Date().getFullYear() + 1)
+            ).toISOString(),
+          }),
         }
       );
 
-      // optional auto-refresh
+      if (!res.ok) {
+        console.error("Approve failed:", res.status);
+        return;
+      }
+
+      const data = await res.json();
+      console.log("Approved:", data);
+
       fetchRequests();
     } catch (err) {
       console.error(err);
@@ -67,16 +85,24 @@ function LeaseRequests() {
 
   const reject = async (id: string) => {
     try {
-      await fetch(
+      const res = await fetch(
         `https://propms-api.fly.dev/api/v1/lease-requests/${id}/reject`,
         {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
-            Accept: "application/json",
+            "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            reason: "Not approved",
+          }),
         }
       );
+
+      if (!res.ok) {
+        console.error("Reject failed:", res.status);
+        return;
+      }
 
       fetchRequests();
     } catch (err) {
@@ -85,6 +111,7 @@ function LeaseRequests() {
   };
 
   const openProperty = (propertyId: string) => {
+    if (!propertyId) return;
     navigate(`/properties/${propertyId}`);
   };
 
@@ -123,34 +150,55 @@ function LeaseRequests() {
       ) : filtered.length === 0 ? (
         <p>No lease requests found</p>
       ) : (
-        <div style={grid}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: "15px",
+          }}
+        >
           {filtered.map((r) => {
             const status = normalizeStatus(r.status);
 
             return (
-              <div key={r.id} style={card}>
-                <div style={header}>
+              <div
+                key={r.id}
+                style={{
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "10px",
+                  padding: "15px",
+                  background: "#fff",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
                   <h3>{r.propertyTitle || "Property Request"}</h3>
 
-                  <span style={{
-                    background:
-                      status === "pending"
-                        ? "#f59e0b"
-                        : status === "approved"
-                        ? "#16a34a"
-                        : "#dc2626",
-                    color: "#fff",
-                    padding: "4px 10px",
-                    borderRadius: "999px",
-                    fontSize: "11px",
-                  }}>
+                  <span
+                    style={{
+                      background:
+                        status === "pending"
+                          ? "#f59e0b"
+                          : status === "approved"
+                          ? "#16a34a"
+                          : "#dc2626",
+                      color: "#fff",
+                      padding: "4px 10px",
+                      borderRadius: "999px",
+                      fontSize: "11px",
+                    }}
+                  >
                     {r.status || "UNKNOWN"}
                   </span>
                 </div>
 
-                <div style={info}>
-                  <p><b>Tenant:</b> {r.tenantName}</p>
-                  <p><b>Email:</b> {r.tenantEmail}</p>
+                <div style={{ marginTop: "10px" }}>
+                  <p><b>Tenant:</b> {r.tenantName || "-"}</p>
+                  <p><b>Email:</b> {r.tenantEmail || "-"}</p>
                   <p><b>Message:</b> {r.message || "No message"}</p>
 
                   <p
@@ -159,24 +207,56 @@ function LeaseRequests() {
                   >
                     View Property →
                   </p>
+
+                  {r.createdLeaseId && (
+                    <p style={{ fontSize: "12px", color: "#555" }}>
+                      Lease Created: {r.createdLeaseId}
+                    </p>
+                  )}
                 </div>
 
-                <div style={actions}>
+                <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
                   {status === "pending" && (
                     <>
-                      <button onClick={() => approve(r)} style={green}>
+                      <button
+                        onClick={() => approve(r)}
+                        style={{
+                          background: "#16a34a",
+                          color: "#fff",
+                          padding: "6px 10px",
+                          border: "none",
+                          borderRadius: "6px",
+                        }}
+                      >
                         Approve
                       </button>
 
-                      <button onClick={() => reject(r.id)} style={red}>
+                      <button
+                        onClick={() => reject(r.id)}
+                        style={{
+                          background: "#dc2626",
+                          color: "#fff",
+                          padding: "6px 10px",
+                          border: "none",
+                          borderRadius: "6px",
+                        }}
+                      >
                         Reject
                       </button>
                     </>
                   )}
 
                   {status === "approved" && (
-                    <button style={infoBtn}>
-                      Ready for Lease Creation
+                    <button
+                      style={{
+                        background: "#111",
+                        color: "#fff",
+                        padding: "6px 10px",
+                        border: "none",
+                        borderRadius: "6px",
+                      }}
+                    >
+                      Lease Created Automatically
                     </button>
                   )}
                 </div>
@@ -190,55 +270,3 @@ function LeaseRequests() {
 }
 
 export default LeaseRequests;
-
-const grid = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-  gap: "15px",
-};
-
-const card = {
-  border: "1px solid #e5e7eb",
-  borderRadius: "10px",
-  padding: "15px",
-  background: "#fff",
-};
-
-const header = {
-  display: "flex",
-  justifyContent: "space-between",
-};
-
-const info = {
-  fontSize: "13px",
-  display: "flex",
-  flexDirection: "column",
-  gap: "6px",
-};
-
-const actions = {
-  display: "flex",
-  gap: "10px",
-  marginTop: "10px",
-};
-
-const green = {
-  background: "#16a34a",
-  color: "#fff",
-  padding: "6px 10px",
-  border: "none",
-};
-
-const red = {
-  background: "#dc2626",
-  color: "#fff",
-  padding: "6px 10px",
-  border: "none",
-};
-
-const infoBtn = {
-  background: "#111",
-  color: "#fff",
-  padding: "6px 10px",
-  border: "none",
-};
