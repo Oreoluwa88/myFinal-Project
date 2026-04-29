@@ -6,7 +6,6 @@ import Navbarone from "../../components/Navbarone";
 import Navbartwo from "../../components/Navbartwo";
 import Footer from "../../components/Footer";
 
-import CreateLease from "../../pages/leases/CreateLeases";
 import LandlordLeases from "../../pages/leases/LandlordLeases";
 import PaymentApproval from "../../pages/payments/PaymentApproval";
 import "../Tenant/TenantDashboard.css"
