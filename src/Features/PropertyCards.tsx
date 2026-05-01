@@ -50,17 +50,17 @@ function PropertyCard({
         <h3>{title || "Untitled Property"}</h3>
         <p className="location">{location || "No location"}</p>
 
-        <div className="card-icons">
+        <div className="card-icons" style={{fontSize:"10px", fontWeight:"bold"}}>
           <span>
-            <BedDouble size={16} /> {beds || 0}
+            <BedDouble size={13} /> {beds || 0}
           </span>
 
           <span>
-            <Bath size={16} /> {baths || 0}
+            <Bath size={13} /> {baths || 0}
           </span>
 
           <span>
-            <Ruler size={16} /> {sqm || 0} sqm
+            <Ruler size={13} /> {sqm || 0}
           </span>
         </div>
       </div>

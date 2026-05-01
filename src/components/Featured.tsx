@@ -16,13 +16,13 @@ function Featured() {
       image: "/images/Featured2.jpg",
     },
     {
-      title: "Mini Flat",
+      title: "Shared apartment",
       location: "Ajah, Lagos",
       price: "$300,000",
       image: "/images/Featured3.jpg",
     },
     {
-      title: "2 bed apartment",
+      title: "3 bed apartment",
       location: "Salem, Lagos",
       price: "$300,000",
       image: "/images/Featured1.jpg",
@@ -49,7 +49,7 @@ function Featured() {
 
               <div className="details">
                 <span><BedDouble size={12} /> 3 Beds</span>
-                <span><Bath size={12} /> 2 Baths</span>
+                <span><Bath size={12} /> 4 Baths</span>
                 <span><Maximize size={12} /> 1200 sqft</span>
               </div>
             </div>

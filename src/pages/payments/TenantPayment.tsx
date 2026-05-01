@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import "./TenantPayment.css";
 
 function TenantPayment() {
-  const token = localStorage.getItem("token");
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   const [schedules, setSchedules] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [payingId, setPayingId] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!token) return;
     loadSchedules();
-  }, []);
+  }, [token]);
 
   const loadSchedules = async () => {
     try {
@@ -27,16 +29,15 @@ function TenantPayment() {
       );
 
       const text = await res.text();
-
       let data: any = {};
+
       try {
         data = text ? JSON.parse(text) : {};
       } catch {
         data = {};
       }
 
-      const list = Array.isArray(data?.data) ? data.data : [];
-      setSchedules(list);
+      setSchedules(Array.isArray(data?.data) ? data.data : []);
     } catch (err) {
       console.error("Failed to load schedules:", err);
       setSchedules([]);
@@ -46,6 +47,14 @@ function TenantPayment() {
   };
 
   const handlePayment = async (schedule: any) => {
+    if (!token) return;
+
+    
+    if (schedule.status === "Paid" || schedule.balanceDue <= 0) {
+      alert("This payment is already completed");
+      return;
+    }
+
     try {
       setPayingId(schedule.id);
 
@@ -59,23 +68,21 @@ function TenantPayment() {
             Accept: "application/json",
           },
           body: JSON.stringify({
-          rentScheduleId: schedule.id,
-          amount: Number(schedule.amountDue),
-          callbackUrl: window.location.origin + "/payment/callback",
-        }),
+            rentScheduleId: schedule.id,
+            amount: Number(schedule.balanceDue) * 100, // ✅ FIXED (kobo)
+            callbackUrl: window.location.origin + "/payment/callback",
+          }),
         }
       );
 
       const text = await res.text();
-
       let data: any = {};
+
       try {
         data = text ? JSON.parse(text) : {};
       } catch {
         data = {};
       }
-
-      console.log("PAYSTACK INIT RESPONSE:", data);
 
       if (!res.ok) {
         alert(data?.message || "Payment initialization failed");
@@ -85,7 +92,7 @@ function TenantPayment() {
       const paymentUrl = data?.data?.authorizationUrl;
 
       if (!paymentUrl) {
-        alert("No authorization URL returned");
+        alert("No payment URL returned");
         return;
       }
 
@@ -104,21 +111,22 @@ function TenantPayment() {
 
   return (
     <div className="tenant-payment-page">
-
       <h2 className="tenant-payment-title">My Rent Payments</h2>
 
       {schedules.length === 0 ? (
-        <p className="tenant-payment-empty">No payment schedules available</p>
+        <p className="tenant-payment-empty">
+          No payment schedules available
+        </p>
       ) : (
         <div className="tenant-payment-grid">
-
           {schedules.map((s) => (
             <div key={s.id} className="tenant-payment-card">
-
               <div className="tenant-payment-header">
                 <h3>{s.propertyTitle || "Rent Payment"}</h3>
 
-                <span className={`tenant-payment-status ${s.status?.toLowerCase()}`}>
+                <span
+                  className={`tenant-payment-status ${s.status?.toLowerCase()}`}
+                >
                   {s.status}
                 </span>
               </div>
@@ -133,14 +141,16 @@ function TenantPayment() {
               <button
                 className="tenant-pay-btn"
                 onClick={() => handlePayment(s)}
-                disabled={s.status === "Paid" || payingId === s.id}
+                disabled={
+                  s.status === "Paid" ||
+                  s.balanceDue <= 0 ||
+                  payingId === s.id
+                }
               >
                 {payingId === s.id ? "Processing..." : "Pay Now"}
               </button>
-
             </div>
           ))}
-
         </div>
       )}
     </div>

@@ -39,6 +39,14 @@
 .notif-content h4 {
   margin-bottom: 5px;
 }
+.notif-content p {
+  color: black;
+  font-size: 14px;
+}
+.notif-content small {
+  color: blue;
+  font-size: 12px;
+}
 
 .dot {
   width: 10px;

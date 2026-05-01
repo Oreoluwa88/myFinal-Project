@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbarone from "../../components/Navbarone";
 import Navbartwo from "../../components/Navbartwo";
 import Footer from "../../components/Footer";
-import { ChevronRight, Bell, Settings, Search, LogOut } from "lucide-react";
+import { ChevronRight, Bell, Settings, Search, LogOut, Home, User, Check } from "lucide-react";
 import "../Tenant/TenantDashboard.css";
 import "../../pages/Notifications.css";
 
@@ -165,15 +165,15 @@ function AdminDashboard() {
           
 
           <button className="active" onClick={() => navigate("/dashboard/admin")}>
-            Overview
+            <Home size={16} />Overview
           </button>
 
           <button onClick={() => navigate("/dashboard/approvals")}>
-            Approvals
+            <Check size={16} />Approvals
           </button>
 
           <button onClick={() => navigate("/properties")}>
-            Properties
+            <Home size={16} />Properties
           </button>
 
           <button
@@ -181,7 +181,7 @@ function AdminDashboard() {
               document.getElementById("users")?.scrollIntoView({ behavior: "smooth" })
             }
           >
-            Users
+           <User size={16} /> Users
           </button>
 
           <button className="tenant-logout" onClick={logout}>

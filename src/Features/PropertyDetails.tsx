@@ -77,14 +77,14 @@ const [selectedId, setSelectedId] = useState("");
             <MapPin size={16} /> {property.location}
           </p>
 
-          <div className="feature-strip">
+          <div className="feature-strip" style={{display:"flex", justifyContent:"start", gap:"10px", marginTop:"20px"}}>
             <span><BedDouble size={16} /> {beds} Beds</span>
             <span><Bath size={16} /> {baths} Baths</span>
             <span><Square size={16} /> {sqm} sqm</span>
           </div>
 
-          <div className="info-card">
-            <h3>About this property</h3>
+          <div className="info-card" style={{marginTop:"20px", border:"1px solid blue"}}>
+            <h3 style={{marginBottom:"20px", textAlign:"center", }}>About this property</h3>
             <p>{cleanDesc}</p>
           </div>
 
@@ -95,16 +95,16 @@ const [selectedId, setSelectedId] = useState("");
             </div>
 
             <div className="landlord-body">
-              <p>{property.landlord?.fullName}</p>
-              <p>{property.landlord?.phoneNumber}</p>
-              <p>{property.landlord?.email}</p>
+              <p style={{fontWeight:"bold"}}>{property.landlord?.fullName}</p>
+              <p style={{fontSize:"13px"}}>{property.landlord?.phoneNumber}</p>
+              <p style={{fontSize:"13px"}}>{property.landlord?.email}</p>
             </div>
 
             <button className="contact-btn">Contact Landlord</button>
           </div>
 
-          <div>
-            <button
+          <div style={{display:"flex", justifyContent:"center", marginTop:"50px"}}>
+            <button style={{backgroundColor:"black", color:"white", padding:"10px 20px", borderRadius:"10px"}}
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectedId(property.id);

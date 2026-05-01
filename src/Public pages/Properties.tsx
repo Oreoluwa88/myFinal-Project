@@ -123,7 +123,9 @@ function Properties() {
         </div>
       </div>
 
-      <div className="properties-container" style={{ padding: "100px 0px" }}>
+      <div className="properties-container" style={{ padding: "100px 50px" }}>
+
+
         {loading ? (
           <p style={{ textAlign: "center" }}>Loading...</p>
         ) : (

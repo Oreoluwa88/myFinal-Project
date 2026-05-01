@@ -130,7 +130,7 @@ function LeaseRequests() {
       <h2>Lease Requests</h2>
 
       <div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>
-        {["ALL", "PENDING", "APPROVED", "REJECTED"].map((f) => (
+        {["ALL"].map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}

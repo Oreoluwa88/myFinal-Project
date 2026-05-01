@@ -6,10 +6,8 @@ function PaymentCallback() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const verifyPayment = async () => {
-      const reference = new URLSearchParams(window.location.search).get(
-        "reference"
-      );
+    const verify = async () => {
+      const reference = new URLSearchParams(window.location.search).get("reference");
 
       if (!reference) {
         navigate("/payments");
@@ -24,7 +22,6 @@ function PaymentCallback() {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
-              Accept: "application/json",
             },
             body: JSON.stringify({ reference }),
           }
@@ -32,23 +29,20 @@ function PaymentCallback() {
 
         const data = await res.json();
 
-        console.log("VERIFY RESPONSE:", data);
-
         if (res.ok) {
-          alert("Payment successful!");
-          navigate("/payments/history");
+          alert("Payment successful");
+          navigate("/dashboard/payment-history");
         } else {
-          alert(data?.message || "Payment verification failed");
+          alert(data.message || "Verification failed");
           navigate("/payments");
         }
       } catch (err) {
         console.error(err);
-        alert("Verification error");
         navigate("/payments");
       }
     };
 
-    verifyPayment();
+    verify();
   }, []);
 
   return <div>Verifying payment...</div>;

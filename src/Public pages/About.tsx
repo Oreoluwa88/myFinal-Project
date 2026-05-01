@@ -269,49 +269,6 @@ useEffect(() => {
         </div>
       </section>
 
-      <section className="agents">
-        <h2>Our Agents</h2>
-
-        <div className="agents-grid">
-
-          <div className="agent-card">
-            <img src="/images/agent1.jpg" />
-            <div className="agent-info">
-              <p>Listing • 10 Properties</p>
-              <h3>Mike Bochs</h3>
-              <span>Senior Property Consultant</span>
-            </div>
-          </div>
-
-          <div className="agent-card">
-            <img src="/images/agent2.jpg" />
-            <div className="agent-info">
-              <p>Listing • 8 Properties</p>
-              <h3>Sarah Geronimo </h3>
-              <span>Luxury Property Specialist</span>
-            </div>
-          </div>
-
-          <div className="agent-card">
-            <img src="/images/agent3.jpg" />
-            <div className="agent-info">
-              <p>Listing • 12 Properties</p>
-              <h3>Jessica Moore</h3>
-              <span>Rental Expert</span>
-            </div>
-          </div>
-
-          <div className="agent-card">
-            <img src="/images/agent4.jpg" />
-            <div className="agent-info">
-              <p>Listing • 9 Properties</p>
-              <h3>David Smith</h3>
-              <span>Client Relations Manager</span>
-            </div>
-          </div>
-
-        </div>
-      </section>
 
       <section className="testimonials">
         <h2>What Our Clients Say</h2>
