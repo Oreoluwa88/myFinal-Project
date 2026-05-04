@@ -185,89 +185,150 @@ useEffect(() => {
         </div>
       </section>
 
-      <section className="audience">
-        <h2>Built for Everyone in Real Estate</h2>
 
-        <div className="audience-grid">
-          <div>
-            <h3>🏠 Landlords</h3>
-            <p>List properties, manage tenants, track rent.</p>
-          </div>
+        <section className="audience">
+          <h2>Built for Modern Renting</h2>
+          <p className="audience-sub">
+            Everything landlords and tenants need — in one seamless platform
+          </p>
 
-          <div>
-            <h3>🧑‍💼 Tenants</h3>
-            <p>Find homes and track rent payments easily.</p>
-          </div>
+          <div className="audience-grid">
 
-          <div>
-            <h3>🛠 Admin</h3>
-            <p>Approve listings and manage the platform.</p>
+            <div className="audience-card landlord">
+              <h3>🏠 For Landlords</h3>
+
+              <ul>
+                <li>✔ List and manage multiple properties</li>
+                <li>✔ Track rent payments in real time</li>
+                <li>✔ Approve or reject tenant requests</li>
+                <li>✔ Automatically generate leases</li>
+                <li>✔ View income and payment history</li>
+              </ul>
+
+              <button className="audience-btn" onClick={() => navigate("./login")}>Manage Properties</button>
+            </div>
+
+            <div className="audience-card tenant">
+              <h3>🧑‍💼 For Tenants</h3>
+
+              <ul>
+                <li>✔ Browse and request properties</li>
+                <li>✔ Pay rent securely online</li>
+                <li>✔ Track payment history & receipts</li>
+                <li>✔ View lease details anytime</li>
+                <li>✔ Get clear due dates & reminders</li>
+              </ul>
+
+              <button className="audience-btn" onClick={() => navigate("./login")}>Find a Home</button>
+            </div>
+
           </div>
-        </div>
-      </section>
+        </section>
 
       <section className="problem-solution">
         <h2>The Problem We Solve</h2>
+        <p className="ps-sub">
+          Renting shouldn't be stressful, confusing, or manual
+        </p>
 
-        <div className="ps-box">
-          <div>
+        <div className="ps-grid">
+
+          <div className="ps-card problem">
             <h3>❌ The Problem</h3>
-            <p>
-              Property management is still manual, messy, and unorganized.
-            </p>
+
+            <ul>
+              <li>Manual rent tracking leads to errors</li>
+              <li>Tenant communication is scattered</li>
+              <li>No clear payment visibility</li>
+              <li>Lease management is inconsistent</li>
+              <li>Property data is disorganized</li>
+            </ul>
           </div>
 
-          <div>
+          <div className="ps-card solution">
             <h3>✅ Our Solution</h3>
-            <p>
-              Rentify centralizes property listings, tenants, and rent tracking.
-            </p>
+
+            <ul>
+              <li>Automated rent tracking & schedules</li>
+              <li>Centralized tenant communication</li>
+              <li>Secure online payments (Paystack)</li>
+              <li>Auto lease creation & management</li>
+              <li>All property data in one dashboard</li>
+            </ul>
           </div>
+
         </div>
       </section>
 
       <section className="how-it-works">
         <h2>How Rentify Works</h2>
+        <p className="hiw-sub">
+          Simple steps to manage renting from start to finish
+        </p>
 
-        <div className="steps">
-          <div>
-            <h3>1. Register</h3>
-            <p>Create an account as landlord or tenant.</p>
+        <div className="timeline">
+
+          <div className="timeline-item">
+            <div className="circle">1</div>
+            <h3>Create Account</h3>
+            <p>Sign up as a landlord or tenant in seconds.</p>
           </div>
 
-          <div>
-            <h3>2. Use Platform</h3>
-            <p>List or search properties easily.</p>
+          <div className="timeline-item">
+            <div className="circle">2</div>
+            <h3>Explore Platform</h3>
+            <p>List properties or browse available homes.</p>
           </div>
 
-          <div>
-            <h3>3. Manage Everything</h3>
-            <p>Track rent, tenants, and properties.</p>
+          <div className="timeline-item">
+            <div className="circle">3</div>
+            <h3>Connect & Approve</h3>
+            <p>Send requests, review tenants, and approve leases.</p>
           </div>
+
+          <div className="timeline-item">
+            <div className="circle">4</div>
+            <h3>Manage & Pay</h3>
+            <p>Track rent, payments, and lease activity easily.</p>
+          </div>
+
         </div>
       </section>
 
+<section className="why">
+  <h2>Why Choose Rentify</h2>
+  <p className="why-sub">
+    Built to simplify renting for everyone involved
+  </p>
 
-      <section className="why">
-        <h2>Why Choose Us</h2>
+  <div className="why-container">
 
-        <div className="why-grid">
-          <div className="why-card">
-            <h3>Trusted Platform</h3>
-            <p>Secure and reliable property management system.</p>
-          </div>
+    <div className="why-item">
+      <div className="why-icon">🔐</div>
+      <div>
+        <h3>Secure & Trusted</h3>
+        <p>All payments and data are protected with modern security standards.</p>
+      </div>
+    </div>
 
-          <div className="why-card">
-            <h3>Easy to Use</h3>
-            <p>Simple interface for landlords and tenants.</p>
-          </div>
+    <div className="why-item">
+      <div className="why-icon">⚡</div>
+      <div>
+        <h3>Fast & Efficient</h3>
+        <p>Automate leases, payments, and tracking in just a few clicks.</p>
+      </div>
+    </div>
 
-          <div className="why-card">
-            <h3>Fast Process</h3>
-            <p>Quick property listing and rent tracking.</p>
-          </div>
-        </div>
-      </section>
+    <div className="why-item">
+      <div className="why-icon">🎯</div>
+      <div>
+        <h3>Simple Experience</h3>
+        <p>Clean interface designed for both landlords and tenants.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 
       <section className="testimonials">
