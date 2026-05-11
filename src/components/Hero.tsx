@@ -126,7 +126,7 @@ function Hero() {
         <p>We help you find the best property in your city</p>
       </div>
 
-      <div style={{ padding: "0px 200px" }}>
+      <div style={{ padding: "0 10%" }}>
         <div className="hero-search-container">
           <div className="tabs">
             <button className="active" onClick={() => navigate("/register")}>Get Started</button>

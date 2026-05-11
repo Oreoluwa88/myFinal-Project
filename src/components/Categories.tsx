@@ -2,7 +2,7 @@ function Categories () {
     return (
         <>
         <section style={{
-        padding:"40px 250px"
+        padding:"40px 5%"
         }}>
             <div className="category">
             <p style={{font:"8px", color:"green"}}> RENTIFY CATEGORIES</p>

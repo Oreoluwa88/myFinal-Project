@@ -82,7 +82,7 @@ useEffect(() => {
     name: "Jane Doe",
     role: "Tenant",
     image: "/images/client1.jpg",
-    text: "Finding a home was so easy with RentEase!",
+    text: "Finding a home was so easy with Rentify!",
   },
   {
     name: "Adaeze Okafor",
