@@ -3,7 +3,7 @@ import {Globe, Map, PhoneCall } from "lucide-react"
 function Navbar (){
     return (
         <>
-    <section >
+    <section className="topbarsection">
       <div className="newtopbar">
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div

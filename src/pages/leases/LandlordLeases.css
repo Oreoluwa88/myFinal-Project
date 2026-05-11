@@ -153,3 +153,90 @@
   border-radius: 6px;
   cursor: pointer;
 }
+
+@media screen and (max-width: 1024px) {
+
+  .lease-full {
+    padding: 20px;
+  }
+
+  .lease-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .modal-box {
+    width: 360px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  .lease-full {
+    padding: 15px;
+  }
+
+  .page-title {
+    font-size: 22px;
+  }
+
+  .lease-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .lease-info {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-box {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 420px) {
+
+  .lease-full {
+    padding: 10px;
+  }
+
+  .page-title {
+    font-size: 20px;
+  }
+
+  .lease-card {
+    padding: 14px;
+  }
+
+  .lease-header h2 {
+    font-size: 14px;
+  }
+
+  .muted {
+    font-size: 12px;
+  }
+
+  .lease-info p {
+    font-size: 12px;
+  }
+
+  .terminate-btn {
+    width: 100%;
+    font-size: 12px;
+  }
+
+  .modal-box {
+    width: 95%;
+    padding: 18px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .cancel-btn,
+  .confirm-btn {
+    width: 100%;
+  }
+}

@@ -75,3 +75,19 @@
   background: #aaa;
   cursor: not-allowed;
 }
+@media screen and (max-width: 1024px) {
+  .tenant-payment-grid {
+    grid-template-columns: 1fr;
+  }
+}
+  @media screen and (max-width: 768px) {
+    .tenant-payment-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+@media screen and (max-width: 420px) {
+  .tenant-payment-grid {
+    grid-template-columns: 1fr;
+  }
+}

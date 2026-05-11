@@ -44,7 +44,6 @@ function TenantDashboard() {
   return () => clearInterval(interval);
 }, [token]);
 
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const [view, setView] = useState<
     "dashboard" | "leases" | "payments" | "history" | "my-lease-requests"
@@ -82,12 +81,7 @@ function TenantDashboard() {
 
           <h2 className="tenant-logo">Rentify</h2>
 
-          <div className="tenant-user-box">
-            <p className="tenant-name">
-              {user?.fullName || "Tenant User"}
-            </p>
-            <span className="tenant-role">Tenant Account</span>
-          </div>
+          
 
           <button onClick={() => setView("dashboard")}>
             <Home size={16} /> Overview
@@ -123,8 +117,7 @@ function TenantDashboard() {
         <main className="landlord-main">
 
         
-          <div className="landlord-topbar">
-            <input placeholder="Search properties, tenants..." />
+          <div className="landlord-topbar" style={{ justifyContent: "flex-end" }}>
 
             <div className="top-actions">
               <div className="icon-circle" onClick={() => navigate("/notifications")}

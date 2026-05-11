@@ -11,6 +11,7 @@ import PaymentApproval from "../../pages/payments/PaymentApproval";
 import "../Tenant/TenantDashboard.css"
 import "../../pages/Notifications.css";
 import LeaseRequests from "../../pages/leases/LeaseRequests";
+import LandlordPaymentHistory from "./LandlordPaymentHistory";
 
 const BASE_URL = "https://propms-api.fly.dev/api/v1";
 
@@ -50,7 +51,7 @@ function LandlordDashboard() {
 
   const [stats, setStats] = useState<any>(null);
   const [view, setView] = useState<
-    "dashboard" | "leases" | "payments" | "lease-requests"
+    "dashboard" | "leases" | "payments" | "lease-requests" | "payment-history"
   >("dashboard");
 
   useEffect(() => {
@@ -105,7 +106,11 @@ function LandlordDashboard() {
           </button>
 
           <button onClick={() => setView("payments")}>
-            <CreditCard size={14} /> Payments
+            <CreditCard size={14} /> Payments Approval
+          </button>
+
+          <button onClick={() => setView("payment-history")}>
+            <FileText size={14} /> Payment History
           </button>
 
           <button className="tenant-logout" onClick={logout}>
@@ -117,8 +122,7 @@ function LandlordDashboard() {
         <main className="landlord-main">
 
         
-          <div className="landlord-topbar">
-            <input placeholder="Search properties, tenants..." />
+          <div className="landlord-topbar" style={{ justifyContent: "flex-end" }}>
 
             <div className="top-actions">
               <div className="icon-circle" onClick={() => navigate("/notifications")}
@@ -174,7 +178,11 @@ function LandlordDashboard() {
             </div>
           )}
 
-    
+          {view === "payment-history" && (
+            <div className="landlord-panel">
+              <LandlordPaymentHistory />
+            </div>
+          )}
 
         </main>
       </div>

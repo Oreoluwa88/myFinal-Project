@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbarone from "../../components/Navbarone";
 import Navbartwo from "../../components/Navbartwo";
 import Footer from "../../components/Footer";
-import { ChevronRight, Bell, Settings, Search, LogOut, Home, User, Check } from "lucide-react";
+import { ChevronRight, Bell, Settings, LogOut, Home, User, Check } from "lucide-react";
 import "../Tenant/TenantDashboard.css";
 import "../../pages/Notifications.css";
 
@@ -190,11 +190,8 @@ function AdminDashboard() {
         </aside>
 
         <main className="admin-main">
-          <div className="admin-topbar">
-            <div className="search-box">
-              <Search size={16} />
-              <input placeholder="Search users, properties, payments..." />
-            </div>
+          <div className="admin-topbar" style={{ justifyContent: "flex-end" }}>
+      
 
             <div className="top-actions">
               <div

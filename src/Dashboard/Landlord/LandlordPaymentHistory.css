@@ -1,0 +1,83 @@
+.lp-page {
+  padding: 30px;
+}
+
+.lp-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.lp-loading,
+.lp-empty {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.lp-error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.lp-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.lp-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.lp-card h4 {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.lp-card p {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.lp-table-wrapper {
+  overflow-x: auto;
+}
+
+.lp-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.lp-table th,
+.lp-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.lp-table th {
+  background: #f9fafb;
+  font-size: 13px;
+}
+
+.lp-status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #fff;
+}
+
+.lp-status.paid {
+  background: #16a34a;
+}
+
+.lp-status.pending {
+  background: #f59e0b;
+}
+
+.lp-status.failed {
+  background: #dc2626;
+}

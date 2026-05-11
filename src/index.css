@@ -80,7 +80,7 @@ h1 {
   margin: 32px 0;
   @media (max-width: 1024px) {
     font-size: 36px;
-    margin: 20px 0;
+    margin: ;
   }
 }
 h2 {
@@ -111,11 +111,41 @@ code {
   background: var(--code-bg);
 }
 */
-/*
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-*/
+@media (max-width: 1024px) {
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  #root {
+    padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  #root {
+    padding: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  #root {
+    padding: 0;
+  }
+}
+
 :root {
   --bg: #f4f6fb;
   --card: #ffffff;
@@ -969,25 +999,28 @@ body {
   }
 }
 
-.category{
+.category {
   display: flex;
   justify-content: center;
   margin-top: 30px;
 }
-.category-grid{
+
+.category-grid {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
   text-align: center;
 }
-.category-grid div{
+
+.category-grid div {
   margin-bottom: 30px;
 }
-.category-grid p{
+
+.category-grid p {
   font-size: 12px;
   font-weight: bold;
 }
 
-.category-grid button{
+.category-grid button {
   background: #fffafa;
   border: none;
   color: green;
@@ -996,12 +1029,97 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
 }
-.category-grid button:hover{
+
+.category-grid button:hover {
   transform: translateZ(20px) scale(1.1);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
   background-color: green;
   color: #f8f9fa;
-  
+}
+
+@media (max-width: 1024px) {
+  section {
+    padding: 40px 80px !important;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .category-grid p {
+    font-size: 11px;
+  }
+
+  .category-grid button {
+    padding: 10px 14px;
+    font-size: 12px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 30px 20px !important;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+  }
+
+  .category-grid div {
+    margin-bottom: 15px;
+  }
+
+  .category-grid p {
+    font-size: 11px;
+  }
+
+  .category-grid button {
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+    padding: 12px;
+    font-size: 13px;
+    border-radius: 12px;
+  }
+
+  .category h2 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 420px) {
+  section {
+    padding: 30px 20px !important;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+  }
+
+  .category-grid div {
+    margin-bottom: 15px;
+  }
+
+  .category-grid p {
+    font-size: 11px;
+  }
+
+  .category-grid button {
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+    padding: 12px;
+    font-size: 13px;
+    border-radius: 12px;
+  }
+
+  .category h2 {
+    font-size: 18px;
+  }
 }
 
 .footer {
@@ -1355,6 +1473,7 @@ body {
     top: 0;
   }
 }
+
 .registerhere form {
   display: flex;
   flex-direction: column;
@@ -1783,164 +1902,6 @@ body {
   pointer-events: auto;
 }
 
-
-
-
-@media screen and (max-width: 1024px) {
-
-  .topbar,
-  .newtopbar {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-
-
-  .property-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .agents-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .why-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .footer-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .dash-grid {
-    grid-template-columns: repeat(2, 1fr);
-    width: 100%;
-  }
-
-  .hero-content h1 {
-    font-size: 36px;
-  }
-
-  .hero-text h1 {
-    font-size: 30px;
-  }
-
-  .property-cont {
-    padding: 0 30px;
-  }
-
-  .about-section {
-    flex-direction: column;
-    padding: 60px 30px;
-  }
-
-  .about-img img {
-    width: 100%;
-    height: auto;
-    padding-left: 0;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .topbar,
-  .newtopbar {
-    flex-direction: column;
-    gap: 8px;
-    padding: 10px 20px;
-    text-align: center;
-  }
-
-  
-  .nav-links a {
-    margin: 0 8px;
-    font-size: 12px;
-  }
-
-  .logo {
-    font-size: 20px;
-  }
-
-  
-  .property-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-  }
-
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .agents-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .why-grid {
-    grid-template-columns: repeat(1, 1fr);
-  }
-
-  .footer-container {
-    grid-template-columns: 1fr;
-  }
-
-  .dash-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  
-  .loginhere,
-  .registerhere {
-    width: 90%;
-  }
-
-
-  .hero-content h1 {
-    font-size: 28px;
-  }
-
-  .hero-content p {
-    font-size: 14px;
-  }
-
-  .hero-text h1 {
-    font-size: 24px;
-  }
-
-  .property-cont {
-    padding: 0 15px;
-  }
-
-  .overlay > div:first-child {
-    padding: 20px;
-  }
-}
-
-
-@media screen and (max-width: 480px) {
-
-
-  .property-grid,
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-
-  .hero-content h1 {
-    font-size: 22px;
-  }
-
-  .hero-text h1 {
-    font-size: 20px;
-  }
-
-  .nav-links button {
-    padding: 6px 10px;
-    font-size: 12px;
-  }
-}
 .approval-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2030,7 +1991,7 @@ body {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .approval-grid {
     grid-template-columns: 1fr;
   }
@@ -2302,7 +2263,7 @@ body {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .admin-layout {
     flex-direction: column;
   }
@@ -2547,6 +2508,9 @@ body {
   .search-box {
     width: 200px;
   }
+  .slider{
+    grid-template-columns: repeat(1,1fr);
+  }
 }
 
 @media (max-width: 768px) {
@@ -2565,6 +2529,9 @@ body {
 
   .user-grid {
     grid-template-columns: 1fr;
+  }
+  .slider{
+    grid-template-columns: repeat(1,1fr);
   }
 }
 .lease-form-container {
@@ -2817,4 +2784,405 @@ body {
 
 .pay-btn:hover {
   background: darkgreen;
+}
+
+
+
+
+
+
+
+@media screen and (max-width: 1024px) {
+  
+
+  .topbar,
+  .newtopbar {
+    padding-left: 40px;
+    padding-right: 40px;
+    margin: 0;
+  }
+
+  .topbarsection{
+    margin-top:0;
+    padding: 0;
+  }
+
+
+  .property-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .agents-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dash-grid {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+  }
+  
+  .hero{
+    margin: 0;
+  }
+
+  .hero-content h1 {
+    font-size: 36px;
+  }
+
+  .hero-text h1 {
+    font-size: 30px;
+  }
+
+  .property-cont {
+    padding: 0 30px;
+
+  }
+
+  .about-section {
+    flex-direction: column;
+    padding: 60px 30px;
+  }
+
+  .about-img img {
+    width: 100%;
+    height: auto;
+    padding-left: 0;
+  }
+
+  .navtwo {
+    padding: 10px 15px;
+  }
+
+
+  .newnav-links {
+    gap: 10px;
+  }
+
+  .newnav-links a {
+    font-size: 13px;
+  }
+
+  .newnav-links button {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .topbar,
+  .newtopbar {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 20px;
+    text-align: center;
+    
+  }
+  .topbarsection{
+    width: 100%;
+    margin: 0;
+  }
+
+  
+  .nav-links a {
+    margin: 0 8px;
+    font-size: 12px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  
+  .property-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .agents-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .why-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  
+  .loginhere,
+  .registerhere {
+    width: 90%;
+  }
+
+  .hero{
+    margin: 0;
+  }
+
+  .hero-content h1 {
+    font-size: 28px;
+  }
+
+  .hero-content p {
+    font-size: 14px;
+  }
+
+  .hero-text h1 {
+    font-size: 24px;
+  }
+
+  .property-cont {
+    padding: 0 15px;
+  }
+
+  .overlay > div:first-child {
+    padding: 20px;
+  }
+
+  .navtwo {
+    flex-direction: row;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  .logo {
+    font-size: 15px;
+    padding: 0;
+  }
+
+  .newnav-links {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .newnav-links a {
+    font-size: 10px;
+  }
+
+  .newnav-links button {
+    padding: 5px 10px;
+    font-size: 10px;
+  }
+}
+
+
+@media screen and (max-width: 480px) {
+
+.topbar,
+  .newtopbar {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 20px;
+    text-align: center;
+    
+  }
+  .topbarsection{
+    width: 100%;
+    margin: 0;
+  }
+
+
+  
+  .nav-links a {
+    margin: 0 8px;
+    font-size: 12px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  
+  .property-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .agents-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .why-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  
+  .loginhere,
+  .registerhere {
+    width: 90%;
+  }
+
+  .hero{
+    margin: 0;
+  }
+
+  .hero-content h1 {
+    font-size: 28px;
+  }
+
+  .hero-content p {
+    font-size: 14px;
+  }
+
+  .hero-text h1 {
+    font-size: 24px;
+  }
+
+  .property-cont {
+    padding: 0 15px;
+  }
+
+  .overlay > div:first-child {
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+
+  .admin-layout,
+  .landlord-layout {
+    flex-direction: column;
+  }
+
+  .sidebar,
+  .landlord-sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sidebar button,
+  .landlord-sidebar button {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .admin-main,
+  .landlord-main {
+    padding: 16px;
+  }
+  .landlord-card-grid{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+  }
+  .card-grid{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+  }
+  .tenant-history-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  .sidebar,
+  .landlord-sidebar {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .sidebar button,
+  .landlord-sidebar button {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .admin-topbar,
+  .landlord-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .admin-main,
+  .landlord-main {
+    padding: 10px;
+  }
+
+  .landlord-card-grid,
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tenant-history-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media screen and (max-width: 420px) {
+
+  .sidebar,
+  .landlord-sidebar {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 6px;
+    padding: 8px;
+  }
+
+  .sidebar button,
+  .landlord-sidebar button {
+    flex-shrink: 0;
+    font-size: 11px;
+    padding: 7px 9px;
+  }
+
+  .admin-main,
+  .landlord-main {
+    padding: 8px;
+  }
+
+  .admin-topbar,
+  .landlord-topbar {
+    gap: 6px;
+  }
+
+  .card-grid,
+  .landlord-card-grid {
+    grid-template-columns: 1fr;
+  }
+  .tenant-history-grid {
+    grid-template-columns: 1fr;
+  }
 }

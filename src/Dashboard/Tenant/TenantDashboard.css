@@ -105,8 +105,8 @@
   justify-content: center;
   border: 2px solid white;
 }
-
 @media screen and (max-width: 1024px) {
+
   .tenant-dashboard-layout {
     flex-direction: column;
   }
@@ -115,6 +115,7 @@
     width: 100%;
     flex-direction: row;
     overflow-x: auto;
+    overflow-y: hidden;
     align-items: center;
     gap: 10px;
   }
@@ -134,9 +135,22 @@
 }
 
 @media screen and (max-width: 768px) {
+
   .tenant-sidebar {
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .tenant-sidebar button {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 8px 10px;
   }
 
   .tenant-main {
@@ -147,6 +161,39 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+  }
+
+  .tenant-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tenant-card {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 420px) {
+
+  .tenant-sidebar {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 6px;
+    padding: 8px;
+  }
+
+  .tenant-sidebar button {
+    flex-shrink: 0;
+    font-size: 11px;
+    padding: 7px 9px;
+  }
+
+  .tenant-main {
+    padding: 8px;
+  }
+
+  .tenant-topbar {
+    gap: 6px;
   }
 
   .tenant-grid {

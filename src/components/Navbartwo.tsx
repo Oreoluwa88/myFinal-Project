@@ -1,7 +1,15 @@
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Navbartwo() {
   const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    navigate("/login");
+  };
 
   return (
     <div className="navtwo">
@@ -12,7 +20,16 @@ export default function Navbartwo() {
         <Link to="/about">About</Link>
         <Link to="/properties">Properties</Link>
         <Link to="/contact">Contact</Link>
-        <button onClick={() => navigate("/login")}>Login</button>
+
+        {!token ? (
+          <button onClick={() => navigate("/login")}>
+            Login
+          </button>
+        ) : (
+          <button onClick={handleLogout}>
+            Logout
+          </button>
+        )}
       </div>
     </div>
   );

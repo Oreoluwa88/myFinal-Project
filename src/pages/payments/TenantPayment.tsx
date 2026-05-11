@@ -69,7 +69,7 @@ function TenantPayment() {
           },
           body: JSON.stringify({
             rentScheduleId: schedule.id,
-            amount: Number(schedule.balanceDue) * 100, // ✅ FIXED (kobo)
+            amount: Number(schedule.balanceDue) * 100,
             callbackUrl: window.location.origin + "/payment/callback",
           }),
         }
