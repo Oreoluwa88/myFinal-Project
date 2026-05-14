@@ -38,7 +38,7 @@ function Hero() {
   };
 
   return (
-    <section className="hero">
+    <><section className="hero">
       <div className="topbar">
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div
@@ -56,13 +56,13 @@ function Hero() {
           >
             <PhoneCall size={14} color="white" />
           </div>
-          <div> 
-        <p style={{fontWeight:"bold", }}><span style={{color:"goldenrod"}}>Free call</span> +234 906 419 8423 </p>
-        <p style={{fontSize:"8px", color:"grey"}}>Call us now 24/7 Customer support</p> 
+          <div>
+            <p style={{ fontWeight: "bold", }}><span style={{ color: "goldenrod" }}>Free call</span> +234 906 419 8423 </p>
+            <p style={{ fontSize: "8px", color: "grey" }}>Call us now 24/7 Customer support</p>
+          </div>
         </div>
-        </div>
-         
-         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div
             style={{
               width: "32px",
@@ -78,10 +78,10 @@ function Hero() {
           >
             <Map size={14} color="white" />
           </div>
-        <div>
-        <p style={{fontWeight:"bold", }}>Our Location</p>
-        <p style={{fontSize:"8px", color:"grey"}}>Lekki, Lagos State, Nigeria</p>
-        </div>
+          <div>
+            <p style={{ fontWeight: "bold", }}>Our Location</p>
+            <p style={{ fontSize: "8px", color: "grey" }}>Lekki, Lagos State, Nigeria</p>
+          </div>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -100,10 +100,10 @@ function Hero() {
           >
             <Globe size={14} color="white" />
           </div>
-        <div>
-        <p style={{fontWeight:"bold", }}>Connect with us</p>
-        <p style={{fontSize:"8px", color:"grey"}}>Twitter Instagram Whatsapp </p>
-        </div>
+          <div>
+            <p style={{ fontWeight: "bold", }}>Connect with us</p>
+            <p style={{ fontSize: "8px", color: "grey" }}>Twitter Instagram Whatsapp </p>
+          </div>
         </div>
       </div>
 
@@ -119,57 +119,57 @@ function Hero() {
           <Link to="/contact">Contact</Link>
           <button onClick={() => navigate("/login")}>Login</button>
         </div>
-      </div>
+      </div> 
 
-      <div className="hero-content">
-        <h1>Find Your Dream Home</h1>
-        <p>We help you find the best property in your city</p>
-      </div>
+    <div className="hero-nav1">
+        <div className="hero-content">
+          <h1>Find Your Dream Home</h1>
+          <p>We help you find the best property in your city</p>
+        </div>
 
-      <div style={{ padding: "0 10%" }}>
-        <div className="hero-search-container">
-          <div className="tabs">
-            <button className="active" onClick={() => navigate("/register")}>Get Started</button>
-            <button onClick={() => navigate("/properties")}>Rent</button>
-          </div>
+        <div className="hero-search-box">
+          <div className="hero-search-container">
+            <div className="tabs">
+              <button className="active" onClick={() => navigate("/register")}>Get Started</button>
+              <button onClick={() => navigate("/properties")}>Rent</button>
+            </div>
 
-          <div className="hero-search-box">
-            <input
-              placeholder="Location (e.g Chevron, Lekki)"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-            />
+            <div className="hero-search-box">
+              <input
+                placeholder="Location (e.g Chevron, Lekki)"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)} />
 
-            <select
-              value={propertyType}
-              onChange={(e) => setPropertyType(e.target.value)}
-              className="property-select">
-              <option value="">Property Type</option>
-              <option value="House">House</option>
-              <option value="Apartment">Apartment</option>
-              <option value="Shop">Shop</option>
-              <option value="Land">Land</option>
+              <select
+                value={propertyType}
+                onChange={(e) => setPropertyType(e.target.value)}
+                className="property-select">
+                <option value="">Property Type</option>
+                <option value="House">House</option>
+                <option value="Apartment">Apartment</option>
+                <option value="Shop">Shop</option>
+                <option value="Land">Land</option>
               </select>
 
-            <input
-              type="number"
-              placeholder="Min Price"
-              value={minPrice}
-              onChange={(e) => setMinPrice(e.target.value)}
-            />
+              <input
+                type="number"
+                placeholder="Min Price"
+                value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)} />
 
-            <input
-              type="number"
-              placeholder="Max Price"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(e.target.value)}
-            />
+              <input
+                type="number"
+                placeholder="Max Price"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(e.target.value)} />
 
-            <button onClick={handleSearch}>Search</button>
+              <button onClick={handleSearch}>Search</button>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+      </>
   );
 }
 

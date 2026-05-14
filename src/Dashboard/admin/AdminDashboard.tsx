@@ -160,7 +160,7 @@ function AdminDashboard() {
       </div>
 
       <div className="admin-layout">
-        <aside className="sidebar">
+        <aside className="landlord-sidebar">
           <h2 className="logo">Rentify</h2>
           
 

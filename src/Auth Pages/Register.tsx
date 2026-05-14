@@ -127,21 +127,21 @@ function Register() {
             onChange={handleChange}
           />
 
-          <div style={{ position: "relative", padding:"0px 10px" }}>
+          <div style={{ position: "relative", marginLeft:"10px" }}>
             <input
               name="password"
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={form.password}
               onChange={handleChange}
-              style={{ width: "100%", paddingRight: "5px", marginLeft:"-10px", marginRight:"10px" }}
+              style={{ width: "100%", paddingRight: "12px", marginLeft:"-10px", marginRight:"15px" }}
             />
 
             <span
               onClick={() => setShowPassword(!showPassword)}
               style={{
                 position: "absolute",
-                right: "10px",
+                right: "15px",
                 top: "50%",
                 transform: "translateY(-50%)",
                 cursor: "pointer",
@@ -152,21 +152,21 @@ function Register() {
             </span>
           </div>
 
-          <div style={{ position: "relative", marginTop: "-1px", padding:"0px 10px" }}>
+          <div style={{ position: "relative", marginTop: "-1px", marginLeft:"10px" }}>
             <input
               name="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm Password"
               value={form.confirmPassword}
               onChange={handleChange}
-              style={{ width: "100%", paddingRight: "5px", marginLeft:"-10px", marginRight:"10px" }}
+              style={{ width: "100%", paddingRight: "12px", marginLeft:"-10px", marginRight:"15px" }}
             />
 
             <span
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               style={{
                 position: "absolute",
-                right: "10px",
+                right: "13px",
                 top: "50%",
                 transform: "translateY(-50%)",
                 cursor: "pointer",

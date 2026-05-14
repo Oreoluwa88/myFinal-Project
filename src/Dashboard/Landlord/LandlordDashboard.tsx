@@ -132,14 +132,6 @@ function LandlordDashboard() {
                   <span className="notif-badge">{unreadCount}</span>)}
               </div>
               <div className="icon-circle"><Settings size={16}/></div>
-
-              <div className="profile-card">
-                <img src="/images/landlord.jpg" />
-                <div>
-                  <h4>Landlord</h4>
-                  <p>Property Owner</p>
-                </div>
-              </div>
             </div>
           </div>
 

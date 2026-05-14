@@ -95,7 +95,7 @@ function Login() {
             value={form.email}
             onChange={handleChange}
           />
-          <div style={{ position: "relative", padding:"0px 6px" }}>
+          <div style={{ position: "relative", padding:"0px 2px" }}>
             <input
               name="password"
               type={showPassword ? "text" : "password"}
