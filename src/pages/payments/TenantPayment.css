@@ -86,7 +86,7 @@
     }
   }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 480px) {
   .tenant-payment-grid {
     grid-template-columns: 1fr;
   }

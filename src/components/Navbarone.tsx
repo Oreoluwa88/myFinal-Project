@@ -5,7 +5,7 @@ function Navbar (){
         <>
     <section className="topbarsection">
       <div className="newtopbar">
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div className="" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div
             style={{
               width: "32px",
@@ -21,9 +21,9 @@ function Navbar (){
           >
             <PhoneCall size={14} color="white" />
           </div>
-          <div> 
+          <div > 
         <p style={{fontWeight:"bold", }}><span style={{color:"goldenrod"}}>Free call</span> +234 906 419 8423 </p>
-        <p style={{fontSize:"8px", color:"grey"}}>Call us now 24/7 Customer support</p> 
+        <p className="topbar-small-text">Call us now 24/7 Customer support</p> 
         </div>
         </div>
          
@@ -45,12 +45,12 @@ function Navbar (){
           </div>
         <div>
         <p style={{fontWeight:"bold", }}>Our Location</p>
-        <p style={{fontSize:"8px", color:"grey"}}>Lekki, Lagos State, Nigeria</p>
+        <p className="topbar-small-text">Lekki, Lagos State, Nigeria</p>
         </div>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <div
+          <div 
             style={{
               width: "32px",
               height: "32px",
@@ -67,7 +67,7 @@ function Navbar (){
           </div>
         <div>
         <p style={{fontWeight:"bold", }}>Connect with us</p>
-        <p style={{fontSize:"8px", color:"grey"}}>Twitter Instagram Whatsapp </p>
+        <p className="topbar-small-text">Twitter Instagram Whatsapp </p>
         </div>
         </div>
       </div>

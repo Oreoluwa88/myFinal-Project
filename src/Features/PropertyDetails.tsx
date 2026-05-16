@@ -96,14 +96,14 @@ const [selectedId, setSelectedId] = useState("");
 
             <div className="landlord-body">
               <p style={{fontWeight:"bold"}}>{property.landlord?.fullName}</p>
-              <p style={{fontSize:"13px"}}>{property.landlord?.phoneNumber}</p>
+              <p  style={{fontSize:"13px"}}>{property.landlord?.phoneNumber}</p>
               <p style={{fontSize:"13px"}}>{property.landlord?.email}</p>
             </div>
 
             <button className="contact-btn">Contact Landlord</button>
           </div>
 
-          <div style={{display:"flex", justifyContent:"center", marginTop:"50px"}}>
+          <div className="lease-btn" style={{display:"flex", justifyContent:"center", marginTop:"50px"}}>
             <button style={{backgroundColor:"black", color:"white", padding:"10px 20px", borderRadius:"10px"}}
               onClick={(e) => {
                 e.stopPropagation();

@@ -1121,7 +1121,7 @@ body,
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 480px) {
 
   .category-grid {
     grid-template-columns: repeat(2,1fr);
@@ -2623,8 +2623,7 @@ body,
 
 .details-image img {
   width: 100%;
-  height: auto;
-  max-height: 700px;
+  height: 150vh;
   object-fit: cover;
   border-radius: 16px;
   transition: 0.4s ease;
@@ -2946,17 +2945,56 @@ body,
   .about-img2 img{
     height: 40vh;
   }
+  .details-wrapper{
+    width: 100%;
+  }
+
+  .details-image img{
+    height: 100vh;
+  }
+ 
   
 }
 
 @media screen and (max-width: 768px) {
-  .topbar,
-  .newtopbar {
-    flex-direction: column;
+  .topbar {
+    flex-direction: row;
     gap: 8px;
     padding: 10px 20px;
     text-align: center;
     
+  }
+  .newtopbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 5px;
+  }
+
+  .newtopbar > div {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .newtopbar p {
+    font-size: 7px;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .newtopbar svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .newtopbar > div > div:first-child {
+    width: 20px ;
+    height: 20px;
+    min-width: 20px;
   }
   .topbarsection{
     width: 100%;
@@ -3087,14 +3125,14 @@ body,
     width: 100%;
   }
   .about-img img {
-    height: 90vh;
-    width: 170px;
+    height: 60vh;
+    width: 220px;
   }
   .about-text p{
-    font-size: 8px;
+    font-size: 12px;
   }
   .about-text h2{
-    font-size: 10px;
+    font-size: 14px;
   }
   .about-text button{
     font-size: 8px;
@@ -3105,13 +3143,39 @@ body,
     width: 100%;
   }
   .stats h2{
-    font-size: 12px;
+    font-size: 14px;
   }
   .stats p{
-    font-size: 6px;
+    font-size: 10px;
   }
   .about-img2 img{
-    height: 38vh;
+    height: 34vh;
+  }
+  .details-wrapper{
+    width: 100%;
+  }
+
+  .details-image img{
+    height: 90vh;
+  }
+  .details-content h1{
+    font-size: 16px;
+  }
+  .location{
+    font-size: 12px;
+  }
+  .feature-strip{
+    font-size: 12px;
+    
+  }
+  .info-card{
+    width: 100%;
+  }
+  .info-card h3{
+    font-size: 18px;
+  }
+  .info-card p {
+    font-size: 12px;
   }
 
 }
@@ -3120,14 +3184,47 @@ body,
 
 @media screen and (max-width: 480px) {
 
-.topbar,
-  .newtopbar {
-    flex-direction: column;
+.topbar{
+    flex-direction: row;
     gap: 8px;
     padding: 10px 20px;
     text-align: center;
     
   }
+
+  .newtopbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 5px;
+  }
+
+  .newtopbar > div {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .newtopbar p {
+    font-size: 5px;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .newtopbar svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .newtopbar > div > div:first-child {
+    width: 5px ;
+    height: 5px;
+    min-width: 5px;
+  }
+
   .topbarsection{
     width: 100%;
     margin: 0;
@@ -3167,11 +3264,11 @@ body,
     font-size: 15px;
     padding: 0;
   }
-
+  
   
   .property-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    gap: 10px;
   }
 
   .cards {
@@ -3193,6 +3290,7 @@ body,
   .dash-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
 
   
   .loginhere,
@@ -3216,27 +3314,19 @@ body,
     font-size: 24px;
   }
 
-  .property-cont {
-    padding: 0 15px;
+  .properties-container {
+    padding: 0;
+    margin-top: 10px;
   }
 
   .overlay > div:first-child {
     padding: 20px;
-  }
-  .hero-search-container{
-    padding: 20px;
-  }
-  .tabs{
-    padding: 0px 30px;
   }
   .contact-page{
     display: flex;
     flex-direction: column;
     padding: 0;
   }
-}
-
-  @media screen and (max-width: 420px){
 
    .about-section{
     display: flex;
@@ -3248,10 +3338,11 @@ body,
   }
   .about-text{
     width: 100%;
+    padding: 0;
   }
   .about-img img {
-    height: 90vh;
-    width: 120px;
+    height: 85vh;
+    width: 150px;
   }
   .about-text p{
     font-size: 8px;
@@ -3274,8 +3365,106 @@ body,
     font-size: 6px;
   }
   .about-img2 img{
-    height: 36vh;
+    height: 31vh;
   }
+  .slider{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .details-wrapper{
+    display: flex;
+    flex-direction: column;
+    padding: 30px 10px;
+    gap:5px;
+  }
+  .details-image{
+    position: relative;
+  }
+  .details-image img{
+    height: 90vh;
+    width: 300px;
+  }
+  .details-content h1{
+    font-size: 12px;
+  }
+  .location{
+    font-size: 8px;
+  }
+  .feature-strip{
+    font-size: 10px;
+    
+  }
+  .info-card{
+    width: 90%;
+  }
+  .info-card h3{
+    font-size: 14px;
+  }
+  .info-card p {
+    font-size: 10px;
+  }
+  .price-badge{
+    font-size: 10px;
+  }
+  .landlord-card.modern{
+    width: 80%;
+  }
+   .landlord-header h3{
+    font-size: 12px;
+   }
+   .landlord-body {
+    font-size: 12px;
+   }
+   .contact-btn{
+    font-size: 12px;
+    padding: 5px 8px;
+   }
+   .lease-btn{
+    font-size: 10px;
+   }
+   .properties-hero{
+    padding-bottom: 40px;
+   }
+    .hero-search-container {
+    margin-top: 190px;
+    top: 0;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+  .tabs {
+    width: 100%;
+    padding: 0px 100px;
+    font-size: 9px;
+  }
+
+  .tabs button {
+    flex: 1;
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .hero-search-box {
+    flex-direction: row;
+    width: 100%;
+    padding: 15px;
+    gap: 12px;
+    box-sizing: border-box;
+    align-items: stretch;
+  }
+
+  .hero-search-box input,
+  .hero-search-box select,
+  .hero-search-box button {
+    width: 100%;
+    padding: 12px;
+    font-size: 10px;
+    box-sizing: border-box;
+  }
+
+
 
 }
 
@@ -3370,7 +3559,7 @@ body,
   }
 
 }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 480px) {
 
   .sidebar,
   .landlord-sidebar {
@@ -3402,9 +3591,41 @@ body,
 
   .card-grid,
   .landlord-card-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2,1fr);
   }
   .tenant-history-grid {
     grid-template-columns: 1fr;
   }
+  .user-card{
+    width: 90%;
+  }
+  
+.landlord-panel h2 {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.user-card h3 {
+  font-size: 10px;
+}
+
+.user-card p {
+  font-size: 9px;
+}
+
+.user-card span {
+  font-size: 9px;
+  color: #0ea5e9;
+}
+
+.actions button {
+  font-size: 10px;
+}
+}
+.search-wrapper{
+  margin-top: -180px;
+}
+.topbar-small-text{
+  font-size: 8px;
+  color: grey;
 }

@@ -127,7 +127,7 @@ function Hero() {
           <p>We help you find the best property in your city</p>
         </div>
 
-        <div className="hero-search-box">
+        <div >
           <div className="hero-search-container">
             <div className="tabs">
               <button className="active" onClick={() => navigate("/register")}>Get Started</button>
