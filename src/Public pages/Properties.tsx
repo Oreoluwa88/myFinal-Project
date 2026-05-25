@@ -142,28 +142,13 @@ function Properties() {
                     onClick={() => navigate(`/properties/${p.id}`)}
                     style={{ position: "relative" }}
                   >
-                    <span
-                      style={{
-                        position: "absolute",
-                        top: "10px",
-                        right: "10px",
-                        background:
-                          status === "OCCUPIED" ? "#dc2626" : "#16a34a",
-                        color: "white",
-                        padding: "4px 10px",
-                        fontSize: "10px",
-                        borderRadius: "999px",
-                        zIndex: 2,
-                      }}
-                    >
-                      {status}
-                    </span>
 
                     <PropertyCard
                       image={p.primaryImageUrl}
                       title={p.title}
                       location={p.location}
                       price={p.rentAmount}
+                      propertyType={p.propertyType}
                       status={status}
                       beds={p.description?.match(/Beds:(\d+)/)?.[1] ?? 0}
                       baths={p.description?.match(/Baths:(\d+)/)?.[1] ?? 0}

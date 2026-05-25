@@ -131,6 +131,7 @@ function MyProperties() {
                   location={prop.location}
                   price={prop.rentAmount}
                   status={prop.status}
+                  propertyType={prop.propertyType}
                   beds={extractBeds(prop.description)}
                   baths={extractBaths(prop.description)}
                   sqm={extractSqm(prop.description)}

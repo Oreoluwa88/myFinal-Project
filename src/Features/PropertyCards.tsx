@@ -6,6 +6,7 @@ interface Props {
   location: string;
   price: number | string;
   status: string;
+  propertyType?: string;
   beds?: number | string;
   baths?: number | string;
   sqm?: number | string;
@@ -17,6 +18,7 @@ function PropertyCard({
   location,
   price,
   status,
+  propertyType,
   beds = 0,
   baths = 0,
   sqm = 0,
@@ -31,40 +33,69 @@ function PropertyCard({
 
   return (
     <div className="property-card">
-      <div className="card-image">
-        <img
-          src={image || "/placeholder.jpg"}
-          alt={title || "Property image"}
-        />
 
-        <span className="price-tag">
-          ₦{safePrice}
-        </span>
+  <div className="card-image">
 
-        <span className={`status-tag ${formattedStatus.toLowerCase()}`}>
+    <img
+      src={image || "/placeholder.jpg"}
+      alt={title}
+    />
+
+    <div className="favorite-btn">
+      <span
+          className={`status-tag ${
+            formattedStatus === "AVAILABLE"
+              ? "property-available"
+              : "property-occupied"
+          }`}
+        >
           {formattedStatus}
         </span>
-      </div>
-
-      <div className="card-content">
-        <h3>{title || "Untitled Property"}</h3>
-        <p className="location">{location || "No location"}</p>
-
-        <div className="card-icons" style={{fontSize:"10px", fontWeight:"bold"}}>
-          <span>
-            <BedDouble size={13} /> {beds || 0}
-          </span>
-
-          <span>
-            <Bath size={13} /> {baths || 0}
-          </span>
-
-          <span>
-            <Ruler size={13} /> {sqm || 0}
-          </span>
-        </div>
-      </div>
     </div>
+
+    <div className="bottom-tags">
+      <span className="property-type">
+        {propertyType || "Apartment"}
+      </span>
+    </div>
+
+  </div>
+
+  <div className="details-row">
+
+    <div>
+      <BedDouble size={16} />
+      <span>{beds} Beds</span>
+    </div>
+
+    <div>
+      <Bath size={16} />
+      <span>{baths} Baths</span>
+    </div>
+
+    <div>
+      <Ruler size={16} />
+      <span>{sqm} m²</span>
+    </div>
+
+  </div>
+
+  <div className="card-content">
+
+    <div className="price">
+      ₦{safePrice}
+      <span>/yr</span>
+    </div>
+
+    <div className="text-content">
+      <h3>{title}</h3>
+      <p>{location}</p>
+    </div>
+
+  </div>
+
+</div>
+
   );
 }
 

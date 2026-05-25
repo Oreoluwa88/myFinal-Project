@@ -214,11 +214,12 @@ body,
 }
 
 .property-card {
-  border-radius: 12px;
+  background: white;
+  border-radius: 24px;
   overflow: hidden;
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: 0.3s;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  width: 100%;
+  transition: 0.3s ease;
 }
 
 .property-card:hover {
@@ -227,17 +228,136 @@ body,
 
 .card-image {
   position: relative;
+  padding: 14px;
 }
-.card-content h3{
-  font-size: 15px;
-}
-.card-content p{
-  font-size: 10px;
-}
+
 .card-image img {
   width: 100%;
-  height: 220px;
+  height: 320px;
   object-fit: cover;
+  border-radius: 22px;
+}
+
+.favorite-btn {
+  position: absolute;
+  top: 15px;
+  right: 28px;
+  width: 55px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.bottom-tags {
+  position: absolute;
+  bottom: 28px;
+  left: 28px;
+  right: 28px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.property-type {
+  background: #1d4ed8;
+  color: white;
+  padding: 4px 13px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.details-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 2px solid #eee;
+  border-bottom: 2px solid #eee;
+}
+
+.details-row div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 18px 10px;
+  font-size: 10px;
+  color: #444;
+  border-right: 2px solid #eee;
+}
+
+.details-row div:last-child {
+  border-right: none;
+}
+
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 15px;
+  width: 100%;
+
+}
+
+.price {
+  font-size: 10px;
+  font-weight: 800;
+  color: black;
+  text-align: left;
+}
+
+.price span {
+  font-size: 10px;
+  color: grey;
+  font-weight: 500;
+}
+
+.text-content {
+  margin-left: auto;
+  text-align: right;
+}
+
+.text-content h3 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.text-content p {
+  margin-top: 4px;
+  color: gray;
+  font-size: 10px;
+}
+
+
+@media screen and (max-width: 480px) {
+
+  .card-image img {
+    height: 250px;
+  }
+
+  .card-content {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .text-content {
+    text-align: left;
+  }
+
+  .price {
+    font-size: 28px;
+  }
+
+  .text-content h3 {
+    font-size: 20px;
+  }
+
+  .details-row div {
+    font-size: 11px;
+    padding: 14px 4px;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -256,53 +376,15 @@ body,
     font-size: 8px;
   }
 }
-
-.price-tag {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  background: #4CAF50;
-  color: white;
-  padding: 5px 8px;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 12px;
+.property-available {
+  background: #22c55e;
 }
 
-.status-tag {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 5px 5px;
-  border-radius: 6px;
-  font-size: 12px;
-  color: white;
+.property-occupied {
+  background: #ef4444;
 }
 
-.available {
-  background: #28a745;
-}
 
-.occupied {
-  background: #dc3545;
-}
-
-.card-content {
-  padding: 15px;
-}
-
-.location {
-  color: gray;
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-
-.card-icons {
-  display: flex;
-  gap: 40px;
-  font-size: 14px;
-  color: #555;
-}
 
 .container {
   font-family: Arial, sans-serif;
@@ -2610,129 +2692,262 @@ body,
   color: green;
   font-size: 13px;
 }
-.details-wrapper {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 40px;
-  padding: 60px 80px;
+.property-details-page{
+  background: #f4f6f9;
+  padding: 50px;
+  min-height: 100vh;
 }
 
-.details-image {
+.property-main-card{
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+.property-image-section{
   position: relative;
+  height: 400px;
 }
 
-.details-image img {
+.main-property-image{
   width: 100%;
-  height: 150vh;
+  height: 100%;
   object-fit: cover;
-  border-radius: 16px;
-  transition: 0.4s ease;
 }
 
-.details-image img:hover {
-  transform: scale(1.03);
-}
-
-.price-badge {
+.image-overlay{
   position: absolute;
-  bottom: 20px;
-  left: 20px;
-  background: linear-gradient(135deg, #16a34a, #22c55e);
-  color: white;
-  padding: 5px 12px;
-  border-radius: 10px;
-  font-weight: bold;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.85),
+    rgba(0,0,0,0.2),
+    rgba(0,0,0,0.1)
+  );
 }
 
-.details-content h1 {
-  font-size: 32px;
+
+
+.image-bottom-content{
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  right: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 2;
+  gap: 30px;
+}
+
+.landlord-overlay-card{
+  background: white;
+  padding: 18px;
+  border-radius: 20px;
+  width: 280px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.landlord-avatar{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.landlord-info h3{
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.landlord-info p{
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 5px;
+}
+
+.property-overlay-details{
+  color: white;
+  flex: 1;
+}
+
+.property-overlay-details h1{
+  font-size: 30px;
   margin-bottom: 10px;
 }
 
-.location {
+.overlay-location{
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #9f0f68;
-  margin-bottom: 15px;
-  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 18px;
 }
 
-.meta-badges {
+.overlay-features{
   display: flex;
-  gap: 10px;
+  gap: 20px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  font-size: 15px;
 }
 
-.meta-badges span {
-  background: #f1f5f9;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-
-.meta-badges .status {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.info-card {
-  background: linear-gradient(145deg, #ffffff, #f8fafc);
-  padding: 20px;
-  border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-  margin-bottom: 20px;
-  transition: 0.3s;
-}
-
-.info-card:hover {
-  transform: translateY(-4px);
-}
-
-.landlord-card.modern {
-  background: linear-gradient(135deg, #eef2ff, #f8fafc);
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-  transition: 0.3s;
-}
-
-.landlord-card.modern:hover {
-  transform: translateY(-5px);
-}
-
-.landlord-header {
+.overlay-features span{
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
-  color: #4f46e5;
+  gap: 6px;
+  background: rgba(255,255,255,0.15);
+  padding: 10px 14px;
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
 }
 
-.landlord-body .name {
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 5px;
+.property-bottom-section{
+  display: grid;
+  grid-template-columns: 2fr 350px;
+  gap: 40px;
+  padding: 40px;
 }
-.contact-btn {
-  margin-top: 15px;
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+
+.description-section h2{
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.description-section p{
+  color: #475569;
+  line-height: 1.9;
+  font-size: 15px;
+}
+
+.price-card{
+  background: #0f172a;
   color: white;
+  border-radius: 20px;
+  padding: 30px;
+  height: fit-content;
+}
+
+.price-card h3{
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.big-price{
+  font-size: 38px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.price-card span{
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+.lease-request-btn{
+  width: 100%;
+  margin-top: 30px;
+  border: none;
+  background: white;
+  color: black;
+  padding: 14px;
+  border-radius: 14px;
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
 }
 
-.contact-btn:hover {
+.lease-request-btn:hover{
   transform: translateY(-2px);
-  opacity: 0.9;
 }
+
+.gallery-section{
+  margin-top: 50px;
+}
+
+.gallery-section h2{
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.gallery-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.gallery-item{
+  border-radius: 18px;
+  overflow: hidden;
+  height: 120px;
+  cursor: pointer;
+  position: relative;
+}
+
+.gallery-item img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.4s ease;
+}
+
+.gallery-item:hover img{
+  transform: scale(1.08);
+}
+
+@media(max-width: 900px){
+
+  .gallery-grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media(max-width: 480px){
+
+  .gallery-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-item{
+    height: 180px;
+  }
+
+}
+
+@media(max-width: 1024px){
+
+  .property-details-page{
+    padding: 20px;
+  }
+
+  .property-image-section{
+    height: 500px;
+  }
+
+  .image-bottom-content{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .property-overlay-details h1{
+    font-size: 28px;
+  }
+
+  .property-bottom-section{
+    grid-template-columns: 1fr;
+  }
+
+  .landlord-overlay-card{
+    width: 100%;
+  }
+
+}
+
 .lease-details-page {
   padding: 30px;
   background: #f6f7fb;

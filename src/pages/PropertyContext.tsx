@@ -11,6 +11,7 @@ export interface Property {
   title: string;
   location: string;
   price: number;
+  propertyType?: string;
   status: "Available" | "Occupied";
   approval: "Pending" | "Approved" | "Rejected";
   beds: number;
@@ -39,7 +40,7 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // ✅ ADD PROPERTY (API)
+
   const addProperty = async (property: Omit<Property, "id">) => {
     try {
       await createProperty(property);
