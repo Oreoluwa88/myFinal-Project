@@ -62,14 +62,15 @@ Baths:${baths || 0}
 Sqm:${sqm || 0}
 `;
 
-      formData.append("title", title);
-      formData.append("description", structuredDescription);
-      formData.append("location", location);
-      formData.append("address", address || location);
-      formData.append("rentAmount", price);
-      formData.append("propertyType", propertyType);
+      formData.append("Title", title);
+      formData.append("Description", structuredDescription);
+      formData.append("Location", location);
+      formData.append("Address", address || location);
+      formData.append("RentAmount", price);
+      formData.append("PropertyType", propertyType);
+
       files.forEach((file) => {
-        formData.append("images", file);
+        formData.append("Images", file);
       });
 
       const res = await fetch(
@@ -83,7 +84,11 @@ Sqm:${sqm || 0}
         }
       );
 
-      const data = await res.json();
+      const text = await res.text();
+
+console.log("RAW RESPONSE:", text);
+
+const data = text ? JSON.parse(text) : {};
 
       if (!res.ok || data.success === false) {
         throw new Error(data.message || "Failed to create property");
