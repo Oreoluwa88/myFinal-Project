@@ -247,7 +247,11 @@ body,
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size: 12px;
+}
+.status-tag{
+  padding: 2px 6px;
+  border-radius: 999px;
 }
 
 .bottom-tags {
@@ -300,14 +304,14 @@ body,
 
 }
 
-.price {
+.property-price {
   font-size: 10px;
   font-weight: 800;
   color: black;
   text-align: left;
 }
 
-.price span {
+.property-price span {
   font-size: 10px;
   color: grey;
   font-weight: 500;
@@ -332,22 +336,33 @@ body,
 
 
 @media screen and (max-width: 480px) {
-
+  
+  .form-grid input{
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .form-grid select{
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
   .card-image img {
     height: 250px;
   }
 
   .card-content {
-    flex-direction: column;
+    flex-direction: row;
     gap: 14px;
   }
 
   .text-content {
-    text-align: left;
+    text-align: right;
+    padding-right: 10px;
   }
 
-  .price {
-    font-size: 28px;
+  .property-price {
+    font-size: 10px;
+    justify-content: center;
+
   }
 
   .text-content h3 {
@@ -370,10 +385,10 @@ body,
 }
 @media screen and (max-width: 480px) {
   .card-content h3{
-    font-size: 10px;
+    font-size: 12px;
   }
   .card-content p{
-    font-size: 8px;
+    font-size: 10px;
   }
 }
 .property-available {
@@ -967,9 +982,14 @@ body,
 }
 
 .testimonials {
-  padding: 80px 60px;
+  padding: 80px 40px;
   background: #f8f9fa;
   text-align: center;
+}
+.testimonials p {
+  color: green;
+  font-size: 10px;
+  margin-bottom: 10px;
 }
 
 .test-card {
@@ -979,6 +999,7 @@ body,
   text-align: left;
   position: relative;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  margin-top: 30px;
 }
 
 
@@ -1278,17 +1299,33 @@ body,
 }
 
 .socials {
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 14px;
+}
+
+.socials a {
+  width: 35px;
+  height: 35px;
+  background: #7ccf00;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.socials a:hover {
+  background: white;
+  color: #7ccf00;
+  transform: translateY(-3px);
 }
 
 .socials svg {
-  background: #7ccf00;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 10px;
+  font-size: 18px;
 }
 
 .contact {
@@ -1746,20 +1783,20 @@ body,
   color: #888;
 }
 
-.form-grid {
+.form-grid1 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
 }
 
-.form-grid input {
+.form-grid1 input {
   padding: 12px;
   border-radius: 8px;
   border: 1px solid #ddd;
   outline: none;
 }
 
-.form-grid input:focus {
+.form-grid1 input:focus {
   border-color: #22c55e;
 }
 
@@ -2660,6 +2697,7 @@ body,
 
 .form-grid {
   display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
 
@@ -2899,14 +2937,6 @@ body,
   transform: scale(1.08);
 }
 
-@media(max-width: 900px){
-
-  .gallery-grid{
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-}
-
 @media(max-width: 480px){
 
   .gallery-grid{
@@ -2916,6 +2946,65 @@ body,
   .gallery-item{
     height: 180px;
   }
+
+  .landlord-overlay-card{
+  padding: 10px;
+  width: 200px;
+}
+
+.landlord-avatar{
+  width: 30px;
+  height: 30px;
+}
+
+.landlord-info h3{
+  font-size: 13px;
+}
+
+.landlord-info p{
+  font-size: 10px;
+}
+.property-overlay-details h1{
+  font-size: 15px;
+}
+
+.overlay-location{
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.overlay-features{
+  gap: 15px;
+  font-size: 12px;
+}
+
+.property-bottom-section{
+  gap: 30px;
+  padding: 20px;
+}
+
+.description-section h2{
+  font-size: 20px;
+}
+
+.description-section p{
+  font-size: 12px;
+}
+
+.price-card h3{
+  font-size: 15px;
+}
+
+.big-price{
+  font-size: 20px;
+}
+
+.price-card span{
+  color: #cbd5e1;
+  font-size: 10px;
+}
+
+
 
 }
 
@@ -3482,7 +3571,7 @@ body,
   
   
   .property-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 10px;
   }
 
@@ -3542,6 +3631,11 @@ body,
     flex-direction: column;
     padding: 0;
   }
+  .contact-info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
 
    .about-section{
     display: flex;

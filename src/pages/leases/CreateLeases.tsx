@@ -73,7 +73,7 @@ function CreateLease() {
       {error && <p className="error-msg">{error}</p>}
       {success && <p className="success-msg">{success}</p>}
 
-      <div className="form-grid">
+      <div className="form-grid1">
 
         <input
           name="propertyId"

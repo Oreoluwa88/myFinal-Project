@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import Navbarone from "../components/Navbarone";
 import Navbartwo from "../components/Navbartwo";
 import { useNavigate } from "react-router-dom";
+import FAQSection from "../components/Faq";
 
 
 function About() {
@@ -224,41 +225,7 @@ useEffect(() => {
 
           </div>
         </section>
-
-      <section className="problem-solution">
-        <h2>The Problem We Solve</h2>
-        <p className="ps-sub">
-          Renting shouldn't be stressful, confusing, or manual
-        </p>
-
-        <div className="ps-grid">
-
-          <div className="ps-card problem">
-            <h3>❌ The Problem</h3>
-
-            <ul>
-              <li>Manual rent tracking leads to errors</li>
-              <li>Tenant communication is scattered</li>
-              <li>No clear payment visibility</li>
-              <li>Lease management is inconsistent</li>
-              <li>Property data is disorganized</li>
-            </ul>
-          </div>
-
-          <div className="ps-card solution">
-            <h3>✅ Our Solution</h3>
-
-            <ul>
-              <li>Automated rent tracking & schedules</li>
-              <li>Centralized tenant communication</li>
-              <li>Secure online payments (Paystack)</li>
-              <li>Auto lease creation & management</li>
-              <li>All property data in one dashboard</li>
-            </ul>
-          </div>
-
-        </div>
-      </section>
+        <FAQSection />
 
       <section className="how-it-works">
         <h2>How Rentify Works</h2>
@@ -332,7 +299,9 @@ useEffect(() => {
 
 
       <section className="testimonials">
-        <h2>What Our Clients Say</h2>
+        <p> Testimonials </p>
+        <h2>What Our Users Say</h2>
+        <p>Our verified users on what changes when Rentify actually vets everyone</p>
 
         <div className="slider">
 

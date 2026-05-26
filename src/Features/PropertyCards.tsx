@@ -82,7 +82,7 @@ function PropertyCard({
 
   <div className="card-content">
 
-    <div className="price">
+    <div className="property-price">
       ₦{safePrice}
       <span>/yr</span>
     </div>

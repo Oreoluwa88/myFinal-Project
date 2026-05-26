@@ -31,6 +31,7 @@ import PropertyDetails from "./Features/PropertyDetails";
 import Notifications from "./pages/Notifications";
 import LeaseRequests from "./pages/leases/LeaseRequests";
 import PaymentCallBack from "./pages/payments/PaymentCallBack";
+import FAQSection from "./components/Faq";
 
 
 
@@ -56,6 +57,7 @@ function App() {
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/lease-requests" element={<LeaseRequests />} />
           <Route path="/payment/callback" element={<PaymentCallBack />} />
+          <Route path="/Faq" element={<FAQSection />} />
 
           <Route
             path="/dashboard"
