@@ -34,7 +34,14 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
   const fetchProperties = async () => {
     try {
       const data = await getProperties();
-      setProperties(data);
+
+      setProperties(
+        Array.isArray(data)
+          ? data
+          : Array.isArray(data?.items)
+          ? data.items
+          : []
+      );
     } catch (err) {
       console.error("Error fetching properties:", err);
     }
@@ -44,7 +51,7 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
   const addProperty = async (property: Omit<Property, "id">) => {
     try {
       await createProperty(property);
-      await fetchProperties(); // refresh list
+      await fetchProperties();
     } catch (err) {
       console.error("Error adding property:", err);
     }

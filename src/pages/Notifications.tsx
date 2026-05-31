@@ -53,22 +53,47 @@ function Notifications() {
   };
 
   const handleNotificationClick = async (n: any) => {
-    try {
-      if (!n.isRead) {
-        await markAsRead(n.id);
-      }
-
-      if (n.propertyId) {
-        navigate(`/properties/${n.propertyId}`);
-      } else if (n.requestId) {
-        navigate(`/requests/${n.requestId}`);
-      } else {
-        navigate("/dashboard");
-      }
-    } catch (err) {
-      console.error("Notification click error:", err);
+  try {
+    if (!n.isRead) {
+      await markAsRead(n.id);
     }
-  };
+
+    switch (n.type) {
+      case "LeaseRequestReceived":
+        navigate("/lease-requests");
+        break;
+
+      case "PropertyApproved":
+        navigate("/dashboard/my-properties");
+        break;
+
+      case "PaymentReceived":
+        navigate("/dashboard/payment-history");
+        break;
+
+      case "PaymentConfirmed":
+        navigate("/dashboard/payment-history");
+        break;
+
+      case "RentReminder":
+        navigate("/dashboard/tenant-payments");
+        break;
+
+      case "LeaseCreated":
+        navigate("/dashboard/my-leases");
+        break;
+
+      case "LeaseRequestApproved":
+        navigate("/dashboard/my-lease-requests");
+        break;
+
+      default:
+        navigate("/dashboard");
+    }
+  } catch (err) {
+    console.error("Notification click error:", err);
+  }
+};
 
   useEffect(() => {
     fetchNotifications();

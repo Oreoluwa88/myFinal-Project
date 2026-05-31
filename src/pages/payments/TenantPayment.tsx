@@ -29,6 +29,8 @@ function TenantPayment() {
       );
 
       const text = await res.text();
+      console.log("PAYMENT RESPONSE:", text);
+
       let data: any = {};
 
       try {
@@ -69,13 +71,15 @@ function TenantPayment() {
           },
           body: JSON.stringify({
             rentScheduleId: schedule.id,
-            amount: Number(schedule.balanceDue) * 100,
+            amount: Number(schedule.balanceDue),
             callbackUrl: window.location.origin + "/payment/callback",
           }),
         }
       );
 
       const text = await res.text();
+      console.log("PAYMENT RESPONSE:", text); 
+
       let data: any = {};
 
       try {

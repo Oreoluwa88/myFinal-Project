@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PropertyCard from "../../Features/PropertyCards";
 import Navbarone from "../../components/Navbarone";
 import Navbartwo from "../../components/Navbartwo";
-import {ChevronRight, Pencil, Trash2 } from "lucide-react";
+import { ChevronRight, Pencil, Trash2 } from "lucide-react";
 import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
 
@@ -15,11 +15,35 @@ function MyProperties() {
   const [actionType, setActionType] = useState<"delete" | null>(null);
 
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+
+  const extractBeds = (desc?: string) =>
+    desc?.match(/Beds:(\d+)/)?.[1] ?? 0;
+
+  const extractBaths = (desc?: string) =>
+    desc?.match(/Baths:(\d+)/)?.[1] ?? 0;
+
+  const extractSqm = (desc?: string) =>
+    desc?.match(/Sqm:(\d+)/)?.[1] ?? 0;
+  
+  const getApprovalStatus = (property: any) =>
+  (property.status || "Unknown").toUpperCase();
+
+const getOccupancyStatus = (property: any) =>
+  (property.occupancyStatus || "Available").toUpperCase();
 
   useEffect(() => {
     const fetchMyProperties = async () => {
       try {
+        const token = localStorage.getItem("token");
+
+        console.log("TOKEN:", token);
+
+        if (!token) {
+          console.error("No token found");
+          setLoading(false);
+          return;
+        }
+
         const res = await fetch(
           "https://propms-api.fly.dev/api/v1/Properties/my-properties",
           {
@@ -30,10 +54,24 @@ function MyProperties() {
           }
         );
 
-        const data = await res.json();
+        console.log("STATUS:", res.status);
+        console.log("OK:", res.ok);
+
+        const text = await res.text();
+        console.log("RAW RESPONSE:", text);
+
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          console.error("Failed to parse JSON");
+          setLoading(false);
+          return;
+        }
+
         setProperties(data?.data || []);
       } catch (err) {
-        console.error(err);
+        console.error("FETCH ERROR:", err);
         setProperties([]);
       } finally {
         setLoading(false);
@@ -51,6 +89,8 @@ function MyProperties() {
 
   const handleDelete = async (id: string) => {
     try {
+      const token = localStorage.getItem("token");
+
       await fetch(
         `https://propms-api.fly.dev/api/v1/Properties/${id}`,
         {
@@ -77,17 +117,9 @@ function MyProperties() {
     setShowModal(true);
   };
 
-  const extractBeds = (desc?: string) =>
-    desc?.match(/Beds:(\d+)/)?.[1] ?? 0;
-
-  const extractBaths = (desc?: string) =>
-    desc?.match(/Baths:(\d+)/)?.[1] ?? 0;
-
-  const extractSqm = (desc?: string) =>
-    desc?.match(/Sqm:(\d+)/)?.[1] ?? 0;
-
   return (
     <>
+    <div className="my-properties">
       <Navbarone />
 
       <div className="about-hero myproperties-hero">
@@ -123,30 +155,45 @@ function MyProperties() {
         ) : (
           <div className="property-grid" style={{ padding: "30px" }}>
             {properties.map((prop) => (
-              <div key={prop.id} className="property-card-wrapper">
-
+              <div
+                key={prop.id}
+                className="property-card-wrapper"
+                onClick={() => navigate(`/properties/${prop.id}`)}
+                style={{ cursor: "pointer" }}
+              >
                 <PropertyCard
                   image={prop.primaryImageUrl}
                   title={prop.title}
                   location={prop.location}
                   price={prop.rentAmount}
-                  status={prop.status}
+                  status={getOccupancyStatus(prop)}
+                  approvalStatus={getApprovalStatus(prop)}
                   propertyType={prop.propertyType}
                   beds={extractBeds(prop.description)}
                   baths={extractBaths(prop.description)}
                   sqm={extractSqm(prop.description)}
                 />
+                
 
                 <div className="action-buttons">
-                  <button onClick={() => handleEdit(prop)}>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEdit(prop);
+                    }}
+                  >
                     <Pencil size={14} />
                   </button>
 
-                  <button onClick={() => confirmDelete(prop)}>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      confirmDelete(prop);
+                    }}
+                  >
                     <Trash2 size={14} />
                   </button>
                 </div>
-
               </div>
             ))}
           </div>
@@ -176,7 +223,6 @@ function MyProperties() {
               textAlign: "center",
             }}
           >
-         
             {actionType === "delete" && (
               <>
                 <h3>Delete Property?</h3>
@@ -218,6 +264,7 @@ function MyProperties() {
           </div>
         </div>
       )}
+      </div>
     </>
   );
 }

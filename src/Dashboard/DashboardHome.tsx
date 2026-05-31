@@ -12,7 +12,12 @@ function DashboardHome() {
   const { user } = authContext;
   const { properties } = propertyContext;
 
-  const safeProperties = properties ?? [];
+  console.log("properties:", properties);
+  console.log("isArray:", Array.isArray(properties));
+
+  const safeProperties = Array.isArray(properties)
+  ? properties
+  : [];
 
   const total = safeProperties.length;
 

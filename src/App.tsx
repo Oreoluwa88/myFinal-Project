@@ -32,6 +32,7 @@ import Notifications from "./pages/Notifications";
 import LeaseRequests from "./pages/leases/LeaseRequests";
 import PaymentCallBack from "./pages/payments/PaymentCallBack";
 import FAQSection from "./components/Faq";
+import MyLeaseRequests from "./pages/leases/MyLeaseRequests";
 
 
 
@@ -85,6 +86,7 @@ function App() {
             <Route path="tenant-payments" element={<TenantPayment />} />
             <Route path="payment-history" element={<PaymentHistory />} />
             <Route path="my-leases" element={<MyLeases />} />
+            <Route path="my-lease-requests" element={<MyLeaseRequests />} />
             
             
           </Route>

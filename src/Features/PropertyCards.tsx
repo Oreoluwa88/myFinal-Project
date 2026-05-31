@@ -6,6 +6,7 @@ interface Props {
   location: string;
   price: number | string;
   status: string;
+  approvalStatus?: string;
   propertyType?: string;
   beds?: number | string;
   baths?: number | string;
@@ -18,15 +19,16 @@ function PropertyCard({
   location,
   price,
   status,
+  approvalStatus,
   propertyType,
   beds = 0,
   baths = 0,
   sqm = 0,
 }: Props) {
   const formattedStatus =
-    status?.toLowerCase() === "occupied"
-      ? "OCCUPIED"
-      : "AVAILABLE";
+  (status || "").toString().toLowerCase().includes("occupied")
+    ? "OCCUPIED"
+    : "AVAILABLE";
 
   const safePrice =
     price ? Number(price).toLocaleString() : "0";
@@ -42,6 +44,11 @@ function PropertyCard({
     />
 
     <div className="favorite-btn">
+
+      <span className="status-tag property-approval">
+          {approvalStatus}
+      </span>
+
       <span
           className={`status-tag ${
             formattedStatus === "AVAILABLE"

@@ -45,14 +45,14 @@ function Properties() {
     fetchData();
   }, []);
 
-  const getStatus = (property: any) => {
-    const status = (property.status || "").toLowerCase();
+ const getStatus = (property: any) => {
+  const status = (property.occupancyStatus || "").toLowerCase();
 
-    if (status.includes("occupied")) return "OCCUPIED";
-    if (status.includes("active")) return "OCCUPIED";
+  if (status === "occupied") return "OCCUPIED";
 
-    return "AVAILABLE";
-  };
+  return "AVAILABLE";
+};
+  
 
   const searchResults = (locationState as any)?.state?.results;
 
@@ -60,8 +60,12 @@ function Properties() {
     ? searchResults
     : properties;
 
+dataToShow.forEach((p) => {
+  console.log("PROPERTY:", p);
+});
   return (
     <>
+    <div className="public-listing">
       <Navbarone />
 
       <div className="properties-hero">
@@ -163,6 +167,7 @@ function Properties() {
       </div>
 
       <Footer />
+      </div>
     </>
   );
 }
